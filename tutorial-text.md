@@ -2,7 +2,7 @@
 title: Making a Small RDF Database
 authors:
 - Will Hanley
-date: 2016-03-08
+date: 2015-11-16
 reviewers:
 layout: default
 ---
@@ -15,13 +15,13 @@ When I'm in the archives, I often come across serial records of some sort--lists
 
 There is a solution: the small RDF database. Once you learn the grammar of this format, it's quite simple to record data in it. There is no need to remake your database as your records change; just add new the new information and carry on. The great advantage comes at the end, because there are powerful querying tools (see the [SPARQL tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL)) and it is easy to link your data to other data sets.
 
-# The example
+# An example
 
-Suppose you were working with a register of American nationals kept at the US consulate in Alexandria in the 1880s. This is a serial record that lists standardized information. It can help to answer questions like how many Americans were registered, what were their occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
+Suppose you were working with a register of American nationals kept at the US consulate in Alexandria, Egypt in the 1880s. This is a serial record that lists standardized information. It can help to answer questions like how many Americans were registered, what were their occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
 
 {% include figure.html src="../images/RDF-example.jpg" caption="Image of USNA" %}
 
-One could transcribe it as a text file, more or less as follows:
+You could transcribe it as a text file, more or less as follows:
 
 ```
 		Mirzan Marie (left) (x)		|
@@ -61,16 +61,16 @@ Moses Mogroby	son 	of	do		 born 10 Feb. 98
 X As recorded by Rev'd Dr. S C Ewing ex US Consular Agent on the 20th day of June 1888
 ```
 
-One could even record the checks, circles, and crosses pencilled in on the left, even if their meaning is uncertain. The names would be searchable in a document. But statistics and other data work would have to be produced manually or using Python searches for standard expressions and the like. But this serial data was already a database when it was produced more than a century ago, and it makes sense to transcribe it as data. So, how do we do this?
+You could even record the checks, circles, and crosses pencilled in on the left, even if their meaning is uncertain. The names would be searchable in a document; statistics and other data work would have to be undertaken manually or using Python scripts. But this serial data was _already a database_ when it was produced more than a century ago, and it makes sense to transcribe it as data. So, how do we do this?
 
-# Making a Database: the Tabular, Relational, and Hierarchical Options
+# The tabular, relational, and hierarchical options
 The first approach to consider is to make a table out of this information, like so:
 
-{% include figure.html src="../images/filename" caption="Table rendering of data" %}
+{% include figure.html src="../images/spreadsheet-eg.png" caption="Tabular rendering of data" %}
 
-It's not clear how many columns to create, or which columns are appropriate, even for this single page. As it is, there are 30 columns [count], and some information is still hidden. Other pages of the register introduce still more categories. A complete table would have many dozens of columns.
+It's not clear how many columns to create, or which columns are appropriate, even for this single page. As it is, there are two dozen columns, and some information is still hidden. Other pages of the register introduce still more categories. A complete table would have many dozens of columns.
 
-A second option is to turn the information into a relational database, in Filemaker or Access. Each head of household (four on this page) would have his or her own subsidiary table, listing information about his or her household.
+A second option is to turn the information into a relational database, for instance using Filemaker or Access. Each of the four heads of household on this page would have his or her own subsidiary table, listing information about his or her household.
 
 A third option would be to encode the page above using XML tags, marking information for machine extraction and counting using Python, for example. This would require the development of an elaborate and customized schema, however. The document would have to be carefully and consistently encoded in order to permit searches that would reveal, for example, the median number of children per household.
 
@@ -83,7 +83,7 @@ In a case like this, a graph data approach might be useful.
 Turning this analog page into data is what computer scientists call "pre-processing." Let's go about this in a couple of steps, to show how the logic works. Once you have a bit of experience, you can skip the preliminary steps.
 
 ## Step 1: List
-First, turn the linear text into a list. Every item on the list is a person that you want to represent in the database. We have some information about each of these persons: his name, as well as various other details.
+First, turn the linear text into a list. Every item on the list is a person that you want to represent in the database. We want to record the name and various other details about each of these persons.
 
 1. Mirzan Marie (left) (x)
 								
@@ -132,8 +132,6 @@ First, turn the linear text into a list. Every item on the list is a person that
 23. Toba Mogroby wife of Mogroby Jacob M.
 
 24. Moses Mogroby son of Mogroby Jacob M, born 10 Feb. 98
-
-(and we can add one more name from the footnote:)
 
 25. Rev'd Dr. S C Ewing, ex US Consular Agent, who recorded information marked with an x on the 20th day of June 1888.
 
@@ -234,15 +232,21 @@ Now, let's structure this list by describing the kind of details it includes abo
 ```
 
 ## Step 3: Translate into Machine-readable Language
-Now, let's translate this structured list into the turtle language, so that a machine can read it. This is a bit more tricky. But every new URI "paragraph" is equivalent to a line on the list. (for the sake of clarity, we'll start the numbering at 1).
+Now, let's translate this structured list into the [Turtle](https://www.w3.org/TeamSubmission/turtle/) language, so that a machine can read it. This is a bit more tricky.
 
-This translation starts with a declaration, which is a list of abbreviations that explains the vocabulary we use. Just as we did in step 2, we're going to invent some vocabulary to describe the information we've found. We're going to assign that invented vocabulary to our own namespace, which we'll call "db". (One pleasure of RDF is that it's easy to invent terms as you go along, and fix or reconcile them later—I'll give an example of that below).
+(It's easiest to use a simple text editor to do this work. For more on simple text editing, see this [plain text tutorial](http://programminghistorian.org/lessons/sustainable-authorship-in-plain-text-using-pandoc-and-markdown)).
 
-Although you can invent your own vocabulary (what computer scientists call "schema") for everything,  there are quite a few well-made schemas in common use. It is good practice to adopt some of these if you can. In this example, we will use three [?] of the leading schemas: rdf, rdfs, foaf. Eventually, you might want to dig deeper into the schemas, which are listed [here]. For now, let's see how they can be implemented into the list we produced on step 2.
+This translation starts with a *declaration*, which is a list of abbreviations that explains the vocabulary we use. Just as we did in step 2, we're going to invent some vocabulary to describe the information we've found. We're going to assign that invented vocabulary to our own namespace, which we'll call "db". (One pleasure of RDF is that it's easy to invent terms as you go along, and fix or reconcile them later—I'll give an example of that below). Make a declaration. RDF allows you to invent your own classification scheme as you go along. That classification scheme lives in your own "namespace," and your first job is to declare that namespace. Make up a name for your namespace and enter it at the top in the following format: `@prefix mydb: <http://myowndata.org#>`. You can use whatever letters you want for "mydb" and whatever address you want for "myowndata.org" (the http:// does not need to refer to a real website).
 
-[all of this can be annotated, with arrows if necessary… show particular terms, why I chose to do things]. So, we're saying that every line is a URI—a unique object, known by its number (which looks like a web address, but which we can invent on our own). This URI is the first item in each paragraph. And we're saying a few other things:
-each of these URIs represents a Person in the foaf (Friend of a Friend) schema. Machines know quite a lot about `foaf:Persons`—like they can have parents, children, genders, and so on—we'll see later what we can do with this. 
-Each of these URIs has a label, which is the same as the person's name. This is what's called a literal (a "string" in computer-science-speak), and it appears between quotation marks. Labels are really useful for humans trying to read databases. When we query an RDF database, the machine looks for URIs, but we can tell the machine to answer us by substituting labels that we can read instead.
+Although you can invent your own vocabulary (what computer scientists call "schema") for everything,  there are quite a few well-made schemas in common use. It is good practice to adopt their terms whenever you can. In this example, we will use three of the leading schemas: [rdf and rdfs](https://www.w3.org/TR/rdf-schema/) and [foaf](http://xmlns.com/foaf/spec/) (friend of a friend). Eventually, you might want to dig deeper into the features of these schemas. For now, let's see how they can be implemented into the list we produced on step 2.
+
+[all of this can be annotated, with arrows if necessary… show particular terms, why I chose to do things]. 
+
+Every new URI "paragraph" in step 3 is equivalent to a line on the list in step 2. (For the sake of clarity, we'll start the numbering at 1). In this database, each person is a unique object, known by its number (which looks like a web address, but which we can invent on our own). This URI is the first item in each paragraph. 
+
+And we're saying a few other things:
+* each of these URIs represents a Person in the foaf (Friend of a Friend) schema. Machines know quite a lot about `foaf:Persons`—like they can have parents, children, genders, and so on—we'll see later what we can do with this. 
+* each of these URIs has a label, which is the same as the person's name. This is what's called a literal (a "string" in computer-science-speak), and it appears between quotation marks. Labels are really useful for humans trying to read databases. When we query an RDF database, the machine looks for URIs, but we can tell the machine to answer us by substituting labels that we can read instead.
 
 [Maybe I should only have as many lines here as I have in previous step?]
 
@@ -379,7 +383,7 @@ reasoner makes family tree. Knows that sons and daughters are male and female, e
 * Break out x annotation
 * add sequence in list
 
-```
+```turtle
 @prefix db: 	<http://mydb.org/schema#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1> .
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
