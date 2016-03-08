@@ -2,7 +2,7 @@
 title: Making a Small RDF Database
 authors:
 - Will Hanley
-date: 2015-11-16
+date: 2016-03-08
 reviewers:
 layout: default
 ---
@@ -93,7 +93,7 @@ First, turn the linear text into a list. Every item on the list is a person that
 
 4. Victor John	son of Mirzan Marie. 4th Sep'r 94. completed 21 years.; Victor, Died today 1st November 1905 at 7 a.m. aged 32 years from Tuberculosi Polmonite. European Hospital.
 
-5. Morpurgo D. Brutus (x),	Ironmonger died the 7 6 July 1906
+5. Morpurgo D. Brutus (x),	Ironmonger died the ~~7~~6 July 1906
 
 6. Clarisa Hélène, wife of Morpurgo D. Brutus
 
@@ -236,7 +236,7 @@ Now, let's translate this structured list into the [Turtle](https://www.w3.org/T
 
 (It's easiest to use a simple text editor to do this work. For more on simple text editing, see this [plain text tutorial](http://programminghistorian.org/lessons/sustainable-authorship-in-plain-text-using-pandoc-and-markdown)).
 
-This translation starts with a *declaration*, which is a list of abbreviations that explains the vocabulary we use. Just as we did in step 2, we're going to invent some vocabulary to describe the information we've found. We're going to assign that invented vocabulary to our own namespace, which we'll call "db". (One pleasure of RDF is that it's easy to invent terms as you go along, and fix or reconcile them later—I'll give an example of that below). Make a declaration. RDF allows you to invent your own classification scheme as you go along. That classification scheme lives in your own "namespace," and your first job is to declare that namespace. Make up a name for your namespace and enter it at the top in the following format: `@prefix mydb: <http://myowndata.org#>`. You can use whatever letters you want for "mydb" and whatever address you want for "myowndata.org" (the http:// does not need to refer to a real website).
+This translation starts with a *declaration*, which is a list of abbreviations that explains the vocabulary we use. Just as we did in step 2, we're going to invent some vocabulary to describe the information we've found. We're going to assign that invented vocabulary to our own namespace, which we'll call "mydb". (One pleasure of RDF is that it's easy to invent terms as you go along, and fix or reconcile them later—I'll give an example of that below). RDF allows you to invent your own classification scheme as you go along. That classification scheme lives in your own "namespace," and your first job is to declare that namespace. Make up a name for your namespace and enter it at the top in the following format: `@prefix mydb: <http://myowndata.org#>`. You can use whatever letters you want for "mydb" and whatever address you want for "myowndata.org" (the http:// does not need to refer to a real website).
 
 Although you can invent your own vocabulary (what computer scientists call "schema") for everything,  there are quite a few well-made schemas in common use. It is good practice to adopt their terms whenever you can. In this example, we will use three of the leading schemas: [rdf and rdfs](https://www.w3.org/TR/rdf-schema/) and [foaf](http://xmlns.com/foaf/spec/) (friend of a friend). Eventually, you might want to dig deeper into the features of these schemas. For now, let's see how they can be implemented into the list we produced on step 2.
 
@@ -251,130 +251,132 @@ And we're saying a few other things:
 [Maybe I should only have as many lines here as I have in previous step?]
 
 ```turtle
-@prefix db: 	<http://mydb.org/schema#> .
+@prefix mydb: 	<http://mydb.org/schema#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1> .
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 
 <mydb.org/id/1> a foaf:Person ;
 	rdfs:label "Mirzan Marie" ;
-	db:note "left" ;
-	db:note "x" .
+	mydb:note "left" ;
+	mydb:note "x" .
 
 <mydb.org/id/2> a foaf:Person ;	
 	rdfs:label "Edwige" ;
-	db:daughterOf <mydb.org/id/1> .
+	mydb:daughterOf <mydb.org/id/1> .
 
 <mydb.org/id/3> a foaf:Person ;	
 	rdfs:label "Mary Rose" ;
-	db:daughterOf <mydb.org/id/1> .
+	mydb:daughterOf <mydb.org/id/1> .
 
 <mydb.org/id/4> a foaf:Person ;	
 	rdfs:label "Victor John" ;
-	db:sonOf <mydb.org/id/1> ;
-	db:note "4 9 1894 completed 21 years" ;
-	db:deathDate "1 11 1905, 7 am" ;
-	db:deathAge 32 ;
-	db:deathPlace	"European Hospital" ;
-	db:deathCause	 "Tuberculosi Polmonite" .
+	mydb:sonOf <mydb.org/id/1> ;
+	mydb:note "4 9 1894 completed 21 years" ;
+	mydb:deathDate "1 11 1905, 7 am" ;
+	mydb:deathAge 32 ;
+	mydb:deathPlace	"European Hospital" ;
+	mydb:deathCause	 "Tuberculosi Polmonite" .
 
 <mydb.org/id/5> a foaf:Person ;
 	rdfs:label "Morpurgo D. Brutus" ;
-	db:note "x" ;
-	db:occupation "Ironmonger" ;
-	db:deathDate "6 7 06" .
+	mydb:note "x" ;
+	mydb:occupation "Ironmonger" ;
+	mydb:deathDate "6 7 06" .
 
 <mydb.org/id/6> a foaf:Person ;	
 	rdfs:label "Clarisa Hélène" ;
-	bd:wifeOf <mydb.org/id/5> .
+	mydb:wifeOf <mydb.org/id/5> .
 
 <mydb.org/id/7> a foaf:Person ;	
 	rdfs:label "Julia" ;
-	db:motherOf <mydb.org/id/5> ;
-	db:deathDate "9 7 1902, 4am" ;
-	db:deathCause "cancer" .
+	mydb:motherOf <mydb.org/id/5> ;
+	mydb:deathDate "9 7 1902, 4am" ;
+	mydb:deathCause "cancer" .
 
 <mydb.org/id/8> a foaf:Person ;	
 	rdfs:label "Libera Rachel" ;
-	db:sisterOf <mydb.org/id/5> .
+	mydb:sisterOf <mydb.org/id/5> .
 
 <mydb.org/id/9> a foaf:Person ;	
 	rdfs:label "Virginia" ;
-	db:daughterOf <mydb.org/id/5> .
+	mydb:daughterOf <mydb.org/id/5> .
 
 <mydb.org/id/10> a foaf:Person ;	
 	rdfs:label "Réné" ;
-	db:daughterOf <mydb.org/id/5> .
+	mydb:daughterOf <mydb.org/id/5> .
 
 <mydb.org/id/11> a foaf:Person ;	
 	rdfs:label "Angelino M." ;
-	db:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/12> a foaf:Person ;	
 	rdfs:label "Ugo" ;
-	db:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/13> a foaf:Person ;	
 	rdfs:label "Hector" ;
-	db:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/14> a foaf:Person ;	
 	rdfs:label "Rodolph" ;
-	db:sonOf <mydb.org/id/5> .
-	db:deathDate "4 4 1894" ;
-	db:deathAge 16 ;
-	db:deathCause "Diptheria" .
+	mydb:sonOf <mydb.org/id/5> .
+	mydb:deathDate "4 4 1894" ;
+	mydb:deathAge 16 ;
+	mydb:deathCause "Diptheria" .
 
 <mydb.org/id/15> a foaf:Person ;	
 	rdfs:label "Edgar" ;
-	db:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/16> a foaf:Person ;	
 	rdfs:label "Oscar" ;
-	db:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/17> a foaf:Person ;	
 	rdfs:label "Hector" ;
-	db:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/18> a foaf:Person ;
 	rdfs:label "McFarlane Kenedy Wiley" ;
-	db:profession "American Missionary" ;
-	db:note "Alexandria 31 3 1896" .
+	mydb:profession "American Missionary" ;
+	mydb:note "Alexandria 31 3 1896" .
 
 <mydb.org/id/19> a foaf:Person ;
 	rdfs:label "Anna Henderson" ;
-	db:wifeOf <mydb.org/id/18> .
+	mydb:wifeOf <mydb.org/id/18> .
 
 <mydb.org/id/20> a foaf:Person ;
 	rdfs:label "Mary Evelyn" ;
-	db:daughterOf <mydb.org/id/18> .
+	mydb:daughterOf <mydb.org/id/18> .
 
 <mydb.org/id/21> a foaf:Person ;
 	rdfs:label "Ralph Harvey"
-	db:sonOf <mydb.org/id/18> .
+	mydb:sonOf <mydb.org/id/18> .
 
 <mydb.org/id/22> a foaf:Person ;
 	rdfs:label "Mogroby Jacob M" ;
-	db:occupation "Ombrella Merchant" ;
-	db:registration	 "on 1.6.97 acc. to a Passport No 776 dated Vienna Austria 20th April 97".
+	mydb:occupation "Ombrella Merchant" ;
+	mydb:registration	 "on 1.6.97 acc. to a Passport No 776 dated Vienna Austria 20th April 97".
 
 <mydb.org/id/23> a foaf:Person ;
 	rdfs:label "Toba Mogroby" .
-	db:wifeOf <mydb.org/id/22> .
+	mydb:wifeOf <mydb.org/id/22> .
 
 <mydb.org/id/24> a foaf:Person ;
 	rdfs:label "Moses Mogroby" ;
-	db:sonOf <mydb.org/id/24> ;
-	db:birthdate "10 2 1898" .
+	mydb:sonOf <mydb.org/id/24> ;
+	mydb:birthDate "10 2 1898" .
 
 <mydb.org/id/25> a foaf:Person ;
 	rdfs:label "Rev'd Dr. S C Ewing" ;
-	db:occupation "ex US Consular Agent" .
+	mydb:occupation "ex US Consular Agent" .
 ```
 
+Done! This is far from elegant, but it will work. (It won't work for long, but every database needs fixing before long). As you can see, the terms are derived directly from the material itself. Anything that you put behind your own invented namespace (db: in this instance) is yours to invent.
+
 The machine can do a lot with this:
-reasoner makes family tree. Knows that sons and daughters are male and female, etc.
+* reasoner makes family tree. Knows that sons and daughters are male and female, etc.
 
 ## Step 4: Make some new objects
 * make name parts into objects.
@@ -384,141 +386,140 @@ reasoner makes family tree. Knows that sons and daughters are male and female, e
 * add sequence in list
 
 ```turtle
-@prefix db: 	<http://mydb.org/schema#> .
+@prefix mydb: 	<http://mydb.org/schema#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1> .
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 
 <mydb.org/id/1> a foaf:Person ;
 	rdfs:label "Mirzan Marie" ;
-	annotation "left" ;
-	annotation (x) .
+	mydb:note "left" ;
+	mydb:note "x" .
 
 <mydb.org/id/2> a foaf:Person ;	
 	rdfs:label "Edwige" ;
-	daughter of 	<mydb.org/id/1> .
+	mydb:daughterOf <mydb.org/id/1> .
 
 <mydb.org/id/3> a foaf:Person ;	
 	rdfs:label "Mary Rose" ;
-	daughter of 	<mydb.org/id/1> .
+	mydb:daughterOf <mydb.org/id/1> .
 
 <mydb.org/id/4> a foaf:Person ;	
 	rdfs:label "Victor John" ;
-	son of 	<mydb.org/id/1> ;
-	associated date	4 9 1894 ;
-	associated event	"completed 21 years" ;
-	death date		1 11 1905 ;
-	death time		7 am ;
-	death age		32 ;
-	death place		European Hospital ;
-	death cause		"Tuberculosi Polmonite" .
+	mydb:sonOf <mydb.org/id/1> ;
+	mydb:associatedDate	1894-09-04 ;
+	mydb:note "completed 21 years" ;
+	mydb:deathDate 1905-11-01T07:00:00 ;
+	mydb:deathAge 32 ;
+	mydb:deathPlace	"European Hospital" ;
+	mydb:deathCause	"Tuberculosi Polmonite" .
 
 <mydb.org/id/5> a foaf:Person ;
 	rdfs:label "Morpurgo D. Brutus" ;
-	annotation (x) ;
-	occupation "Ironmonger" ;
-	death date 6 7 06 .
+	mydb:note "x" ;
+	mydb:occupation "Ironmonger" ;
+	mydb:deathDate 1906-07-06 
+	mydb:note "7 July 1906 day crossed out".
 
 <mydb.org/id/6> a foaf:Person ;	
 	rdfs:label "Clarisa Hélène" ;
-	wife of 	<mydb.org/id/5> .
+	mydb:wifeOf <mydb.org/id/5> .
 
 <mydb.org/id/7> a foaf:Person ;	
 	rdfs:label "Julia" ;
-	mother of 	<mydb.org/id/5> ;
-	death date		9 7 1902 ;
-	death time		4 am ;
-	death cause		"cancer" .
+	mydb:motherOf <mydb.org/id/5> ;
+	mydb:deathDate 1902-07-09T04:00:00 ;
+	mydb:deathCause	"cancer" .
 
 <mydb.org/id/8> a foaf:Person ;	
 	rdfs:label "Libera Rachel" ;
-	sister of 	<mydb.org/id/5> .
+	mydb:sisterOf <mydb.org/id/5> .
 
 <mydb.org/id/9> a foaf:Person ;	
 	rdfs:label "Virginia" ;
-	daughter of 	<mydb.org/id/5> .
+	mydb:daughterOf <mydb.org/id/5> .
 
 <mydb.org/id/10> a foaf:Person ;	
 	rdfs:label "Réné" ;
-	daughter of 	<mydb.org/id/5> .
+	mydb:daughterOf <mydb.org/id/5> .
 
 <mydb.org/id/11> a foaf:Person ;	
 	rdfs:label "Angelino M." ;
-	son of 	<mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/12> a foaf:Person ;	
 	rdfs:label "Ugo" ;
-	son of 	<mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/13> a foaf:Person ;	
 	rdfs:label "Hector" ;
-	son of 	<mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/14> a foaf:Person ;	
 	rdfs:label "Rodolph" ;
-	son of 	<mydb.org/id/5> .
-	death date		4 4 1894 ;
-	death age		16 ;
-	death cause		"Diptheria" .
+	mydb:sonOf <mydb.org/id/5> .
+	mydb:deathDate 1894-04-04 ;
+	mydb:deathAge 16 ;
+	mydb:deathCause	"Diptheria" .
 
 <mydb.org/id/15> a foaf:Person ;	
 	rdfs:label "Edgar" ;
-	son of 	<mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/16> a foaf:Person ;	
 	rdfs:label "Oscar" ;
-	son of 	<mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/17> a foaf:Person ;	
 	rdfs:label "Hector" ;
-	son of 	<mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> .
 
 <mydb.org/id/18> a foaf:Person ;
 	rdfs:label "McFarlane Kenedy Wiley" ;
-	profession "American Missionary" ;
-	Note 	"Alexandria" ;
-	note 	31 3 1896.
+	mydb:profession "American Missionary" ;
+	mydb:note "Alexandria" ;
+	mydb:note 1896-03-31 .
 
 <mydb.org/id/19> a foaf:Person ;
 	rdfs:label "Anna Henderson" ;
-	wife of <mydb.org/id/18> .
+	mydb:wifeOf <mydb.org/id/18> .
 
 <mydb.org/id/20> a foaf:Person ;
 	rdfs:label "Mary Evelyn" ;
-	daughter of <mydb.org/id/18> ;
-	note "misspelled dauter" .
+	mydb:daughterOf <mydb.org/id/18> ;
+	mydb:note "misspelled dauter" .
 
 <mydb.org/id/21> a foaf:Person ;
 	rdfs:label "Ralph Harvey"
-	son of	<mydb.org/id/18> .
+	mydb:sonOf <mydb.org/id/18> .
 
 <mydb.org/id/22> a foaf:Person ;
 	rdfs:label "Mogroby Jacob M" ;
-	occupation "Ombrella Merchant" ;
-	db:registration	 date 	1 6 1897 ;
-	db:registration document <mydb.org/doc/1> ;
+	mydb:occupation "Ombrella Merchant" ;
+	mydb:registrationDate 1897-06-01 ;
+	mydb:registrationDocument <mydb.org/doc/1> ;
 
 <mydb.org/doc/1> a passport ;
-	number 776 ;	
-	date 20 4 97 ;
-	place  Vienna Austria .	
+	mydb:docNumber 776 ;	
+	mydb:docDate 1897-04-20 ;
+	mydb:docIssued "Vienna Austria" .	
 
 <mydb.org/id/23> a foaf:Person ;
 	rdfs:label "Toba Mogroby" .
-	Wife of	<mydb.org/id/22> .
+	mydb:wifeOf	<mydb.org/id/22> .
 
 <mydb.org/id/24> a foaf:Person ;
 	rdfs:label "Moses Mogroby" ;
-	son of	<mydb.org/id/24> ;
-	birth date 	10 2 1898 .
+	mydb:sonOf <mydb.org/id/24> ;
+	mydb:birthDate	1898-02-10 .
 
 <mydb.org/annot/0> a db:registrationNote ;
-	recorded by <mydb.org/id/24> ;
-	date 20 6 1888 .
+	mydb:recordedBy <mydb.org/id/24> ;
+	mydb:date 1888-06-20 .
 
 <mydb.org/id/25> a foaf:Person ;
 	rdfs:label "Rev'd Dr. S C Ewing" ;
-	occupation "ex US Consular Agent" .
+	mydb:occupation "ex US Consular Agent" .
 ```
 
 Now the machine can supplies surname via link to parent.
