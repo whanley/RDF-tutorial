@@ -2,7 +2,7 @@
 title: Making a Small RDF Database
 authors:
 - Will Hanley
-date: 2015-11-16
+date: 2016-03-08
 reviewers:
 layout: default
 ---
@@ -11,57 +11,11 @@ Note: Matthew Lincoln's programminghistorian SPARQL tutorial explains how to acc
 
 # Making a small RDF database
 
-When I'm in the archives, I often come across serial records of some sort--lists, stacks of forms, handwritten and corrected indexes--that I wish to record. One way to do this is an word document: efficient, but not very powerful. It's much easier to count, alphabetize, filter, and otherwise manipulate this data if I record it in a spreadsheet (like Excel) or database (like Filemaker or Access). Often, however, it's not clear to me what fields I should use to record the data. First name/last name, or whole name? Some dates are exact, others are just years, and sometimes an age is given. Sometimes the types of data shift over time. All of this means that I have to change my database, and go back over records I've already read, or leave the series incomplete.
+When I'm in the archives, I often come across serial records of some sort--lists, stacks of forms, handwritten and corrected indexes--that I wish to record. One way to do this is an word document: efficient, but not very powerful. It's much easier to count, alphabetize, filter, and otherwise manipulate this data if I record it in a spreadsheet (like Excel) or database (like Filemaker or Access). Often, however, it's not clear to me which fields I might need to record the data. Should I use First name/last name, or whole name? What if some birthdates are exact, others are just years, and some are just ages? Sometimes, too, the types of data shift from scribe to scribe or from year to year. All of this means that I have to change my database, and go back over records I've already read, or leave the series incomplete.
 
-[extend rationale: explain relational vs hierarchical vs tabular dbs]
+There is a solution: the small RDF database. Once you learn the grammar of this format, it's quite simple to record data in it. There is no need to remake your database as your records change; just add new the new information and carry on. The great advantage comes at the end, because there are powerful querying tools (see the [SPARQL tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL)) and it is easy to link your data to other data sets.
 
-There is a solution: the small RDF database. Once you learn the grammar of this language, it's quite simple to record data in it. There is no need to remake your database as your records change; just add new language and carry on. The great advantage comes at the end, because there are powerful querying tools (see the SPARQL tutorial) and it is easy to link your data to other data sets.
-
-1. Open a text editor. Ideally, this will be a very simple program, like TextEdit (Mac), Notepad (Windows), or Gedit (Linux). But you can also use your normal word processor.
-
-2. Make a declaration. RDF allows you to invent your own classification scheme as you go along. That classification scheme lives in your own "namespace," and your first job is to declare that namespace. Make up a name for your namespace and enter it at the top in the following format:
-
-    @prefix mydb: <http://myowndata.org#> .
-
-You can use whatever letters you want for "mydb" and whatever address you want for "myowndata.org" (the http:// does not need to refer to a real website).
-
-3. Save the file. You will want to save your file as plain text. Careful, because your text editor or word processor might try to save it in a different format.
-
-To save as plain text on TextEdit (Mac) use ⇧⌘T or Format > Make Plain Text. On Notepad (Windows), use File > Save As, and at the bottom of the Save As dialog box, select Plain text (*.txt) from the "Save as type" drop-down list. On Gedit (Linux), you shouldn't have any problem.
-
-To save as plain text on a word processor like Microsoft Word, Libreoffice, or Open Office, use File > Save As, and at the bottom of the Save As dialog box, select Plain text (*.txt) from the "Save as type" drop-down list. When you press save, you may see a warning saying "This document may contain formatting or content that cannot be saved in the currently selected file format "Text"." Confirm that you wish to "use text format."
-
-4. Start entering your data into the document. This is the part that is a bit tricky. You need to learn a new language, called Turtle. But don't worry too much, because the language is very, very simple. In fact, it has only one rule: it is written in "triples," which means that every sentence has exactly three words in it.
-
-No need to learn the language right away, just imitate the format used below.
-
-For example, take this table from a 1 July 1905 newspaper:
-
-```
-<http://myowndata.org#London> mydb:timeFromCompany'sOffices 14 ;
-mydb:timeFromPostalTelegraphOffices  59 .
-
-<http://myowndata.org#Liverpool> mydb:timeFromCompany'sOffices 14 ;
-mydb:timeFromPostalTelegraphOffices  92 .
-
-<http://myowndata.org#Manchester> mydb:timeFromCompany'sOffices 20 ;
-mydb:timeFromPostalTelegraphOffices  64 .
-
-<http://myowndata.org#Glasgow> mydb:timeFromCompany'sOffices 21 .
-
-<http://myowndata.org#OtherProvincialOffices> mydb:timeFromPostalTelegraphOffices  64 .
-```
-
-Done! This is far from elegant, but it will work. (It won't work for long, but every database needs fixing before long). As you can see, the terms are derived directly from the material itself. Anything that you put behind your own invented namespace (mydb: in this instance) is yours to invent.
-
-5. Get a triplestore. Here's a ranking of some popular triplestores.
-
-6. Query it with SPARQL.
-
-7. Export it for others to use. (as csv--how?)
-
-
-___________________________________
+# The example
 
 Suppose you were working with a register of American nationals kept at the US consulate in Alexandria in the 1880s. This is a serial record that lists standardized information. It can help to answer questions like how many Americans were registered, what were their occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
 
@@ -73,8 +27,8 @@ One could transcribe it as a text file, more or less as follows:
 		Mirzan Marie (left) (x)		|
 							        |	
 Edwige		daughter of 	Do.		|
-Mary Rose	daughter of	Do.			|
-Victor John	son of		Do.			|4th Sep'r 94. completed 21 years.			
+Mary Rose	daughter of		Do.		|
+Victor John	son of			Do.		|4th Sep'r 94. completed 21 years.			
 Victor, Died today 1st November 1905 at 7 a.m.
 aged 32 years from Tuberculosi Polmonite. European Hospital.
 
@@ -107,7 +61,7 @@ Moses Mogroby	son 	of	do		 born 10 Feb. 98
 X As recorded by Rev'd Dr. S C Ewing ex US Consular Agent on the 20th day of June 1888
 ```
 
-One could even record the checks, circles, and crosses pencilled in on the left, even if their meaning is uncertain. The names would be searchable in a document. But statistics and other data work would have to be produced manually or using python searches for standard expressions and the like. But this serial data was already a database when it was produced more than a century ago, and it makes sense to transcribe it as data. So, how do we do this?
+One could even record the checks, circles, and crosses pencilled in on the left, even if their meaning is uncertain. The names would be searchable in a document. But statistics and other data work would have to be produced manually or using Python searches for standard expressions and the like. But this serial data was already a database when it was produced more than a century ago, and it makes sense to transcribe it as data. So, how do we do this?
 
 # Making a Database: the Tabular, Relational, and Hierarchical Options
 The first approach to consider is to make a table out of this information, like so:
@@ -118,7 +72,7 @@ It's not clear how many columns to create, or which columns are appropriate, eve
 
 A second option is to turn the information into a relational database, in Filemaker or Access. Each head of household (four on this page) would have his or her own subsidiary table, listing information about his or her household.
 
-A third option would be to encode the page above using XML tags, marking information for machine extraction and counting using python, for example. This would require the development of an elaborate and customized schema, however. The document would have to be carefully and consistently encoded in order to permit searches that would reveal, for example, the median number of children per household.
+A third option would be to encode the page above using XML tags, marking information for machine extraction and counting using Python, for example. This would require the development of an elaborate and customized schema, however. The document would have to be carefully and consistently encoded in order to permit searches that would reveal, for example, the median number of children per household.
 
 Ultimately, it is hard to see that any of these approaches would save much effort over mere transcription. And if the historian wanted to share this data with a colleague, a lot of explanation would be necessary.
 
@@ -129,7 +83,7 @@ In a case like this, a graph data approach might be useful.
 Turning this analog page into data is what computer scientists call "pre-processing." Let's go about this in a couple of steps, to show how the logic works. Once you have a bit of experience, you can skip the preliminary steps.
 
 ## Step 1: List
-First, turn the linear text into a list. Every item on the list is a person that you want to represent in the database. We have some information about each of these persons: their name, as well as various other details.
+First, turn the linear text into a list. Every item on the list is a person that you want to represent in the database. We have some information about each of these persons: his name, as well as various other details.
 
 1. Mirzan Marie (left) (x)
 								
@@ -186,6 +140,7 @@ First, turn the linear text into a list. Every item on the list is a person that
 ## Step 2: Structured list
 Now, let's structure this list by describing the kind of details it includes about each person. We can invent relatively arbitrary categories for each type of detail, much as we would if we were putting the information into a table. One move that is novel here: for "ditto," we're substituting a number, which shows which person on the list the "ditto" refers to. Thus, we say that Edwige (#2 on the list) is the daughter of #1 (by which we mean Marie).
 
+```
 1. 	Name: Mirzan Marie
 	Notes: "left", "x"
 
@@ -276,6 +231,7 @@ Now, let's structure this list by describing the kind of details it includes abo
 25.	Name: Rev'd Dr. S C Ewing
 	Occupation: ex US Consular Agent
 	Note: recorded information marked with an x on the 20th day of June 1888.
+```
 
 ## Step 3: Translate into Machine-readable Language
 Now, let's translate this structured list into the turtle language, so that a machine can read it. This is a bit more tricky. But every new URI "paragraph" is equivalent to a line on the list. (for the sake of clarity, we'll start the numbering at 1).
