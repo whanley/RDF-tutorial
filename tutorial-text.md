@@ -7,8 +7,6 @@ reviewers:
 layout: default
 ---
 
-Note: Matthew Lincoln's programminghistorian SPARQL tutorial explains how to access existing databases (catalogs, especially) that are written in RDF format. This tutorial is about building small RDF databases. A future tutorial will show how to produce an RDF database from an existing table via OpenRefine, focusing on skeleton/schema description.
-
 # Making a small RDF database
 
 When I'm in the archives, I often come across serial records of some sort--lists, stacks of forms, handwritten and corrected indexes--that I wish to record. One way to do this is an word document: efficient, but not very powerful. It's much easier to count, alphabetize, filter, and otherwise manipulate this data if I record it in a spreadsheet (like Excel) or database (like Filemaker or Access). Often, however, it's not clear to me which fields I might need to record the data. Should I use First name/last name, or whole name? What if some birthdates are exact, others are just years, and some are just ages? Sometimes, too, the types of data shift from scribe to scribe or from year to year. All of this means that I have to change my database, and go back over records I've already read, or leave the series incomplete.
@@ -20,6 +18,7 @@ There is a solution: the small RDF database. Once you learn the grammar of this 
 Suppose you were working with a register of American nationals kept at the US consulate in Alexandria, Egypt in the 1880s. This is a serial record that lists standardized information. It can help to answer questions like how many Americans were registered, what were their occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
 
 {% include figure.html src="../images/RDF-example.jpg" caption="Image of USNA" %}
+Source: 350/11/19/3, vol. 24, RG 84, National Archives and Records Administration, College Park, Maryland.
 
 You could transcribe it as a text file, more or less as follows:
 
