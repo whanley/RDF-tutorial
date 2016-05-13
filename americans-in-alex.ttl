@@ -25,9 +25,9 @@
     rdfs:label "Victor John" ;
     foaf:givenName "Victor John" ;
     mydb:sonOf <http://mydb.org/id/1> ;
-    mydb:associatedDate 1894-09-04 ;
+    mydb:associatedDate "1894-09-04" ;
     mydb:note "completed 21 years" ;
-    schema:deathDate 1905-11-01T07:00:00 ;
+    schema:deathDate "1905-11-01T07:00:00" ;
     mydb:deathAge 32 ;
     schema:deathPlace "European Hospital" ;
     mydb:deathCause "Tuberculosi Polmonite" .
@@ -38,7 +38,7 @@
     foaf:givenName "D. Brutus" ;
     mydb:note "x" ;
     mydb:occupation "Ironmonger" ;
-    schema:deathDate 1906-07-06 
+    schema:deathDate "1906-07-06" ; 
     mydb:note "7 July 1906 day crossed out".
 
 <http://mydb.org/id/6> a foaf:Person ; 
@@ -50,7 +50,7 @@
     rdfs:label "Julia" ;
     foaf:givenName "Julia" ;
     mydb:motherOf <http://mydb.org/id/5> ;
-    schema:deathDate 1902-07-09T04:00:00 ;
+    schema:deathDate "1902-07-09T04:00:00" ;
     mydb:deathCause "cancer" .
 
 <http://mydb.org/id/8> a foaf:Person ; 
@@ -86,8 +86,8 @@
 <http://mydb.org/id/14> a foaf:Person ;    
     rdfs:label "Rodolph" ;
     foaf:givenName "Rodolph" ;
-    mydb:sonOf <http://mydb.org/id/5> .
-    schema:deathDate 1894-04-04 ;
+    mydb:sonOf <http://mydb.org/id/5> ;
+    schema:deathDate "1894-04-04" ;
     mydb:deathAge 16 ;
     mydb:deathCause "Diptheria" .
 
@@ -112,7 +112,7 @@
     foaf:givenName "Kenedy Wiley" ;
     mydb:profession "American Missionary" ;
     mydb:note "Alexandria" ;
-    mydb:note 1896-03-31 .
+    mydb:note "1896-03-31" .
 
 <http://mydb.org/id/19> a foaf:Person ;
     rdfs:label "Anna Henderson" ;
@@ -126,7 +126,7 @@
     mydb:note "misspelled dauter" .
 
 <http://mydb.org/id/21> a foaf:Person ;
-    rdfs:label "Ralph Harvey"
+    rdfs:label "Ralph Harvey" ;
     foaf:givenName "Ralph Harvey" ;
     mydb:sonOf <http://mydb.org/id/18> .
 
@@ -135,16 +135,16 @@
     foaf:familyName "Mogroby" ;
     foaf:givenName "Jacob M" ;
     mydb:occupation "Ombrella Merchant" ;
-    mydb:registrationDate 1897-06-01 ;
-    mydb:registrationDocument <http://mydb.org/doc/1> ;
+    mydb:registrationDate "1897-06-01" ;
+    mydb:registrationDocument <http://mydb.org/doc/1> .
 
 <http://mydb.org/doc/1> a passport ;
     mydb:docNumber 776 ;    
-    mydb:docDate 1897-04-20 ;
+    mydb:docDate "1897-04-20" ;
     mydb:docIssued "Vienna Austria" .   
 
 <http://mydb.org/id/23> a foaf:Person ;
-    rdfs:label "Toba Mogroby" .
+    rdfs:label "Toba Mogroby" ;
     foaf:familyName "Mogroby" ;
     foaf:givenName "Toba" ;
     mydb:wifeOf <http://mydb.org/id/22> .
@@ -154,11 +154,11 @@
     foaf:familyName "Mogroby" ;
     foaf:givenName "Moses" ;
     mydb:sonOf <http://mydb.org/id/24> ;
-    mydb:birthDate  1898-02-10 .
+    mydb:birthDate "1898-02-10" .
 
-<http://mydb.org/annot/0> a db:registrationNote ;
+<http://mydb.org/annot/0> a mydb:registrationNote ;
     mydb:recordedBy <http://mydb.org/id/24> ;
-    mydb:date 1888-06-20 .
+    mydb:date "1888-06-20" .
 
 <http://mydb.org/id/25> a foaf:Person ;
     rdfs:label "Rev'd Dr. S C Ewing" ;
