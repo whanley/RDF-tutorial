@@ -370,7 +370,7 @@ And we're saying a few other things:
 	mydb:occupation "ex US Consular Agent" .
 ```
 
-Done! This is far from elegant, but it will work. (It won't work for long, but every database needs fixing before long). As you can see, the terms are derived directly from the material itself. Anything that you put behind your own invented namespace (db: in this instance) is yours to invent.
+Done! This is far from elegant, but it will work. (It won't work for long, but every database needs fixing before long). As you can see, the terms are derived directly from the material itself. Anything that you put behind your own invented namespace (`mydb:` in this instance) is yours to invent.
 
 The machine can do a lot with this:
 * reasoner makes family tree. Knows that sons and daughters are male and female, etc.
@@ -411,9 +411,9 @@ The machine can do a lot with this:
 	rdfs:label "Victor John" ;
 	foaf:givenName "Victor John" ;
 	mydb:sonOf <mydb.org/id/1> ;
-	mydb:associatedDate	1894-09-04 ;
+	mydb:associatedDate	"1894-09-04" ;
 	mydb:note "completed 21 years" ;
-	schema:deathDate 1905-11-01T07:00:00 ;
+	schema:deathDate "1905-11-01" ;
 	mydb:deathAge 32 ;
 	schema:deathPlace "European Hospital" ;
 	mydb:deathCause	"Tuberculosi Polmonite" .
@@ -424,7 +424,7 @@ The machine can do a lot with this:
 	foaf:givenName "D. Brutus" ;
 	mydb:note "x" ;
 	mydb:occupation "Ironmonger" ;
-	schema:deathDate 1906-07-06 
+	schema:deathDate "1906-07-06" ;
 	mydb:note "7 July 1906 day crossed out".
 
 <mydb.org/id/6> a foaf:Person ;	
@@ -436,7 +436,7 @@ The machine can do a lot with this:
 	rdfs:label "Julia" ;
 	foaf:givenName "Julia" ;
 	mydb:motherOf <mydb.org/id/5> ;
-	schema:deathDate 1902-07-09T04:00:00 ;
+	schema:deathDate "1902-07-09" ;
 	mydb:deathCause	"cancer" .
 
 <mydb.org/id/8> a foaf:Person ;	
@@ -473,7 +473,7 @@ The machine can do a lot with this:
 	rdfs:label "Rodolph" ;
 	foaf:givenName "Rodolph" ;
 	mydb:sonOf <mydb.org/id/5> .
-	schema:deathDate 1894-04-04 ;
+	schema:deathDate "1894-04-04" ;
 	mydb:deathAge 16 ;
 	mydb:deathCause	"Diptheria" .
 
@@ -498,7 +498,7 @@ The machine can do a lot with this:
 	foaf:givenName "Kenedy Wiley" ;
 	mydb:profession "American Missionary" ;
 	mydb:note "Alexandria" ;
-	mydb:note 1896-03-31 .
+	mydb:note "1896-03-31" .
 
 <mydb.org/id/19> a foaf:Person ;
 	rdfs:label "Anna Henderson" ;
@@ -521,12 +521,12 @@ The machine can do a lot with this:
 	foaf:familyName "Mogroby" ;
 	foaf:givenName "Jacob M" ;
 	mydb:occupation "Ombrella Merchant" ;
-	mydb:registrationDate 1897-06-01 ;
+	mydb:registrationDate "1897-06-01" ;
 	mydb:registrationDocument <mydb.org/doc/1> ;
 
 <mydb.org/doc/1> a passport ;
 	mydb:docNumber 776 ;	
-	mydb:docDate 1897-04-20 ;
+	mydb:docDate "1897-04-20" ;
 	mydb:docIssued "Vienna Austria" .	
 
 <mydb.org/id/23> a foaf:Person ;
@@ -540,11 +540,11 @@ The machine can do a lot with this:
 	foaf:familyName "Mogroby" ;
 	foaf:givenName "Moses" ;
 	mydb:sonOf <mydb.org/id/24> ;
-	mydb:birthDate	1898-02-10 .
+	mydb:birthDate "1898-02-10" .
 
 <mydb.org/annot/0> a db:registrationNote ;
 	mydb:recordedBy <mydb.org/id/24> ;
-	mydb:date 1888-06-20 .
+	mydb:date "1888-06-20" .
 
 <mydb.org/id/25> a foaf:Person ;
 	rdfs:label "Rev'd Dr. S C Ewing" ;
