@@ -86,7 +86,7 @@
 <mydb.org/id/14> a foaf:Person ;	
 	rdfs:label "Rodolph" ;
 	foaf:givenName "Rodolph" ;
-	mydb:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> ;
 	schema:deathDate "1894-04-04" ;
 	mydb:deathAge 16 ;
 	mydb:deathCause	"Diptheria" .
@@ -126,7 +126,7 @@
 	mydb:note "misspelled dauter" .
 
 <mydb.org/id/21> a foaf:Person ;
-	rdfs:label "Ralph Harvey"
+	rdfs:label "Ralph Harvey" ;
 	foaf:givenName "Ralph Harvey" ;
 	mydb:sonOf <mydb.org/id/18> .
 
@@ -136,15 +136,16 @@
 	foaf:givenName "Jacob M" ;
 	mydb:occupation "Ombrella Merchant" ;
 	mydb:registrationDate "1897-06-01" ;
-	mydb:registrationDocument <mydb.org/doc/1> ;
+	mydb:registrationDocument <mydb.org/doc/1> .
 
-<mydb.org/doc/1> a passport ;
+<mydb.org/doc/1> a mydb:doc ;
+	mydb:doctype "passport" ;
 	mydb:docNumber 776 ;	
 	mydb:docDate "1897-04-20" ;
 	mydb:docIssued "Vienna Austria" .	
 
 <mydb.org/id/23> a foaf:Person ;
-	rdfs:label "Toba Mogroby" .
+	rdfs:label "Toba Mogroby" ;
 	foaf:familyName "Mogroby" ;
 	foaf:givenName "Toba" ;
 	mydb:wifeOf	<mydb.org/id/22> .
@@ -156,7 +157,7 @@
 	mydb:sonOf <mydb.org/id/24> ;
 	mydb:birthDate "1898-02-10" .
 
-<mydb.org/annot/0> a db:registrationNote ;
+<mydb.org/annot/0> a mydb:registrationNote ;
 	mydb:recordedBy <mydb.org/id/24> ;
 	mydb:date "1888-06-20" .
 
