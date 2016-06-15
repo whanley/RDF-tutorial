@@ -372,6 +372,8 @@ And we're saying a few other things:
 
 Done! This is far from elegant, but it will work. (It won't work for long, but every database needs fixing before long). As you can see, the terms are derived directly from the material itself. Anything that you put behind your own invented namespace (`mydb:` in this instance) is yours to invent.
 
+(Download this file [here](https://raw.githubusercontent.com/whanley/RDF-tutorial/master/americans-in-alex-step-3.ttl) and perform SPARQL queries [here](http://whanley.history.fsu.edu:8890/sparql) (enter `http://localhost:8890/am-in-alex-step-3` as the Graph IRI).
+
 The machine can do a lot with this:
 * reasoner makes family tree. Knows that sons and daughters are male and female, etc.
 
@@ -555,7 +557,9 @@ The machine can do a lot with this:
 	mydb:occupation "ex US Consular Agent" .
 ```
 
-Now the machine can supplies surname via link to parent.
+(Download this file [here](https://raw.githubusercontent.com/whanley/RDF-tutorial/master/americans-in-alex-step-4.ttl) and perform SPARQL queries [here](http://whanley.history.fsu.edu:8890/sparql) (enter `http://localhost:8890/am-in-alex-step-4` as the Graph IRI).
+
+Now the machine can supply surname via link to parent.
 
 ### Step 5: Reconcile
 * It doesn't matter whether it's "death cause" or "cause of death"--just link them. 
