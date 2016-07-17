@@ -139,7 +139,7 @@
 	mydb:registrationDocument <mydb.org/doc/1> .
 
 <mydb.org/doc/1> a mydb:doc ;
-	mydb:doctype "passport" ;
+	mydb:docType "passport" ;
 	mydb:docNumber 776 ;	
 	mydb:docDate "1897-04-20" ;
 	mydb:docIssued "Vienna Austria" .	

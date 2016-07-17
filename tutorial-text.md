@@ -377,7 +377,7 @@ Done! This is far from elegant, but it will work. (It won't work for long, but e
 The machine can do a lot with this:
 * reasoner makes family tree. Knows that sons and daughters are male and female, etc.
 
-### Step 4: Make some new objects
+### Step 4: Deeper into RDF
 * make name parts into objects.
 * Do something with the "left" annotation: make it an annot/1 of its own?
 * Break out passport documents.
@@ -474,7 +474,7 @@ The machine can do a lot with this:
 <mydb.org/id/14> a foaf:Person ;	
 	rdfs:label "Rodolph" ;
 	foaf:givenName "Rodolph" ;
-	mydb:sonOf <mydb.org/id/5> .
+	mydb:sonOf <mydb.org/id/5> ;
 	schema:deathDate "1894-04-04" ;
 	mydb:deathAge 16 ;
 	mydb:deathCause	"Diptheria" .
@@ -514,7 +514,7 @@ The machine can do a lot with this:
 	mydb:note "misspelled dauter" .
 
 <mydb.org/id/21> a foaf:Person ;
-	rdfs:label "Ralph Harvey"
+	rdfs:label "Ralph Harvey" ;
 	foaf:givenName "Ralph Harvey" ;
 	mydb:sonOf <mydb.org/id/18> .
 
@@ -524,15 +524,16 @@ The machine can do a lot with this:
 	foaf:givenName "Jacob M" ;
 	mydb:occupation "Ombrella Merchant" ;
 	mydb:registrationDate "1897-06-01" ;
-	mydb:registrationDocument <mydb.org/doc/1> ;
+	mydb:registrationDocument <mydb.org/doc/1> .
 
-<mydb.org/doc/1> a passport ;
+<mydb.org/doc/1> a mydb:doc ;
+	mydb:docType "passport" ;
 	mydb:docNumber 776 ;	
 	mydb:docDate "1897-04-20" ;
 	mydb:docIssued "Vienna Austria" .	
 
 <mydb.org/id/23> a foaf:Person ;
-	rdfs:label "Toba Mogroby" .
+	rdfs:label "Toba Mogroby" ;
 	foaf:familyName "Mogroby" ;
 	foaf:givenName "Toba" ;
 	mydb:wifeOf	<mydb.org/id/22> .
@@ -544,7 +545,7 @@ The machine can do a lot with this:
 	mydb:sonOf <mydb.org/id/24> ;
 	mydb:birthDate "1898-02-10" .
 
-<mydb.org/annot/0> a db:registrationNote ;
+<mydb.org/annot/0> a mydb:registrationNote ;
 	mydb:recordedBy <mydb.org/id/24> ;
 	mydb:date "1888-06-20" .
 
@@ -561,28 +562,109 @@ The machine can do a lot with this:
 
 ### Step 5: Work with your small database
 
-To work with the data in this file (for instance using SPARQL), you need an application that will treat it as a database. A simple option is [Fuseki](https://jena.apache.org/documentation/serving_data/). Download it from [this page](https://jena.apache.org/download/index.cgi) (scroll down to the *Apache Jena Fuseki* heading, and download the `apache-jena-fuseki.2.4.0.zip` file. Unzip this file. Then, using the command line (in Terminal in Linux or Mac, or in Command Prompt in Windows), use `cd` (Linux/Mac) or `dir` (Windows) to navigate to the Fuseki folder you created. Then use the command `.\fuseki-server` (Linux/Mac) or `.\fuseki-server.bat` (Windows) to start the server. Open a web browser and type [`localhost:3030`](localhost:3030) into the address bar, and you are set to go.
+To work with the data in this file (for instance using SPARQL), you need an application that will treat it as a database. A simple option is [Fuseki](https://jena.apache.org/documentation/serving_data/). Download it from [this page](https://jena.apache.org/download/index.cgi) (scroll down to the *Apache Jena Fuseki* heading, and download the `apache-jena-fuseki.2.4.0.zip` file. Unzip this file. Then, using the command line (in Terminal in Linux or Mac, or in Command Prompt in Windows), use `cd` (Linux/Mac) or `dir` (Windows) to navigate to the Fuseki folder you created. Then use the command `./fuseki-server` (Linux/Mac) or `./fuseki-server.bat` (Windows) to start the server. Open a web browser and type [`localhost:3030`](localhost:3030) into the address bar, and you are set to go.
 
-You'll now need to upload your data file into Fuseki. Add a new dataset, give it a name that makes sense, then upload data and attach your turtle file. Now you're really set to go. Switch to the query interface, and run `SELECT * WHERE {?s ?p ?o}`, a SPARQL query that will yield all of the information entered. Once this is working, you can proceed to search or refine your database further using SPARQL.
+You'll now need to upload your data file into Fuseki. Add a new dataset, give it a name that makes sense, then upload data and attach your turtle file. (If you've constructed the dataset yourself, you might encounter upload errors if you have made certain syntax errors in typing. Most often, it's a misplaced semicolon or period that is responsible.)
+
+Now you're set to interact with the data using the SPARQL query language, which is the subject of [another *Programming Historian* tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL). Switch to the query interface and run `SELECT * WHERE {?s ?p ?o}`, the standard SPARQL query that lists all of the information entered. 
+
+Let's try a more useful query. This query will list the name, cause of death, and date of death in each case where all three were listed. 
+```turtle
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX mydb: 	<http://mydb.org/schema#> 
+PREFIX schema: <http://schema.org/#> 
+
+SELECT ?name ?cause ?date
+WHERE
+{?s rdfs:label ?name ;
+	mydb:deathCause ?cause ;
+	schema:deathDate ?date .
+}
+```
+
+How about those marginal notes? This query lists every note.
+```turtle
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX mydb: 	<http://mydb.org/schema#> 
+PREFIX schema: <http://schema.org/#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?name ?note
+WHERE
+{ ?s rdfs:label ?name ;
+ mydb:note ?note .
+}
+```
+This query may reveal patterns, for instance in the use of "x" in the margins.
 
 ### Step 6: Refining data
-Now the machine can supply surname via link to parent.
+Of course, a small RDF database such as this contains numerous inconsistencies--these inconsistencies are an important reason why you might choose this data model. Fortunately, [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/) is not just a query language. It also helps you to update your data. 
 
-Query:
+In constructing this database, we made up categories as we went along. Let's take a look at a list of these categories. Use this query:
+```turtle
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX mydb: <http://mydb.org/schema#> 
+PREFIX schema: <http://schema.org/#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT distinct ?property 
+where { 
+   ?s ?property ?o .
+}
+ORDER BY ASC(?property)
 ```
-PREFIX foaf: <http://xmlns.com/foaf/0.1>
-PREFIX mydb: 	<http://mydb.org/schema#> 
+Partway down this alphabetized list, you'll notice that we used both `mydb:occupation` and `mydb:profession`. For our purposes, these two properties are synonymous. We can add a statement that establishes this equivalence.
 
-SELECT ?givenName ?surname
+```turtle
+PREFIX mydb: <http://mydb.org/schema#> 
+PREFIX owl:	<http://www.w3.org/2002/07/owl#>
+
+INSERT DATA
+{
+mydb:occupation owl:equivalentProperty mydb:profession .
+}
+```
+
+Then search, with something like: 
+```turtle
+PREFIX mydb: 	<http://mydb.org/schema#> 	
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?name ?occupation
 WHERE
-{?s foaf:givenName ?givenName .
- ?s mydb:sonOf ?o .
+{
+  ?s rdfs:label ?name ;
+    mydb:profession ?occupation .
+}
+```
+
+* names
+The machine can supply surname via link to parent. Be sure to use the /update endpoint in Fuseki, rather than the /query or /sparql endpoints you've used up to now.
+
+```turtle
+# be sure to use /update endpoint
+PREFIX foaf: <http://xmlns.com/foaf/0.1>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX mydb: 	<http://mydb.org/schema#> 
+PREFIX schema: <http://schema.org/#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+INSERT 
+{
+  ?s foaf:familyName ?surname .
+}
+WHERE
+{ ?s (mydb:sonOf | mydb:daughterOf) ?o .
   ?o foaf:familyName ?surname .
 }
 ```
 
-* It doesn't matter whether it's "death cause" or "cause of death"--just link them. 
-* Deliberately make a mistake with "occupation" and "profession"
-* link diseases to Dbpedia
+* Reconcile: link diseases to Dbpedia
 
-Sharing (or exposing) this data is a topic for another lesson.
+### Conclusion
+The turtle file that you've created is quite compact, and can be sent to others. Exposing this data as a SPARQL endpoint is rather more complicated, and is a topic for another lesson.
