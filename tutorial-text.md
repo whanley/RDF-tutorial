@@ -2,7 +2,7 @@
 title: Making a Small RDF Database
 authors:
 - Will Hanley
-date: 2016-03-08
+date: 2016-08-12
 reviewers:
 layout: default
 ---
@@ -35,7 +35,7 @@ aged 32 years from Tuberculosi Polmonite. European Hospital.
 
 		Morpurgo D. Brutus (x)		|	Ironmonger died the 7 6 July 1906
 
-Clarisa Hélène  wife 	of	Do.	    |
+Clarisa Hélène  wife    of  Do.     |
 Julia			mother (of Brutus) +| dead from cancer 9th July 1902. 4 a.m.
 Libera Rachel	sister	"	"		|
 Virginia        daughter    "   "   |
@@ -54,8 +54,8 @@ Anna Henderson	wife 	of	same	| Alexandria
 Mary Evelyn		dauter	of	same	| 31 March 1896
 Ralph Harvey	son		of	same	|
 
-	Mogroby Jacob M				| Ombrella Merchant
-								| reg. The 1.6.97 acc. To a Passport No 776 dated
+	Mogroby Jacob M	                | Ombrella Merchant
+                                    | reg. The 1.6.97 acc. To a Passport No 776 dated
 Toba Mogroby	wife	of	do		 Vienna Austria 20th April 97.
 Moses Mogroby	son 	of	do		 born 10 Feb. 98
 
