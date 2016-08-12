@@ -9,13 +9,15 @@ layout: default
 
 # Making a small RDF database
 
-When I'm in the archives, I often come across serial records of some sort--lists, stacks of forms, indexes--that I wish to record. One way to do this is to ue a word document: convenient, but not very powerful. It's much easier to count, alphabetize, filter, and otherwise manipulate this data if I record it in a spreadsheet (like Excel) or a database (like Filemaker or Access). Often, however, it's not clear to me which fields I ought to choose to record the data. Should I use first name/last name, or full name? What if some birthdates are exact, others are just years, and some are just ages? Sometimes, too, the way that information is recorded changes from scribe to scribe or from year to year. All of this means that I have to change my database, and go back over records I've already read, or leave the series incomplete.
+When I'm in the archives, I often come across serial records of some sort--lists, stacks of forms, indexes--that I wish to record. While it is convenient to enter this information using a word processer, the document that results is not very powerful. It's much easier to count, alphabetize, filter, and otherwise manipulate this data if I record it in a spreadsheet (like [Calc](https://www.libreoffice.org/discover/calc/) or [Excel](https://products.office.com/en-us/excel)) or a database (like [FileMaker](http://www.filemaker.com) or [Access](http://office.microsoft.com/access)). When I use these spreadsheet or database programs, however, it's often not clear to me which fields I ought to choose to record the data. Should I use first name/last name, or full name? What if some birthdates are exact, others are just years, and some are just ages? Sometimes, too, the way that information is recorded changes from scribe to scribe or from year to year. All of this means that I have to change my database's design midstream, then go back over records I've already recorded or leave the series incomplete.
 
-There is a solution: the small RDF database. Once you learn the grammar of this format, it's quite simple to record data in it. There is no need to remake your database as your records change; just add new the new information and carry on. The great advantage comes at the end, because there are powerful querying tools (see the [SPARQL tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL)) and it is easy to link your data to other data sets.
+There is a solution: the small Resource Description Framework (RDF) database. The RDF data models allows you to invent, remake, split, and combine your data fields and categories on the fly. Once you learn the grammar of this format, it's quite simple to record data in it. There is no need to remake your database as your records (or your understanding of them) change; just add the new data fields and carry on. Another great advantage comes at the end, because the RDF format offers powerful querying tools (see the [SPARQL tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL)) and it is easy to link RDF data to other data sets.
+
+You may have heard of related concepts, such as graph databases, semantic databases, and triplestores. While the distinctions between all of these concepts are important, they are not critical to a basic grasp of the general graph/semantic/RDF approach. This approach is notably championed by the [World Wide Web Consortium](https://www.w3.org/) (W3C), which produces standards and software for an open web. Their interfaces and documentation can be somewhat opaque for beginners, however. Popular applications like [Neo4j](https://neo4j.com/) adopt a graph approach and and can be easy to use for certain purposes, but do not provide ready access to open standards such as RDF and SPQARQL. This tutorial skips abstract explanation of graph data modeling and jumps right into practical application. It employs very basic (free and open-source) tools that are perfectly suitable for the smaller databases that an archival historian might produce. 
 
 ## An example
 
-Suppose you were working with a register of American nationals kept at the US consulate in Alexandria, Egypt in the 1880s. This is a serial record that lists standardized information. It can help to answer questions like how many Americans were registered, what were their occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
+Suppose you were working with a register of American nationals kept at the US consulate in Alexandria, Egypt in the 1880s. This is a serial record that lists standardized information. It can help to answer questions such as how many Americans lived in the city, the demographics of this population, its occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
 
 {% include figure.html src="../images/RDF-example.jpg" caption="Image of USNA" %}
 Source: 350/11/19/3, vol. 24, RG 84, National Archives and Records Administration, College Park, Maryland.
@@ -33,11 +35,11 @@ aged 32 years from Tuberculosi Polmonite. European Hospital.
 
 		Morpurgo D. Brutus (x)		|	Ironmonger died the 7 6 July 1906
 
-Clarisa Hélène	wife 	of	Do.	    |
+Clarisa Hélène  wife 	of	Do.	    |
 Julia			mother (of Brutus) +| dead from cancer 9th July 1902. 4 a.m.
 Libera Rachel	sister	"	"		|
-Virginia        daughter	"	"	|
-Réné            daughter	"	"	|
+Virginia        daughter    "   "   |
+Réné            daughter    "   "   |
 Angelino M.		son 	"	"		|
 Ugo				son 	"	"		|
 Hector			son 	"	"		|
@@ -60,29 +62,37 @@ Moses Mogroby	son 	of	do		 born 10 Feb. 98
 X As recorded by Rev'd Dr. S C Ewing ex US Consular Agent on the 20th day of June 1888
 ```
 
-You could even record the checks, circles, and crosses pencilled in on the left, though their meaning is uncertain. The names would be searchable in a document; statistics and other data work would have to be undertaken manually or using Python scripts. But this serial data was _already a database_ when it was produced more than a century ago, and it makes sense to transcribe it as data. So, how do we do this?
+You could even record the check marks, circles, and crosses pencilled in on the left, though their meaning is uncertain. The names would be searchable in such a document, but statistics and other data work would have to be undertaken manually or using Python scripts. Yet this serial register was _already a database_ when it was produced more than a century ago, and it makes sense to transcribe it _as data_. How might we do this in a more sophisticated way?
 
 ## The tabular, relational, and hierarchical options
-The first approach to consider is to make a table out of this information, like so:
+If you choose to record this list as chunks of information rather than linear text, you have several approaches to consider. 
+
+A **first option** is to make a table out of this information, like so:
 
 {% include figure.html src="../images/spreadsheet-eg.png" caption="Tabular rendering of data" %}
 
-It's not clear how many columns to create, or which columns are appropriate, even for this single page. As it is, there are two dozen columns, and some information is still hidden. Other pages of the register introduce still more categories. A complete table would have many dozens of columns.
+It's not clear how many columns to create, or which columns are appropriate, even for this single page. As it is, there are two dozen columns, and some information still remains hidden. Other pages of the register introduce still more categories. A complete table would have many dozens of columns.
 
-A second option is to turn the information into a relational database, for instance using Filemaker or Access. Each of the four heads of household on this page would have his or her own subsidiary table, listing information about his or her household.
+A **second option** is to turn the information into a relational database, for instance using Filemaker or Access. Each of the four heads of household on this page would have his or her own subsidiary table, listing information about his or her household. This approach would be rather time consuming, however, and it would be difficult to maintain a comprehensive view of the dataset.
 
-A third option would be to encode the page above using XML tags, marking information for machine extraction and counting using Python, for example. This would require the development of an elaborate and customized schema, however. The document would have to be carefully and consistently encoded in order to permit searches that would reveal, for example, the median number of children per household.
+A **third option** would be to encode the page above using XML tags, marking information for machine extraction and counting. This would require the development of an elaborate and customized schema, however. The document would have to be carefully and consistently encoded in order to permit searches that would reveal, for example, the median number of children per household.
 
-Ultimately, it is hard to see that any of these approaches would save much effort over mere transcription. And if the historian wanted to share this data with a colleague, a lot of explanation would be necessary.
+Ultimately, it is hard to see that any of these approaches would save much effort over mere linear transcription. And if the historian wanted to share data in one of these formats with a colleague, a lot of explanation (metadata) would be necessary.
 
-In a case like this, a graph data approach might be useful.
+In a case like this, an RDF approach might be useful.
 
-## Making a small graph database
+## Making a small RDF database
 
-Turning this analog page into useable raw data is what computer scientists call "pre-processing." Let's go about this in a couple of steps, to show how the logic works. Once you have a bit of experience, you can skip the preliminary steps.
+An RDF database is made up of three-part assertions called "triples." A shorthand that people use to describe the grammar of triples is "subject-verb-object" or "subject-predicate-object." This simple grammar can be applied to almost any statement:
+
+- This (1) is not (2) a pipe (3) .
+- Gillian Welch (1) was born in (2) the year 1967 (3) .
+- Coffee (1) contains (2) caffeine (3) .
+
+To make an RDF database from the register page from the US Consulate in Alexandria, we need to render it into triples. We'll go about the processing step-by-step to show how the logic works. Once you have a bit of experience, you can skip the preliminary steps.
 
 ### Step 1: List
-First, turn the linear text into a list. Every item on the list represents a person that you want to enter into the database. You want to record the name and various other details about each of these persons.
+First, turn the linear text into a list. Every item on the list represents a person that you want to enter into the database. You want to record the name and various other details about each of these persons. For clarity, let's replace all of the "dittos" in the original with the names to which they refer.
 
 1. Mirzan Marie (left) (x)
 								
@@ -92,11 +102,11 @@ First, turn the linear text into a list. Every item on the list represents a per
 
 4. Victor John	son of Mirzan Marie. 4th Sep'r 94. completed 21 years.; Victor, Died today 1st November 1905 at 7 a.m. aged 32 years from Tuberculosi Polmonite. European Hospital.
 
-5. Morpurgo D. Brutus (x),	Ironmonger died the ~~7~~6 July 1906
+5. Morpurgo D. Brutus (x), Ironmonger died the ~~7~~6 July 1906
 
 6. Clarisa Hélène, wife of Morpurgo D. Brutus
 
-7. Julia	, mother of Morpurgo D. Brutus, dead from cancer 9th July 1902. 4 a.m.
+7. Julia, mother of Morpurgo D. Brutus, dead from cancer 9th July 1902. 4 a.m.
 
 8. Libera Rachel, sister of Morpurgo D. Brutus.
 
@@ -135,7 +145,9 @@ First, turn the linear text into a list. Every item on the list represents a per
 25. Rev'd Dr. S C Ewing, ex US Consular Agent, who recorded information marked with an x on the 20th day of June 1888.
 
 ### Step 2: Structured list
-Now, let's structure this list by describing the kind of details it includes about each person. We can invent relatively arbitrary categories for each type of detail, much as we would if we were putting the information into a table. One move that is novel here: for "ditto," we're substituting a number, which shows which person on the list the "ditto" refers to. Thus, we say that Edwige (#2 on the list) is the daughter of #1 (by which we mean Marie).
+Now, let's structure this list by describing the kind of details it includes about each person. This is where we introduce the idea of triples. For example, the first triple we want to make is "item 1 on the list (1) is a person named (2) Mirzan Marie (3)." In other words, "1. (1) Name: (2) Mirzan Marie (3)." We repeat this process for every assertion that the list contains. We can invent relatively arbitrary categories for each type of detail, much as we would if we were putting the information into a table. 
+
+One move that is novel here: for "ditto," we're substituting a number, which shows which person on the list the "ditto" refers to. Thus, we say that Edwige (#2 on the list) is the daughter of #1 (by which we mean Marie).
 
 ```
 1. 	Name: Mirzan Marie
@@ -233,19 +245,27 @@ Now, let's structure this list by describing the kind of details it includes abo
 ### Step 3: Translate into Machine-readable Language
 This step is a bit more tricky, but it's the critical transformation: let's translate this structured list into language that a machine can read. The language that we will use is called [Turtle](https://www.w3.org/TeamSubmission/turtle/), a common and quite simple language to express RDF triples. It's easiest to use a simple text editor to do this work. For more on simple text editing, see this [plain text tutorial](http://programminghistorian.org/lessons/sustainable-authorship-in-plain-text-using-pandoc-and-markdown). 
 
-This translation starts with a *declaration*, which is a list of abbreviations or shorthand that explains the vocabulary we use. Just as we did in step 2, we're going to invent some vocabulary to describe the information we've found. We're going to assign that invented vocabulary to our own namespace, which we'll call "mydb". (One pleasure of RDF is that it's easy to invent terms as you go along, and fix or reconcile them later; I'll give an example of that below). RDF allows you to invent your own classification scheme as you go along. That classification scheme lives in your own "namespace," and your first job is to declare that namespace. Make up a name for your namespace and enter it at the top in the following format: `@prefix mydb: <http://myowndata.org#>`. You can use whatever letters you want for "mydb" and whatever address you want for "myowndata.org" (the http:// does not need to refer to a real website).
+This translation (like all RDF documents) starts with a *declaration*, which is a list of abbreviations or shorthand that explains the vocabulary we use. Just as we did in step 2, we're going to invent some vocabulary to describe the information we've found. One pleasure of RDF is that it's easy to invent your own classification scheme as you go along, and fix or reconcile it later. That classification scheme lives in your own "namespace," and your first job is to declare that namespace. We'll call our namespace "mydb" and enter it at the top in the following format: `@prefix mydb: <http://mydb.org#>`. You can use whatever letters you want for "mydb" and whatever address you want for "mydb.org" (the http:// does not need to refer to a real website).
 
-Although you can invent your own vocabulary (what computer scientists call "schema") for everything,  there are quite a few well-made schemas in common use. It is good practice to adopt their terms whenever you can. In this example, we will use three of the leading schemas: [rdf and rdfs](https://www.w3.org/TR/rdf-schema/) and [foaf](http://xmlns.com/foaf/spec/) (friend of a friend). Eventually, you might want to dig deeper into the features of these schemas. For now, let's see how they can be implemented into the list we produced on step 2.
+Although you can invent your own vocabulary (what computer scientists call "schema") for everything, there are already quite a few well-made schemas in common use. It is good practice to adopt their terms whenever you can. In this example, we will use three of the leading schemas: [rdf and rdfs](https://www.w3.org/TR/rdf-schema/) and [foaf](http://xmlns.com/foaf/spec/) (friend of a friend). Eventually, you might want to dig deeper into the features of these schemas. For now, let's declare them and see how they can be implemented into the list we produced on step 2. 
 
-[all of this can be annotated, with arrows if necessary… show particular terms, why I chose to do things]. 
+Having finished the declaration, we are now ready to begin making statements about each person that we listed in step 2. In this database, each person is a unique object, known by its own URI (Unique Resource Identifier)--a number or node that represents the person. This URI looks like a web address, but is in fact simply a numbered, identified node in our mydb.org namespace. For the sake of clarity, we'll start the numbering at 1, thus the first URI is mydb.org/id/1. 
 
-Next, we begin to make statements about each person that we listed in step 2. These statements must begin with a URI (Unique Resource Identifier)--a number or node that represents the person. Every new URI "paragraph" in step 3 is equivalent to a line on the list in step 2. (For the sake of clarity, we'll start the numbering at 1). In this database, each person is a unique object, known by its number (which looks like a web address, but which we can invent on our own). This URI is the first item in each paragraph. 
+This URI is the subject of a paragraph of triples that give information about this person. Let's take a close look at one of these paragraphs:
 
-And we're saying a few other things:
-* each of these URIs represents a Person in the foaf (Friend of a Friend) schema. Machines know quite a lot about `foaf:Persons`—like they can have parents, children, genders, and so on—we'll see later what we can do with this. 
-* each of these URIs has a label, which is the name we humans call it--in this case, the person's name. This is what's called a literal (a "string" in computer-science-speak), and it appears between quotation marks. Labels are really useful for humans trying to read databases. When we query an RDF database, the machine looks for URIs, but we can tell the machine to answer us by substituting labels that we can read instead.
+```turtle
+<mydb.org/id/2> a foaf:Person ;	
+	rdfs:label "Edwige" ;
+	mydb:daughterOf <mydb.org/id/1> .
+```
 
-[Maybe I should only have as many lines here as I have in previous step?]
+The first triple simply states that the URI represents a person, an idea that we can represent using the Person element of the foaf (Friend of a Friend) schema. Machines know quite a lot about `foaf:Persons`—like they can have parents, children, genders, and so on—we'll see later what we can do with this. 
+
+The first triple ends with a semicolon, indicating that another triple about the same subject (the same URI) will follow. The second triple states that `mydb.org/id/2` can be labeled "Edwige." For ease of use, every URI should be assigned a label, which is the name we humans call it--in this case, the person's name. This is what's called a literal (a "string" in computer-science-speak), and it appears between quotation marks. Labels are really useful for humans trying to read databases. When we query an RDF database, the machine looks for URIs, but we can tell the machine to answer us by substituting labels that we can read instead.
+
+The third triple states that mydb.org/id/2 is the `daughterOf` (a term we've just invented in our mydb schema) the person listed under the URI `mydb.org/id/1`. As the last triple of the paragraph, this statement ends with a full stop rather than a semicolon.
+
+Here's the whole page in Turtle:
 
 ```turtle
 @prefix mydb: 	<http://mydb.org/schema#> .
@@ -370,20 +390,20 @@ And we're saying a few other things:
 	mydb:occupation "ex US Consular Agent" .
 ```
 
-Done! This is far from elegant, but it will work. (It won't work for long, but every database needs fixing before long). As you can see, the terms are derived directly from the material itself. Anything that you put behind your own invented namespace (`mydb:` in this instance) is yours to invent.
+Done! This is far from elegant, but it will work. (It may not work for long, but every database needs updating eventually, and RDF is very easy to update as your understanding of the material in your dataset evolves). As you can see, the terms we've used are derived directly from the material itself. Anything that you put behind your own invented namespace (`mydb:` in this instance) is yours to invent.
 
-(Download this file [here](https://raw.githubusercontent.com/whanley/RDF-tutorial/master/americans-in-alex-step-3.ttl) and perform SPARQL queries [here](http://whanley.history.fsu.edu:8890/sparql) (enter `http://localhost:8890/am-in-alex-step-3` as the Graph IRI).
-
-The machine can do a lot with this:
-* reasoner makes family tree. Knows that sons and daughters are male and female, etc.
+If you are already familiar with SPARQL, you can download this file [here](https://raw.githubusercontent.com/whanley/RDF-tutorial/master/americans-in-alex-step-3.ttl) or perform SPARQL queries [here](http://whanley.history.fsu.edu:8890/sparql) (enter `http://localhost:8890/am-in-alex-step-3` as the Graph IRI). If not, let's do a little more work on the basic dataset before we start manipulating it.
 
 ### Step 4: Deeper into RDF
-* make name parts into objects.
-* Do something with the "left" annotation: make it an annot/1 of its own?
-* Break out passport documents.
-* Break out x annotation
-* add sequence in list
-* adding schema.org declaration for death and birth dates
+Like any historian, you come to the archives with a sense of some of the information that you're looking for while remaining alert for new tracks of inquiry. Our database for this register has already established a network of parent-child relationships, but it does not do a great job of expressing names or dates, which are something we're pretty interested to analyse. It also records only persons, when it could also record other types of things, such as documents. Let's add this layer of structure.
+
+In Step 3, we treated all names as labels (using the rdfs schema). Now, let's add a triple to each paragraph in which we also designate them as names (using the foaf schema). For the first person listed, Mirzan Marie, this means adding a `foaf:givenName` of "Marie" and a `foaf:familyName` of "Mirzan". The second person, her daughter Edwige, has a `foaf:givenName` of "Edwige" but no family name listed (later one we'll add one automatically). 
+
+Now let's see what we can do about dates. First, let's standardize their format. Most databases use the YYYY-MM-DD format for dates, which we'll adopt below. Here and there, the dates we've recorded are birth and death dates. It seems likely that there's a schema somewhere that already expresses such a common concept. Sure enough, if we look at [schema.org's list of Person properties](http://schema.org/Person), we find `birthDate` and `deathDate`, as well as `deathPlace`. So let's add schema.org to our declaration, and substitute these more widely used properties for the `mydb:birthDate`, `mydb:deathDate`, and `mydb:deathPlace` properties we invented in step 3. There's probably a substitute for `mydb:deathCause` somewhere out there, but it didn't turn up right away, so let's leave it in place.
+
+Finally, let's add two new types of objects. First, let's deal with the document that Jacob Mogroby (#22 on the Step 1 list) presented when registering. We'll assign it a URI of `mydb.org/doc/1` and record its type and number and date and place of issue in triples. Let's also deal with the note at the bottom of the page, which states that Reverend Ewing was the one who entered certain information into the register on June 30, 1888. We've previously listed Ewing as `mydb.org/id/25`. Now let's create `mydb.org/annot/1`, call it a "registrationNote" and enter the relevant information. It's not entirely clear what this registration note means, but we'll have a better chance of figuring it out later on if we make the information explicit now.
+
+Here is the result: 
 
 ```turtle
 @prefix mydb: 	<http://mydb.org/schema#> .
@@ -414,7 +434,7 @@ The machine can do a lot with this:
 	foaf:givenName "Victor John" ;
 	mydb:sonOf <mydb.org/id/1> ;
 	mydb:associatedDate	"1894-09-04" ;
-	mydb:note "completed 21 years" ;
+	mydb:note "1894-09-04 completed 21 years" ;
 	schema:deathDate "1905-11-01" ;
 	mydb:deathAge 32 ;
 	schema:deathPlace "European Hospital" ;
@@ -545,7 +565,7 @@ The machine can do a lot with this:
 	mydb:sonOf <mydb.org/id/24> ;
 	mydb:birthDate "1898-02-10" .
 
-<mydb.org/annot/0> a mydb:registrationNote ;
+<mydb.org/annot/`> a mydb:registrationNote ;
 	mydb:recordedBy <mydb.org/id/24> ;
 	mydb:date "1888-06-20" .
 
@@ -562,13 +582,13 @@ The machine can do a lot with this:
 
 ### Step 5: Work with your small database
 
-To work with the data in this file (for instance using SPARQL), you need an application that will treat it as a database. A simple option is [Fuseki](https://jena.apache.org/documentation/serving_data/). Download it from [this page](https://jena.apache.org/download/index.cgi) (scroll down to the *Apache Jena Fuseki* heading, and download the `apache-jena-fuseki.2.4.0.zip` file. Unzip this file. Then, using the command line (in Terminal in Linux or Mac, or in Command Prompt in Windows), use `cd` (Linux/Mac) or `dir` (Windows) to navigate to the Fuseki folder you created. Then use the command `./fuseki-server` (Linux/Mac) or `./fuseki-server.bat` (Windows) to start the server. Open a web browser and type [`localhost:3030`](localhost:3030) into the address bar, and you are set to go.
+To work with the data in this file (for instance using SPARQL), we'll need an application that will treat it as a database. A simple option is [Fuseki](https://jena.apache.org/documentation/serving_data/). Download it from [this page](https://jena.apache.org/download/index.cgi) (scroll down to the *Apache Jena Fuseki* heading, and download the `apache-jena-fuseki.2.4.0.zip` file. Unzip this file. Then, using the command line (in Terminal in Linux or Mac, or in Command Prompt in Windows), use `cd` (Linux/Mac) or `dir` (Windows) to navigate to the Fuseki folder you created. Then use the command `./fuseki-server` (Linux/Mac) or `./fuseki-server.bat` (Windows) to start the server. Open a web browser and type [`localhost:3030`](localhost:3030) into the address bar, and you are set to go.
 
-You'll now need to upload your data file into Fuseki. Add a new dataset, give it a name that makes sense, then upload data and attach your turtle file. (If you've constructed the dataset yourself, you might encounter upload errors if you have made certain syntax errors in typing. Most often, it's a misplaced semicolon or period that is responsible.)
+We'll now need to upload our data file into Fuseki. Add a new dataset, give it a name that makes sense, then upload data and attach our turtle file. (When you construct a dataset yourself, you might encounter upload errors if you have made certain syntax errors in typing. Most often, it's a misplaced semicolon or period that is responsible.)
 
-Now you're set to interact with the data using the SPARQL query language, which is the subject of [another *Programming Historian* tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL). Switch to the query interface and run `SELECT * WHERE {?s ?p ?o}`, the standard SPARQL query that lists all of the information entered. 
+Now we're set to interact with the data using the SPARQL query language, which as we've seen is the subject of [another *Programming Historian* tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL). Switch to the Fuseki query interface and run `SELECT * WHERE {?s ?p ?o}`, the standard SPARQL query that lists all of the information entered. 
 
-Let's try a more useful query. This query will list the name, cause of death, and date of death in each case where all three were listed. 
+Now let's try a more useful query. This query will list the name, cause of death, and date of death in each case where all three were listed. 
 ```turtle
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX dbpedia: <http://dbpedia.org/resource/>
@@ -600,7 +620,7 @@ WHERE
 This query may reveal patterns, for instance in the use of "x" in the margins.
 
 ### Step 6: Refining data
-Of course, a small RDF database such as this contains numerous inconsistencies--these inconsistencies are an important reason why you might choose this data model. Fortunately, [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/) is not just a query language. It also helps you to update your data. 
+Of course, a small RDF database such as this contains numerous inconsistencies--and these inconsistencies are an important reason why you might choose this data model. Fortunately, [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/) is not just a query language. It also helps you to update your data. 
 
 In constructing this database, we made up categories as we went along. Let's take a look at a list of these categories. Use this query:
 ```turtle
@@ -643,8 +663,7 @@ WHERE
 }
 ```
 
-* names
-The machine can supply surname via link to parent. Be sure to use the /update endpoint in Fuseki, rather than the /query or /sparql endpoints you've used up to now.
+How about a second refinement? As I mentioned earlier, the machine can supply surname via link to parent. Be sure to use the /update endpoint in Fuseki, rather than the /query or /sparql endpoints you've used up to now. Then execute this command:
 
 ```turtle
 # be sure to use /update endpoint
@@ -664,7 +683,7 @@ WHERE
 }
 ```
 
-* Reconcile: link diseases to Dbpedia
+Now a line will be added to the record of every son and daughter, giving them the `familyName` of their parent.
 
 ### Conclusion
-The turtle file that you've created is quite compact, and can be sent to others. Exposing this data as a SPARQL endpoint is rather more complicated, and is a topic for another lesson.
+The turtle file that you've created is quite compact, and can be sent to others. Exposing this data as a SPARQL endpoint is rather more complicated, and is a topic for another lesson. And there is much more that you can do with schemas and ontologies to enhance this data set. But this small RDF database has a simpler purpose: to record serial data of uncertain structure in a format that allows you to explore its content and categories. I hope that the examples give here have convinced you of the many possibilities of this format.
