@@ -19,7 +19,7 @@ You may have heard of related concepts, such as graph databases, semantic databa
 
 Suppose you were working with a register of American nationals kept at the US consulate in Alexandria, Egypt in the 1880s. This is a serial record that lists standardized information. It can help to answer questions such as how many Americans lived in the city, the demographics of this population, its occupations, and so on. But the protocols of registration are inconsistent, and it's hard to know how to record the data in a standard format. Consider this page:
 
-{% include figure.html src="../images/alexandria-register-page.jpg" caption="Register of US nationals in Alexandria, Egypt (Source: 350/11/19/3, vol. 24, RG 84, National Archives and Records Administration, College Park, Maryland)." %}
+{% include figure.html filename="alexandria-register-page.jpg" caption="Register of US nationals in Alexandria, Egypt (Source: 350/11/19/3, vol. 24, RG 84, National Archives and Records Administration, College Park, Maryland)." %}
 
 You could transcribe it as a text file, more or less as follows:
 
@@ -68,7 +68,7 @@ If you choose to record this list as chunks of information rather than linear te
 
 A **first option** is to make a table out of this information, like so:
 
-{% include figure.html src="../images/spreadsheet-example.png" caption="Tabular rendering of data" %}
+{% include figure.html filename="spreadsheet-example.png" caption="Tabular rendering of data" %}
 
 It's not clear how many columns to create, or which columns are appropriate, even for this single page. As it is, there are two dozen columns, and some information still remains hidden. Other pages of the register introduce still more categories. A complete table would have many dozens of columns.
 
