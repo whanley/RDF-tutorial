@@ -243,7 +243,7 @@ Your complete declaration looks like this:
 
 Notice that `mydb:`, `schema:`, `rdf:`, and `rdfs:` are described as prefixes in this declaration. Prefixes (or, more properly, [QNames](https://en.wikipedia.org/wiki/QName)) are abbreviations for the fuller URIs listed beside them, and they will function as shorthand in the body of the database.
 
-Having finished the declaration, we are now ready to begin making statements about each person that we listed in step 2. In this database, each person is a unique object, known by its own URI within our mydb.org namespace. The URI is a number or node that represents the person. For the sake of clarity, we'll start the numbering at 1, and include an identifier `id/`, thus the first URI is `<http://mydb.org/id/1>`.
+Having finished the declaration, we are now ready to begin making statements about each person that we listed in step 2. In this database, each person is a unique object, known by its own URI within our mydb.org namespace. The URI is a number or node that represents the person. For the sake of clarity, we'll start the numbering at 1, and include an identifier `/id/`, thus the first URI is `<http://mydb.org/id/1>`.
 
 Each URI is the subject of a paragraph of triples containing information about a person on the register's list. Let's take a close look at one of these paragraphs:
 
@@ -582,13 +582,13 @@ Download the application for your platform (you'll have to give Ontotext your em
 
 The friendliest way to interface with GraphDB (and most graph database servers) is via your web browser. It's important to understand that the GraphDB page you'll see is not on the internet--it's just a view of a local server running on your own hard drive. This browser window should open automatically after you start GraphDB. If not, type [`localhost:7200`](localhost:7200) into the address bar, and you are set to go.
 
-Now, we'll need to upload the data file we've created into GraphDB. First, click "create new repository." You'll face a somewhat daunting list of options, but all you need to do is to enter a name under "Repository ID" and click "Create." Next, choose this repository, either by clicking on the name you've just created in the middle of the screen, or via the "Choose repository" menu in the top right corner. Once the repository is active, you can upload your data via the "Import" menu at the top of the left column. Click "RDF," then "click here to upload a file." Select your file, click open, click import, leave the import settings as they are and click import once again, and you're done. Phew!
+Now we'll need to upload the data file we've created into GraphDB. First, click "create new repository." You'll face a somewhat daunting list of options, but all you need to do is to enter a name under "Repository ID" and click "Create." Next, choose this repository, either by clicking on the name you've just created in the middle of the screen, or via the "Choose repository" menu in the top right corner. Once the repository is active, you can upload your data via the "Import" menu at the top of the left column. Click "RDF," then "click here to upload a file." Select your file, click open, click import, leave the import settings as they are and click import once again, and you're done. Phew!
 
 Now we're set to interact with the data using the SPARQL query language, which as we've seen is the subject of [another *Programming Historian* tutorial](http://programminghistorian.org/lessons/graph-databases-and-SPARQL). Click the SPARQL button on the left and run `SELECT * WHERE {?s ?p ?o}`, the standard SPARQL query that lists all of the information entered. Underneath the query box, you'll find a long three-column table of triples. Many you won't recognize--they're part of GraphDB's background schema, which it's not necessary for you to use at this point. Some way down the list, however, you'll start to see some familiar terms. The person id nodes we created are rendered with a strange prefix (`file:/fake/generated/mydb.org/id/`) that shouldn't cause trouble. You'll also see `mydb:daughterOf` and the like.
 
 Let's try a narrower query. Like the RDF database file we've just written in Turtle, SPARQL queries list a variety of namespaces in an opening declaration (albeit using a slightly different syntax)--these declarations allow us to abbreviate our URIs. The following query will return the name, cause of death, and date of death in each case where all three were listed.
 
-```sparql
+```turtle
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -603,7 +603,7 @@ WHERE
 
 How about those marginal notes? Perhaps there's a pattern in the use of "x" in the margins. This query lists every note.
 
-```sparql
+```turtle
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -617,9 +617,9 @@ WHERE
 
 Because we've written the database schema ourselves, we'll be familiar with its terms, and SPARQL lets us get at all of them.
 
-We can also mix data from several different categories. Let's put all ten of the dates listed on this page in a chronological sequence.
+One advantage of RDF is that we can easily combine data from several different categories. If we were trying to establish a timeline, it would be useful to look at every date invoked. This query does just that:
 
-```sparql
+```turtle
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -634,14 +634,14 @@ WHERE {
 ORDER BY ASC(?date)
 ```
 
-The results show every dated event in order, along with information that identifies the event.
+The results show every dated event in chronological order, along with information that identifies the event.
 
 ### Step 6: Refining data
 Of course, a small RDF database such as this contains numerous inconsistencies. Discovering these inconsistencies is an important reason why you might choose this data model. Fortunately, [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/) is not just a query language. It also allows you to update your data.
 
 This query returns all given names and family names in the database, as well as any family names that occur:
 
-```sparql
+```turtle
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -655,7 +655,7 @@ WHERE
 
 The results show that the database we've produced only lists family names for heads of household; everyone else appears under their given names only. An RDF database can fetch specific information from some records and add it to others. Let's use this function to attribute parents' surnames to their children, using this INSERT command:
 
-```sparql
+```turtle
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -674,11 +674,10 @@ Now a line will be added to the record of every son and daughter, giving them th
 
 We've just used SPARQL to update the content of our RDF database. Now, let's use it to refine its structure. In constructing this database, we made up categories as we went along. It might be useful to review them for patterns and inconsistencies. Let's take a look at a list of these categories. Use this query:
 
-```sparql
+```turtle
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT distinct ?property
 where {
@@ -689,7 +688,7 @@ ORDER BY ASC(?property)
 
 Some way down this alphabetized list, you'll notice that we used both `mydb:occupation` and `mydb:profession`. For our purposes, these two properties are synonymous. We can add a statement that establishes this equivalence. Execute this command, which inserts a line into the RDF file stating (using the [OWL](https://www.w3.org/TR/owl-ref/) ontology language) that `mydb:occupation` and `mydb:profession` mean the same thing:
 
-```sparql
+```turtle
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
@@ -701,7 +700,7 @@ mydb:occupation owl:equivalentProperty mydb:profession .
 
 Then search the updated results for this new common category, with the sort of SPARQL query that is now becoming familiar:
 
-```sparql
+```turtle
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -716,7 +715,7 @@ WHERE
 This query should return four results, and if you change `mydb:profession` to `mydb:occupation`, you should see the same results. Now, try clicking on the `>>` icon on the right hand side of the SPARQL frame, which turns inferencing on and off. With inferencing off, these searches return fewer and different results. The ability to navigate between asserted and inferred results is one of RDF's strengths.
 
 ### Conclusion and next steps
-The Turtle file that you've created is quite compact, and can be shared with others as a text file that they can explore using their own RDF applications. Exposing this data as a publicly-accessible SPARQL endpoint is rather more complicated, and is a topic for another lesson. Schemas and ontologies, which can do much more to enhance your data sets, will also have to wait for a deeper dive. This small RDF database has a simpler purpose: to record serial data of uncertain structure in a format that allows you to explore its content and categories. I hope that the examples give here suggest some of the many possibilities of this format.
+The Turtle file that you've created is quite compact, and can be shared with others as a text file that they can explore using their own RDF applications. Exposing this data as a publicly-accessible SPARQL endpoint is rather more complicated, and is a topic for another lesson. Schemas and ontologies, which can do much more to enhance your data sets, will also have to wait for a deeper dive. This small RDF database has a simpler purpose: to record serial data of uncertain structure in a format that allows you to explore its content and categories. I hope that the examples given here suggest some of the many possibilities of this format.
 
 Setting up a full RDF database engine, working with ontologies, enriching it with data from services such as [Wikidata](http://query.wikidata.org) and [DBPedia](http://dbpedia.org/snorql/), and exposing your own data as a SPARQL endpoint are some of the next steps that you may wish to take if you continue to work with RDF databases. Jonathan Blaney's [list of further readings and resources](https://programminghistorian.org/lessons/intro-to-linked-data#further-reading-and-resources) is a great place to start.
 
