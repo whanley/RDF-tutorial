@@ -243,7 +243,7 @@ Your complete declaration looks like this:
 
 Notice that `mydb:`, `schema:`, `rdf:`, and `rdfs:` are described as prefixes in this declaration. Prefixes (or, more properly, [QNames](https://en.wikipedia.org/wiki/QName)) are abbreviations for the fuller URIs listed beside them, and they will function as shorthand in the body of the database.
 
-Having finished the declaration, we are now ready to begin making statements about each person that we listed in step 2. In this database, each person is a unique object, known by its own URI within our mydb.org namespace. The URI is a number or node that represents the person. For the sake of clarity, we'll start the numbering at with an identifier (`id/`) of 1, thus the first URI is `<http://mydb.org/id/1>`.
+Having finished the declaration, we are now ready to begin making statements about each person that we listed in step 2. In this database, each person is a unique object, known by its own URI within our mydb.org namespace. The URI is a number or node that represents the person. For the sake of clarity, we'll start the numbering at 1, and include an identifier `id/`, thus the first URI is `<http://mydb.org/id/1>`.
 
 Each URI is the subject of a paragraph of triples containing information about a person on the register's list. Let's take a close look at one of these paragraphs:
 
@@ -253,7 +253,7 @@ Each URI is the subject of a paragraph of triples containing information about a
   mydb:daughterOf <http://mydb.org/id/1> .
 ```
 
-The first triple simply states that the URI `<http://mydb.org/id/2>` represents a person, an idea that we can represent using the Person element of the schema.org schema. Machines know quite a lot about `schema:Person`s—like that they can have parents, children, genders, and so on. (For more information, combine the full URL listed opposite the `schema:` prefix with `Persons` suffix and consult [http://schema.org/Person](http:schema.org/Person)). We'll see later what we can (and cannot) do with the rules encoded in schema.org and other schemas.
+The first triple simply states that the URI `<http://mydb.org/id/2>` represents a person, an idea that we can represent using the Person element of the schema.org schema. Machines know quite a lot about `schema:Person`s—like that they can have parents, children, genders, and so on. (For more information, consult [http://schema.org/Person](http:schema.org/Person)). More advanced RDF databases do many things with the rules encoded in schema.org and other schemas.
 
 The first triple ends with a semicolon, indicating that another triple about the same subject (the same URI) will follow. The second triple gives this person a name, by stating that `<http://mydb.org/id/2>` can be labeled "Edwige." For ease of use, every URI should be assigned a label, which is the name we humans call it—in this case, the person's name. This is what's called a literal (a "string" in computer-science-speak), and it appears between quotation marks. Labels are really useful for humans trying to read databases. When we query an RDF database, the machine looks for URIs, but we can tell the machine to answer us by substituting labels that we can read instead of URIs that won't mean much to us.
 
@@ -262,131 +262,131 @@ The third triple describes Edwige's relationship to Marie, by stating that `<htt
 We've now expressed what we can say about Edwige, and we'll proceed to do the same for every person listed on the page. Here's the whole page in Turtle:
 
 ```turtle
-@prefix mydb: <http://mydb.org/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mydb: 	<http://mydb.org/> .
+@prefix schema:	<http://schema.org/> .
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 
-<mydb.org/id/1> a foaf:Person ;
-  rdfs:label "Mirzan Marie" ;
-  mydb:note "left" ;
-  mydb:note "x" .
+<mydb.org/id/1> a schema:Person ;
+	rdfs:label "Mirzan Marie" ;
+	mydb:note "left" ;
+	mydb:note "x" .
 
-<mydb.org/id/2> a foaf:Person ;
-  rdfs:label "Edwige" ;
-  mydb:daughterOf <mydb.org/id/1> .
+<mydb.org/id/2> a schema:Person ;
+	rdfs:label "Edwige" ;
+	mydb:daughterOf <mydb.org/id/1> .
 
-<mydb.org/id/3> a foaf:Person ;
-  rdfs:label "Mary Rose" ;
-  mydb:daughterOf <mydb.org/id/1> .
+<mydb.org/id/3> a schema:Person ;
+	rdfs:label "Mary Rose" ;
+	mydb:daughterOf <mydb.org/id/1> .
 
-<mydb.org/id/4> a foaf:Person ;
-  rdfs:label "Victor John" ;
-  mydb:sonOf <mydb.org/id/1> ;
-  mydb:note "4 9 1894 completed 21 years" ;
-  mydb:deathDate "1 11 1905, 7 am" ;
-  mydb:deathAge 32 ;
-  mydb:deathPlace "European Hospital" ;
-  mydb:deathCause "Tuberculosi Polmonite" .
+<mydb.org/id/4> a schema:Person ;
+	rdfs:label "Victor John" ;
+	mydb:sonOf <mydb.org/id/1> ;
+	mydb:note "4 9 1894 completed 21 years" ;
+	mydb:deathDate "1 11 1905, 7 am" ;
+	mydb:deathAge 32 ;
+	mydb:deathPlace	"European Hospital" ;
+	mydb:deathCause	"Tuberculosi Polmonite" .
 
-<mydb.org/id/5> a foaf:Person ;
-  rdfs:label "Morpurgo D. Brutus" ;
-  mydb:note "x" ;
-  mydb:occupation "Ironmonger" ;
-  mydb:deathDate "6 7 06" .
+<mydb.org/id/5> a schema:Person ;
+	rdfs:label "Morpurgo D. Brutus" ;
+	mydb:note "x" ;
+	mydb:occupation "Ironmonger" ;
+	mydb:deathDate "6 7 06" .
 
-<mydb.org/id/6> a foaf:Person ;
-  rdfs:label "Clarisa Hélène" ;
-  mydb:wifeOf <mydb.org/id/5> .
+<mydb.org/id/6> a schema:Person ;
+	rdfs:label "Clarisa Hélène" ;
+	mydb:wifeOf <mydb.org/id/5> .
 
-<mydb.org/id/7> a foaf:Person ;
-  rdfs:label "Julia" ;
-  mydb:motherOf <mydb.org/id/5> ;
-  mydb:deathDate "9 7 1902, 4am" ;
-  mydb:deathCause "cancer" .
+<mydb.org/id/7> a schema:Person ;
+	rdfs:label "Julia" ;
+	mydb:motherOf <mydb.org/id/5> ;
+	mydb:deathDate "9 7 1902, 4am" ;
+	mydb:deathCause "cancer" .
 
-<mydb.org/id/8> a foaf:Person ;
-  rdfs:label "Libera Rachel" ;
-  mydb:sisterOf <mydb.org/id/5> .
+<mydb.org/id/8> a schema:Person ;
+	rdfs:label "Libera Rachel" ;
+	mydb:sisterOf <mydb.org/id/5> .
 
-<mydb.org/id/9> a foaf:Person ;
-  rdfs:label "Virginia" ;
-  mydb:daughterOf <mydb.org/id/5> .
+<mydb.org/id/9> a schema:Person ;
+	rdfs:label "Virginia" ;
+	mydb:daughterOf <mydb.org/id/5> .
 
-<mydb.org/id/10> a foaf:Person ;
-  rdfs:label "Réné" ;
-  mydb:daughterOf <mydb.org/id/5> .
+<mydb.org/id/10> a schema:Person ;
+	rdfs:label "Réné" ;
+	mydb:daughterOf <mydb.org/id/5> .
 
-<mydb.org/id/11> a foaf:Person ;
-  rdfs:label "Angelino M." ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/11> a schema:Person ;
+	rdfs:label "Angelino M." ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/12> a foaf:Person ;
-  rdfs:label "Ugo" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/12> a schema:Person ;
+	rdfs:label "Ugo" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/13> a foaf:Person ;
-  rdfs:label "Hector" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/13> a schema:Person ;
+	rdfs:label "Hector" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/14> a foaf:Person ;
-  rdfs:label "Rodolph" ;
-  mydb:sonOf <mydb.org/id/5> .
-  mydb:deathDate "4 4 1894" ;
-  mydb:deathAge 16 ;
-  mydb:deathCause "Diptheria" .
+<mydb.org/id/14> a schema:Person ;
+	rdfs:label "Rodolph" ;
+	mydb:sonOf <mydb.org/id/5> ;
+	mydb:deathDate "4 4 1894" ;
+	mydb:deathAge 16 ;
+	mydb:deathCause "Diptheria" .
 
-<mydb.org/id/15> a foaf:Person ;
-  rdfs:label "Edgar" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/15> a schema:Person ;
+	rdfs:label "Edgar" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/16> a foaf:Person ;
-  rdfs:label "Oscar" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/16> a schema:Person ;
+	rdfs:label "Oscar" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/17> a foaf:Person ;
-  rdfs:label "Hector" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/17> a schema:Person ;
+	rdfs:label "Hector" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/18> a foaf:Person ;
-  rdfs:label "McFarlane Kenedy Wiley" ;
-  mydb:profession "American Missionary" ;
-  mydb:note "Alexandria 31 3 1896" .
+<mydb.org/id/18> a schema:Person ;
+	rdfs:label "McFarlane Kenedy Wiley" ;
+	mydb:profession "American Missionary" ;
+	mydb:note "Alexandria 31 3 1896" .
 
-<mydb.org/id/19> a foaf:Person ;
-  rdfs:label "Anna Henderson" ;
-  mydb:wifeOf <mydb.org/id/18> .
+<mydb.org/id/19> a schema:Person ;
+	rdfs:label "Anna Henderson" ;
+	mydb:wifeOf <mydb.org/id/18> .
 
-<mydb.org/id/20> a foaf:Person ;
-  rdfs:label "Mary Evelyn" ;
-  mydb:daughterOf <mydb.org/id/18> .
+<mydb.org/id/20> a schema:Person ;
+	rdfs:label "Mary Evelyn" ;
+	mydb:daughterOf <mydb.org/id/18> .
 
-<mydb.org/id/21> a foaf:Person ;
-  rdfs:label "Ralph Harvey"
-  mydb:sonOf <mydb.org/id/18> .
+<mydb.org/id/21> a schema:Person ;
+	rdfs:label "Ralph Harvey" ;
+	mydb:sonOf <mydb.org/id/18> .
 
-<mydb.org/id/22> a foaf:Person ;
-  rdfs:label "Mogroby Jacob M" ;
-  mydb:occupation "Ombrella Merchant" ;
-  mydb:registration "on 1.6.97 acc. to a Passport No 776 dated Vienna Austria 20th April 97".
+<mydb.org/id/22> a schema:Person ;
+	rdfs:label "Mogroby Jacob M" ;
+	mydb:occupation "Ombrella Merchant" ;
+	mydb:registration "on 1.6.97 acc. to a Passport No 776 dated Vienna Austria 20th April 97" .
 
-<mydb.org/id/23> a foaf:Person ;
-  rdfs:label "Toba Mogroby" .
-  mydb:wifeOf <mydb.org/id/22> .
+<mydb.org/id/23> a schema:Person ;
+	rdfs:label "Toba Mogroby" ;
+	mydb:wifeOf <mydb.org/id/22> .
 
-<mydb.org/id/24> a foaf:Person ;
-  rdfs:label "Moses Mogroby" ;
-  mydb:sonOf <mydb.org/id/24> ;
-  mydb:birthDate "10 2 1898" .
+<mydb.org/id/24> a schema:Person ;
+	rdfs:label "Moses Mogroby" ;
+	mydb:sonOf <mydb.org/id/24> ;
+	mydb:birthDate "10 2 1898" .
 
-<mydb.org/id/25> a foaf:Person ;
-  rdfs:label "Rev'd Dr. S C Ewing" ;
-  mydb:occupation "ex US Consular Agent" .
+<mydb.org/id/25> a schema:Person ;
+	rdfs:label "Rev'd Dr. S C Ewing" ;
+	mydb:occupation "ex US Consular Agent" .
 ```
 
 Done! This is far from elegant, but it will work. (It may not work for long, but every database needs updating eventually, and RDF is very easy to update as your understanding of the material in your dataset evolves). As you can see, the terms we've used are derived directly from the archival source itself. Anything that you put behind your own invented namespace (`mydb:` in this instance) is yours to invent.
 
-If you are already familiar with SPARQL, you can download this file [here](americans-in-alex-step-3.ttl) or perform SPARQL queries [here](http://whanley.history.fsu.edu:8890/sparql) (enter `http://localhost:8890/am-in-alex-step-3` as the Graph IRI). If not, let's do a little more work on the basic dataset before we start manipulating it.
+If you are already familiar with SPARQL, you can download this file [here](americans-in-alex-step-3.ttl) to try it out. In any case, let's do a little more work on the basic dataset before we start manipulating it.
 
 ### Step 4: Deeper into RDF
 Like any historian, you come to the archives with a sense of some of the information that you're looking for while remaining alert for new tracks of inquiry. Our database has already established a network of parent-child relationships, but it does not do a great job of expressing names or dates, which are something historians are often keen to analyse. It also records only persons, but it could also record other types of things, such as documents. Let's add this layer of structure.
@@ -402,179 +402,178 @@ Finally, let's add two new types of objects. First, let's deal with the document
 Here is the result:
 
 ```turtle
-@prefix mydb: <http://mydb.org/schema#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
+@prefix mydb: 	<http://mydb.org/> .
+@prefix schema:	<http://schema.org/> .
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 
-<mydb.org/id/1> a foaf:Person ;
-  rdfs:label "Mirzan Marie" ;
-  foaf:givenName "Marie" ;
-  foaf:familyName "Mirzan" ;
-  mydb:note "left" ;
-  mydb:note "x" .
+<mydb.org/id/1> a schema:Person ;
+	rdfs:label "Mirzan Marie" ;
+	schema:givenName "Marie" ;
+	schema:familyName "Mirzan" ;
+	mydb:note "left" ;
+	mydb:note "x" .
 
-<mydb.org/id/2> a foaf:Person ;
-  rdfs:label "Edwige" ;
-  foaf:givenName "Edwige" ;
-  mydb:daughterOf <mydb.org/id/1> .
+<mydb.org/id/2> a schema:Person ;
+	rdfs:label "Edwige" ;
+	schema:givenName "Edwige" ;
+	mydb:daughterOf <mydb.org/id/1> .
 
-<mydb.org/id/3> a foaf:Person ;
-  rdfs:label "Mary Rose" ;
-  foaf:givenName "Mary Rose" ;
-  mydb:daughterOf <mydb.org/id/1> .
+<mydb.org/id/3> a schema:Person ;
+	rdfs:label "Mary Rose" ;
+	schema:givenName "Mary Rose" ;
+	mydb:daughterOf <mydb.org/id/1> .
 
-<mydb.org/id/4> a foaf:Person ;
-  rdfs:label "Victor John" ;
-  foaf:givenName "Victor John" ;
-  mydb:sonOf <mydb.org/id/1> ;
-  mydb:associatedDate "1894-09-04" ;
-  mydb:note "1894-09-04 completed 21 years" ;
-  schema:deathDate "1905-11-01" ;
-  mydb:deathAge 32 ;
-  schema:deathPlace "European Hospital" ;
-  mydb:deathCause "Tuberculosi Polmonite" .
+<mydb.org/id/4> a schema:Person ;
+	rdfs:label "Victor John" ;
+	schema:givenName "Victor John" ;
+	mydb:sonOf <mydb.org/id/1> ;
+	mydb:associatedDate "1894-09-04"^^xsd:date ;
+	mydb:note "completed 21 years" ;
+	schema:deathDate "1905-11-01"^^xsd:date ;
+	mydb:deathAge 32 ;
+	schema:deathPlace "European Hospital" ;
+	mydb:deathCause	"Tuberculosi Polmonite" .
 
-<mydb.org/id/5> a foaf:Person ;
-  rdfs:label "Morpurgo D. Brutus" ;
-  foaf:familyName "Morpurgo" ;
-  foaf:givenName "D. Brutus" ;
-  mydb:note "x" ;
-  mydb:occupation "Ironmonger" ;
-  schema:deathDate "1906-07-06" ;
-  mydb:note "7 July 1906 day crossed out".
+<mydb.org/id/5> a schema:Person ;
+	rdfs:label "Morpurgo D. Brutus" ;
+	schema:familyName "Morpurgo" ;
+	schema:givenName "D. Brutus" ;
+	mydb:note "x" ;
+	mydb:occupation "Ironmonger" ;
+	schema:deathDate "1906-07-06"^^xsd:date ;
+	mydb:note "7 July 1906 day crossed out".
 
-<mydb.org/id/6> a foaf:Person ;
-  rdfs:label "Clarisa Hélène" ;
-  foaf:givenName "Clarisa Hélène" ;
-  mydb:wifeOf <mydb.org/id/5> .
+<mydb.org/id/6> a schema:Person ;
+	rdfs:label "Clarisa Hélène" ;
+	schema:givenName "Clarisa Hélène" ;
+	mydb:wifeOf <mydb.org/id/5> .
 
-<mydb.org/id/7> a foaf:Person ;
-  rdfs:label "Julia" ;
-  foaf:givenName "Julia" ;
-  mydb:motherOf <mydb.org/id/5> ;
-  schema:deathDate "1902-07-09" ;
-  mydb:deathCause "cancer" .
+<mydb.org/id/7> a schema:Person ;
+	rdfs:label "Julia" ;
+	schema:givenName "Julia" ;
+	mydb:motherOf <mydb.org/id/5> ;
+	schema:deathDate "1902-07-09"^^xsd:date ;
+	mydb:deathCause	"cancer" .
 
-<mydb.org/id/8> a foaf:Person ;
-  rdfs:label "Libera Rachel" ;
-  foaf:givenName "Libera Rachel" ;
-  mydb:sisterOf <mydb.org/id/5> .
+<mydb.org/id/8> a schema:Person ;
+	rdfs:label "Libera Rachel" ;
+	schema:givenName "Libera Rachel" ;
+	mydb:sisterOf <mydb.org/id/5> .
 
-<mydb.org/id/9> a foaf:Person ;
-  rdfs:label "Virginia" ;
-  foaf:givenName "Virginia" ;
-  mydb:daughterOf <mydb.org/id/5> .
+<mydb.org/id/9> a schema:Person ;
+	rdfs:label "Virginia" ;
+	schema:givenName "Virginia" ;
+	mydb:daughterOf <mydb.org/id/5> .
 
-<mydb.org/id/10> a foaf:Person ;
-  rdfs:label "Réné" ;
-  foaf:givenName "Réné" ;
-  mydb:daughterOf <mydb.org/id/5> .
+<mydb.org/id/10> a schema:Person ;
+	rdfs:label "Réné" ;
+	schema:givenName "Réné" ;
+	mydb:daughterOf <mydb.org/id/5> .
 
-<mydb.org/id/11> a foaf:Person ;
-  rdfs:label "Angelino M." ;
-  foaf:givenName "Angelino M." ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/11> a schema:Person ;
+	rdfs:label "Angelino M." ;
+	schema:givenName "Angelino M." ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/12> a foaf:Person ;
-  rdfs:label "Ugo" ;
-  foaf:givenName "Ugo" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/12> a schema:Person ;
+	rdfs:label "Ugo" ;
+	schema:givenName "Ugo" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/13> a foaf:Person ;
-  rdfs:label "Hector" ;
-  foaf:givenName "Hector" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/13> a schema:Person ;
+	rdfs:label "Hector" ;
+	schema:givenName "Hector" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/14> a foaf:Person ;
-  rdfs:label "Rodolph" ;
-  foaf:givenName "Rodolph" ;
-  mydb:sonOf <mydb.org/id/5> ;
-  schema:deathDate "1894-04-04" ;
-  mydb:deathAge 16 ;
-  mydb:deathCause "Diptheria" .
+<mydb.org/id/14> a schema:Person ;
+	rdfs:label "Rodolph" ;
+	schema:givenName "Rodolph" ;
+	mydb:sonOf <mydb.org/id/5> ;
+	schema:deathDate "1894-04-04"^^xsd:date ;
+	mydb:deathAge 16 ;
+	mydb:deathCause	"Diptheria" .
 
-<mydb.org/id/15> a foaf:Person ;
-  rdfs:label "Edgar" ;
-  foaf:givenName "Edgar" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/15> a schema:Person ;
+	rdfs:label "Edgar" ;
+	schema:givenName "Edgar" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/16> a foaf:Person ;
-  rdfs:label "Oscar" ;
-  foaf:givenName "Oscar" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/16> a schema:Person ;
+	rdfs:label "Oscar" ;
+	schema:givenName "Oscar" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/17> a foaf:Person ;
-  rdfs:label "Hector" ;
-  foaf:givenName "Hector" ;
-  mydb:sonOf <mydb.org/id/5> .
+<mydb.org/id/17> a schema:Person ;
+	rdfs:label "Hector" ;
+	schema:givenName "Hector" ;
+	mydb:sonOf <mydb.org/id/5> .
 
-<mydb.org/id/18> a foaf:Person ;
-  rdfs:label "McFarlane Kenedy Wiley" ;
-  foaf:familyName "McFarlane" ;
-  foaf:givenName "Kenedy Wiley" ;
-  mydb:profession "American Missionary" ;
-  mydb:note "Alexandria" ;
-  mydb:note "1896-03-31" .
+<mydb.org/id/18> a schema:Person ;
+	rdfs:label "McFarlane Kenedy Wiley" ;
+	schema:familyName "McFarlane" ;
+	schema:givenName "Kenedy Wiley" ;
+	mydb:profession "American Missionary" ;
+	mydb:note "Alexandria" ;
+	mydb:note "1896-03-31"^^xsd:date .
 
-<mydb.org/id/19> a foaf:Person ;
-  rdfs:label "Anna Henderson" ;
-  foaf:givenName "Anna Henderson" ;
-  mydb:wifeOf <mydb.org/id/18> .
+<mydb.org/id/19> a schema:Person ;
+	rdfs:label "Anna Henderson" ;
+	schema:givenName "Anna Henderson" ;
+	mydb:wifeOf <mydb.org/id/18> .
 
-<mydb.org/id/20> a foaf:Person ;
-  rdfs:label "Mary Evelyn" ;
-  foaf:givenName "Mary Evelyn" ;
-  mydb:daughterOf <mydb.org/id/18> ;
-  mydb:note "misspelled dauter" .
+<mydb.org/id/20> a schema:Person ;
+	rdfs:label "Mary Evelyn" ;
+	schema:givenName "Mary Evelyn" ;
+	mydb:daughterOf <mydb.org/id/18> ;
+	mydb:note "misspelled dauter" .
 
-<mydb.org/id/21> a foaf:Person ;
-  rdfs:label "Ralph Harvey" ;
-  foaf:givenName "Ralph Harvey" ;
-  mydb:sonOf <mydb.org/id/18> .
+<mydb.org/id/21> a schema:Person ;
+	rdfs:label "Ralph Harvey" ;
+	schema:givenName "Ralph Harvey" ;
+	mydb:sonOf <mydb.org/id/18> .
 
-<mydb.org/id/22> a foaf:Person ;
-  rdfs:label "Mogroby Jacob M" ;
-  foaf:familyName "Mogroby" ;
-  foaf:givenName "Jacob M" ;
-  mydb:occupation "Ombrella Merchant" ;
-  mydb:registrationDate "1897-06-01" ;
-  mydb:registrationDocument <mydb.org/doc/1> .
+<mydb.org/id/22> a schema:Person ;
+	rdfs:label "Mogroby Jacob M" ;
+	schema:familyName "Mogroby" ;
+	schema:givenName "Jacob M" ;
+	mydb:occupation "Ombrella Merchant" ;
+	mydb:registrationDate "1897-06-01"^^xsd:date ;
+	mydb:registrationDocument <mydb.org/doc/1> .
 
 <mydb.org/doc/1> a mydb:doc ;
-  mydb:docType "passport" ;
-  mydb:docNumber 776 ;
-  mydb:docDate "1897-04-20" ;
-  mydb:docIssued "Vienna Austria" .
+	mydb:docType "passport" ;
+	mydb:docNumber 776 ;
+	mydb:docDate "1897-04-20"^^xsd:date ;
+	mydb:docIssued "Vienna Austria" .
 
-<mydb.org/id/23> a foaf:Person ;
-  rdfs:label "Toba Mogroby" ;
-  foaf:familyName "Mogroby" ;
-  foaf:givenName "Toba" ;
-  mydb:wifeOf <mydb.org/id/22> .
+<mydb.org/id/23> a schema:Person ;
+	rdfs:label "Toba Mogroby" ;
+	schema:familyName "Mogroby" ;
+	schema:givenName "Toba" ;
+	mydb:wifeOf	<mydb.org/id/22> .
 
-<mydb.org/id/24> a foaf:Person ;
-  rdfs:label "Moses Mogroby" ;
-  foaf:familyName "Mogroby" ;
-  foaf:givenName "Moses" ;
-  mydb:sonOf <mydb.org/id/24> ;
-  mydb:birthDate "1898-02-10" .
+<mydb.org/id/24> a schema:Person ;
+	rdfs:label "Moses Mogroby" ;
+	schema:familyName "Mogroby" ;
+	schema:givenName "Moses" ;
+	mydb:sonOf <mydb.org/id/24> ;
+	mydb:birthDate "1898-02-10"^^xsd:date .
 
-<mydb.org/annot/`> a mydb:registrationNote ;
-  mydb:recordedBy <mydb.org/id/24> ;
-  mydb:date "1888-06-20" .
+<mydb.org/annot/0> a mydb:registrationNote ;
+	mydb:recordedBy <mydb.org/id/24> ;
+	mydb:date "1888-06-20"^^xsd:date .
 
-<mydb.org/id/25> a foaf:Person ;
-  rdfs:label "Rev'd Dr. S C Ewing" ;
-  foaf:familyName "Ewing" ;
-  foaf:givenName "S C" ;
-  schema:honorificPrefix "Rev'd" ;
-  schema:honorificPrefix "Dr." ;
-  mydb:occupation "ex US Consular Agent" .
+<mydb.org/id/25> a schema:Person ;
+	rdfs:label "Rev'd Dr. S C Ewing" ;
+	schema:familyName "Ewing" ;
+	schema:givenName "S C" ;
+	schema:honorificPrefix "Rev'd" ;
+	schema:honorificPrefix "Dr." ;
+	mydb:occupation "ex US Consular Agent" .
 ```
 
-(Download this file [here](americans-in-alex-step-4.ttl) and perform SPARQL queries [here](http://whanley.history.fsu.edu:8890/sparql) (enter `http://localhost:8890/am-in-alex-step-4` as the Graph IRI).
+You can download this file [here](americans-in-alex-step-4.ttl).
 
 ### Step 5: Work with your small database
 
@@ -589,7 +588,7 @@ Now we're set to interact with the data using the SPARQL query language, which a
 
 Let's try a narrower query. Like the RDF database file we've just written in Turtle, SPARQL queries list a variety of namespaces in an opening declaration (albeit using a slightly different syntax)--these declarations allow us to abbreviate our URIs. The following query will return the name, cause of death, and date of death in each case where all three were listed.
 
-```turtle
+```sparql
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -604,7 +603,7 @@ WHERE
 
 How about those marginal notes? Perhaps there's a pattern in the use of "x" in the margins. This query lists every note.
 
-```turtle
+```sparql
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -642,7 +641,7 @@ Of course, a small RDF database such as this contains numerous inconsistencies. 
 
 This query returns all given names and family names in the database, as well as any family names that occur:
 
-```turtle
+```sparql
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -656,7 +655,7 @@ WHERE
 
 The results show that the database we've produced only lists family names for heads of household; everyone else appears under their given names only. An RDF database can fetch specific information from some records and add it to others. Let's use this function to attribute parents' surnames to their children, using this INSERT command:
 
-```turtle
+```sparql
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -675,7 +674,7 @@ Now a line will be added to the record of every son and daughter, giving them th
 
 We've just used SPARQL to update the content of our RDF database. Now, let's use it to refine its structure. In constructing this database, we made up categories as we went along. It might be useful to review them for patterns and inconsistencies. Let's take a look at a list of these categories. Use this query:
 
-```turtle
+```sparql
 PREFIX schema: <http://schema.org/>
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -690,7 +689,7 @@ ORDER BY ASC(?property)
 
 Some way down this alphabetized list, you'll notice that we used both `mydb:occupation` and `mydb:profession`. For our purposes, these two properties are synonymous. We can add a statement that establishes this equivalence. Execute this command, which inserts a line into the RDF file stating (using the [OWL](https://www.w3.org/TR/owl-ref/) ontology language) that `mydb:occupation` and `mydb:profession` mean the same thing:
 
-```turtle
+```sparql
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
@@ -702,7 +701,7 @@ mydb:occupation owl:equivalentProperty mydb:profession .
 
 Then search the updated results for this new common category, with the sort of SPARQL query that is now becoming familiar:
 
-```turtle
+```sparql
 PREFIX mydb: <http://mydb.org/schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
