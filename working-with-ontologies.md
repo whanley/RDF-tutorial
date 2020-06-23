@@ -2,7 +2,7 @@
 title: Working with Ontologies
 authors:
 - Will Hanley
-date: 2017-10-04
+date: 2019-01-01
 reviewers:
 layout: lesson
 ---
