@@ -27,7 +27,11 @@ Wikidata is a sibling of Wikipedia, and shares its [politics of knowledge produc
 
 Wikidata's content is very different in nature: all facts and no synthesis. To get an idea of its nature, and without worrying too much about the format, spend a bit of time scrolling through what Wikidata has to say about [Gamal Abdel Nasser](https://www.wikidata.org/wiki/Q39524). 
 
-At the top of the page, you will see many variant versions and spellings of his name, in various languages. A bit further down, a section of **Statements** begins. Some of these statements are the sort of transparent thing you'd see on a passport: "sex or gender" is "male", "date of birth." Others (such as "instance of" "human") may be a bit less obvious--we'll say more about those later.
+At the top of the page, you will see many variant versions and spellings of his name, in various languages. Wikidata's multilingual functionality is superb. Click on "all entered languages" to see just how true this is. If you wish to interface with the whole knowledge base in a language other than English, log in and click "English" at the top. You may now choose another language (and you can [do more with language on Wikidata](https://www.wikidata.org/wiki/Help:Navigating_Wikidata/User_Options#Language_settings)). 
+
+![Figure 1: Nasser labels and languages](nasser-labels-languages.png)
+
+A bit further down, a section of **Statements** begins. Some of these statements are the sort of transparent thing you'd see on a passport: "sex or gender" is "male", "date of birth." Others (such as "instance of" "human") may be a bit less obvious--we'll say more about those later.
 
 Even further down, you'll find another section with the heading **Identifiers**. Here you'll find the unique identifier that dozens of other databases--from the Library of Congress to the Internet Movied Database--use for Abdel Nasser in their systems. And at the very bottom, you will see a list of all of the Wikipedia pages about him.
 
