@@ -53,7 +53,7 @@ It is essential, however, to recognize what Wikidata does not do--and should not
 
 This incompleteness is a function of two features of the knowledge base. First, there is no guarantee that the data it contains are accurate. At the time of writing, there were eight references attested for Abdel Nasser's date of birth:
 
-![Figure 3: Nasser birthdate references](nasser-birth-reference.png)
+![Figure 3: Nasser birthdate references](nasser-birth-references.png)
 
 However, we only have one reference for the date when he assumed the Prime Minister's office. That reference is to the [list of Egyptian Prime Ministers in English Wikipedia](https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Egypt)--which might itself be scrutinized. Generally speaking, at this point in its development, Wikidata's references are poor in quality and quantity. However, in many cases, we can reasonably take it on trust that information of this sort in Wikidata will mostly be right. Our historian's judgment will serve us well when we look at the evidence.
 
