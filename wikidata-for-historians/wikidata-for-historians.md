@@ -8,27 +8,28 @@ authors:
 
 {% include toc.html %}
 
-In this lesson you will learn what kinds of information Wikidata contains, how to explore that data in order to contextualize questions in your historical research, and how to edit and add data in Wikidata to store your own data and share it with others.
+In this lesson you will learn:
+- what kinds of information Wikidata contains, 
+- how to explore that data in order to contextualize questions in your historical research, and
+- how to edit and add data in Wikidata to store your own data and share it with others.
 
-## What is Wikidata?
+# What is Wikidata?
 
 Wikidata is the world's largest open data set. Like any database, it operates according to rigid rules about how information must be structured. Unlike most databases, Wikidata's structure prioritizes interoperability, linking to data sets, and open contribution.  
 
-Wikidata is a sibling of Wikipedia, and shares its politics of knowledge production and dissemination. The debate over Wikipedia's merits and faults is rich; many historians will agree that it's a convenient place to look up facts, refreshingly broad and democratic in its coverage, but not reliable in its synthesis.
+Wikidata is a sibling of Wikipedia, and shares its politics of knowledge production and dissemination. The debate over Wikipedia's merits and faults is rich; many historians will agree that it's a convenient place to look up facts, refreshingly broad and democratic in its coverage, but it can be unreliable in its synthesis.
 
-Wikidata's content, on the other hand, is all facts and no synthesis. Without worrying too much about the format, spend a bit of time scrolling through what Wikidata has to say about [Gamal Abdel Nasser](https://www.wikidata.org/wiki/Q39524).
+Wikidata's content, on the other hand, is all facts and contains no synthesis. To get an idea of its nature, and without worrying too much about the format, spend a bit of time scrolling through what Wikidata has to say about [Gamal Abdel Nasser](https://www.wikidata.org/wiki/Q39524).
 
-First, you will see many variant versions and spellings of his name, in various languages. A bit further down, a section of "Statements" begins. Some of these statements are transparent, like the sort of thing you'd see on a passport: "sex or gender" is "male", "date of birth." Others (such as "instance of" "human") may be a bit less obvious.
+At the top of the page, you will see many variant versions and spellings of his name, in various languages. A bit further down, a section of **Statements** begins. Some of these statements are the sort of transparent thing you'd see on a passport: "sex or gender" is "male", "date of birth." Others (such as "instance of" "human") may be a bit less obvious--we'll say more about those later.
 
-Even further down, you'll find another section with the heading "Identifiers." Here you'll find the unique identifier that dozens of other databases--from the Library of Congress to the Internet Movied Database--use for Abdel Nasser in their systems. And at the very bottom, you will see a list of all of the Wikipedia pages about him.
+Even further down, you'll find another section with the heading **Identifiers**. Here you'll find the unique identifier that dozens of other databases--from the Library of Congress to the Internet Movied Database--use for Abdel Nasser in their systems. And at the very bottom, you will see a list of all of the Wikipedia pages about him.
 
-On the face of things, there's nothing especially enticing about a list of details like this trivia, which can be looked up in lots of places. But Wikidata's value and power lies not in such isolated details, but in the way that it combines these details with all of the other details it contains. It does this with a powerful seach protocol called SPARQL, about which more later.
+On the face of things, there's nothing especially enticing about a list of details like this trivia, which you can look up in lots of places.  Wikidata's value and power lies not in such isolated details, but in the way that it combines these details with all of the other details it contains. It does this with a powerful seach protocol called SPARQL, about which more later.
 
-Here is a trivial example of combined details. Let's say your whimsy leads you to wonder about the age at which twentieth-century leaders took power. There's [a query for that](https://query.wikidata.org/#%23%20Age%20of%20heads%20of%20state%20upon%20taking%20power%2C%201950-1980%0ASELECT%20%3FheadOfState%20%3FheadOfStateLabel%20%3Fage%20%3FcountryLabel%20%3FpositionLabel%20%0A%7B%0A%20%23%20find%20heads%20of%20state%20positions%0A%20hint%3AQuery%20hint%3Aoptimizer%20%22None%22.%0A%20%3Fposition%20wdt%3AP279%2a%20wd%3AQ48352%20.%0A%0A%20%23%20sovereign%20states%20only%0A%20%3Fposition%20wdt%3AP1001%20%3Fcountry%20.%0A%20%3Fcountry%20wdt%3AP31%20wd%3AQ3624078%20.%0A%20%20%0A%20%23%20fetch%20names%20of%20officeholders%0A%20%3FheadOfState%20wdt%3AP39%20%3Fposition%20.%0A%0A%20%23%20birthdates%20of%20officeholders%0A%20%3FheadOfState%20wdt%3AP569%20%3Fdob.%20hint%3APrior%20hint%3ArangeSafe%20true.%20%0A%20%20%0A%20%23%20date%20of%20term%20start%0A%20%3FheadOfState%20p%3AP39%20%3Fstatement%20.%0A%20%3Fstatement%20ps%3AP39%20%3Fposition%20.%20%0A%20%3Fstatement%20pq%3AP580%20%3FtermStart.%20hint%3APrior%20hint%3ArangeSafe%20true.%0A%20FILTER%28%221950-01-01%22%5E%5Exsd%3AdateTime%20%3C%3D%20%3FtermStart%20%26%26%20%3FtermStart%20%3C%20%221980-01-01%22%5E%5Exsd%3AdateTime%29%0A%20BIND%28YEAR%28%3FtermStart%29-YEAR%28%3Fdob%29%20as%20%3Fage%29%0A%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22%20%7D%0A%7D%0AORDER%20BY%20DESC%28%3Fage%29)!
+Here is a trivial example of combined details. Let's say your whimsy leads you to wonder about the age at which twentieth-century leaders took power. There's [a query for that](https://query.wikidata.org/#%23%20Age%20of%20heads%20of%20state%20upon%20taking%20power%2C%201950-1980%0ASELECT%20DISTINCT%20%3FheadOfState%20%3FheadOfStateLabel%20%28MIN%28%3Fage%29%20as%20%3FageMin%29%20%3FcountryLabel%20%3FpositionLabel%0A%7B%0A%20%23%20find%20heads%20of%20state%20positions%0A%20hint%3AQuery%20hint%3Aoptimizer%20%22None%22.%0A%20%3Fposition%20wdt%3AP279%2a%20wd%3AQ48352%20.%0A%0A%20%23%20sovereign%20states%20only%0A%20%3Fposition%20wdt%3AP1001%20%3Fcountry%20.%0A%20%3Fcountry%20wdt%3AP31%20wd%3AQ3624078%20.%0A%20%20%0A%20%23%20fetch%20names%20of%20officeholders%0A%20%3FheadOfState%20wdt%3AP39%20%3Fposition%20.%0A%0A%20%23%20birthdates%20of%20officeholders%0A%20%3FheadOfState%20wdt%3AP569%20%3Fdob.%20hint%3APrior%20hint%3ArangeSafe%20true.%20%0A%20%20%0A%20%23%20date%20of%20term%20start%0A%20%3FheadOfState%20p%3AP39%20%3Fstatement%20.%0A%20%3Fstatement%20ps%3AP39%20%3Fposition%20.%20%0A%20%3Fstatement%20pq%3AP580%20%3FtermStart.%20hint%3APrior%20hint%3ArangeSafe%20true.%0A%20%20%0A%20%23%201950-1980%20term%20start%20only%0A%20FILTER%28%221950-01-01%22%5E%5Exsd%3AdateTime%20%3C%3D%20%3FtermStart%20%26%26%20%3FtermStart%20%3C%20%221980-01-01%22%5E%5Exsd%3AdateTime%29%0A%20%0A%20%23%20calcuate%20age%20%0A%20BIND%28YEAR%28%3FtermStart%29-YEAR%28%3Fdob%29%20as%20%3Fage%29%0A%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22%20%7D%0A%7D%0AGROUP%20BY%20%3FheadOfState%20%3FheadOfStateLabel%20%3FcountryLabel%20%3FpositionLabel%0AORDER%20BY%20DESC%28%3FageMin%29)! 
 
-[not working right]
-
-This should show us that Abdel Nasser became president when he was 38, in 1954. Comparing him to the hundreds of others listed, we can see that some heads of state first took power at an older age, and some at a younger age. This is a good starting point for data exploration and hypothesis testing. Wikidata supports data-informed contextualization of this kind.
+This should show us that Abdel Nasser became president in 1954, when he was 38. Comparing him to the hundreds of other heads of state listed, we can see that some first took power at an older age, and some at a younger age. This is a good starting point for data exploration and hypothesis testing. Wikidata supports data-informed contextualization of this kind.
 
 It is essential, however, to recognize what Wikidata does not--and should not be expected--to do. Its knowledge base is vast, but it will always be incomplete. While many or even most of the ages on this list of results are more or less correct, we find some individual answers that don't make sense, and others that are missing. 
 
@@ -36,7 +37,7 @@ This incompleteness is a function of two features of the knowledge base. First, 
 
 A second (and more interesting) issue concerns the structure of knowledge that Wikidata produces, and this issue warrants a section of its own. 
 
-## Wikidata ontology
+# Wikidata's ontology
 Categories and semantics are a juicy problem for any historian. This is true in analog scholarly debate, and it is also true in Wikidata and other semantic data structures. 
 
 While there is probably a general consensus on the meaning of "date of birth," the meaning of "head of state" is not so clear. The age query above used the Wikidata item "head of state"([Q48352](https://www.wikidata.org/wiki/Q48352)) to identify Abdel Nasser and his counterparts in other countries. But Wikidata also contains an item labeled "head of government"([Q2285706](https://www.wikidata.org/wiki/Q2285706)). For Abdel Nasser, this query returns his age when he became prime minister rather than president. But this query accurately captures other leaders who are not returned with the "head of state" query. For instance, it returns prime ministers in states (like India?) where the president is largely ceremonial.
@@ -55,7 +56,7 @@ Historians tend to be sceptical of taxonomic schemes, with good reason. But expl
 
 A big part of our expertise as historians is contextualizing details. For many of us, that's the fun and fascinating work. And that skill is precisely what a researcher needs to interact with the galaxy of isolated factoids in Wikidata. The rest of this lesson shows a few of the main ways to do that.
 
-### How does Wikidata structure its data?
+## How does Wikidata structure its data?
 
 This section, which offers a somewhat deeper dive into Wikidata, is not essential reading for all users of this lesson. Wikidata's engineers have made it possible to bypass much of the technical detail with their graphic search interface.
 
@@ -68,7 +69,7 @@ Most historians have some background in postcolonial theory, and can readily ide
 P-number is property
 
 
-## Querying Wikidata
+# Querying Wikidata
 
 There are no bad questions in Wikidata--only unrealistic questions. The knowledge base should not be expected to provide comprehensive answers to any questions. But it does better with some questions than others.
 
@@ -84,7 +85,9 @@ Wikidata offers two great workarounds. First, it offers a long list of example q
 
 Second, Wikidata offers a graphic query interface. This can't do all of things that SPARQL can do, but it can set up a basic structure for your queries.
 
-## Contributing to Wikidata
+Note: Keyword searching is not Wikidata's strong suit. Users who are  are not as good at finding keywords and strings as other indexes, like internet search engines. Users who are used to this functionality This is not their purpose.
+
+# Contributing to Wikidata
 
 Every Wikipedia page links to a wikidata item
 
@@ -93,6 +96,8 @@ Login
 See other languages
 
 Add reference
+
+Add item: must have instance of. Imitate another of its type.
 
 Add birthplace?
 
