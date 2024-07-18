@@ -8,22 +8,32 @@ authors:
 
 {% include toc.html %}
 
+# Lesson Overview
+
 In this lesson you will learn:
 - what kinds of information Wikidata contains, 
 - how to explore that data in order to contextualize questions in your historical research, and
 - how to edit and add data in Wikidata to store your own data and share it with others.
 
+While this stand-alone lesson focuses on Wikidata, it can also serve to extend your understanding of Linked Open Data. Wikidata is the most user-friendly implementation of this data structure, and it's under constant development. It's a great place to learn about key graph data features, such as schemas and the SPARQL query language, which can be applied in other contexts. After--or before--completing this lesson, users might wish to read Jonathan Blaney's [Introduction to the Principles of Linked Open Data](https://programminghistorian.org/en/lessons/intro-to-linked-data), which covers some of the same ground.
+
+There are no prerequisites for this lesson, but users with a Wikipedia login might wish to log in to Wikidata using the same credential.
+
 # What is Wikidata?
 
-Wikidata is the world's largest open data set. Like any database, it operates according to rigid rules about how information must be structured. Unlike most databases, Wikidata's structure prioritizes interoperability, linking to data sets, and open contribution.  
+Wikidata is the world's largest open data set. Like any database, it operates according to rigid rules about how information must be structured. Unlike most databases, Wikidata's structure prioritizes interoperability, linking between data sets, and open contribution protocols. For historians, this data structure offers something especially attractive: in cases of uncertainty, it can accommodate more than one answer.
 
-Wikidata is a sibling of Wikipedia, and shares its politics of knowledge production and dissemination. The debate over Wikipedia's merits and faults is rich; many historians will agree that it's a convenient place to look up facts, refreshingly broad and democratic in its coverage, but it can be unreliable in its synthesis.
+Wikidata is a sibling of Wikipedia, and shares its [politics of knowledge production and dissemination](https://en.wikipedia.org/wiki/Wikipedia:Five_pillars), as well as the [values of the Wikimedia Foundation](https://wikimediafoundation.org/about/values/#a1-we-are-in-this-mission-together). The debate over Wikipedia's merits and faults is rich; many historians will agree that it's a convenient place to look up facts, refreshingly broad and democratic in its coverage, but it can be unreliable in its synthesis.[^1]
 
-Wikidata's content, on the other hand, is all facts and contains no synthesis. To get an idea of its nature, and without worrying too much about the format, spend a bit of time scrolling through what Wikidata has to say about [Gamal Abdel Nasser](https://www.wikidata.org/wiki/Q39524).
+Wikidata's content is very different in nature: all facts and no synthesis. To get an idea of its nature, and without worrying too much about the format, spend a bit of time scrolling through what Wikidata has to say about [Gamal Abdel Nasser](https://www.wikidata.org/wiki/Q39524). 
 
 At the top of the page, you will see many variant versions and spellings of his name, in various languages. A bit further down, a section of **Statements** begins. Some of these statements are the sort of transparent thing you'd see on a passport: "sex or gender" is "male", "date of birth." Others (such as "instance of" "human") may be a bit less obvious--we'll say more about those later.
 
 Even further down, you'll find another section with the heading **Identifiers**. Here you'll find the unique identifier that dozens of other databases--from the Library of Congress to the Internet Movied Database--use for Abdel Nasser in their systems. And at the very bottom, you will see a list of all of the Wikipedia pages about him.
+
+Every Wikipedia page has a counterpart item in Wikidata, accessible via a link the left hand tools menu:
+
+![Figure 1: Wikidata item on Wikipedia](wikidata-item-on-wikipedia.png)
 
 On the face of things, there's nothing especially enticing about a list of details like this trivia, which you can look up in lots of places.  Wikidata's value and power lies not in such isolated details, but in the way that it combines these details with all of the other details it contains. It does this with a powerful seach protocol called SPARQL, about which more later.
 
@@ -102,3 +112,6 @@ Add item: must have instance of. Imitate another of its type.
 Add birthplace?
 
 Batch editing: subject of another lesson.
+
+## Endnotes
+[^1] Rosenzweig, Roy. “Can History Be Open Source? Wikipedia and the Future of the Past.” *Journal of American History* 93, no. 1 (June 1, 2006): 117–46. https://doi.org/10.2307/4486062.
