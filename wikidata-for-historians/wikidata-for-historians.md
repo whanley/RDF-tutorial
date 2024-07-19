@@ -108,7 +108,10 @@ These queries come from the Wikidata query service. Playing around with this ser
 
 The most powerful way to query Wikidata is using the SPARQL query language, which is [introduced in another (currently retired) Programming Historian lesson](https://programminghistorian.org/en/lessons/retired/graph-databases-and-SPARQL). SPARQL is incredibly flexible, but it takes some learning.
 
-Before you take that step, Wikidata offers two great workarounds. First, it offers a [long list of example queries](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples#Most_popular_subjects_of_scientific_articles). All of these queries can be adapted for your own interests, by substituting the item you want for the item the query contains. 
+Before you take that step, Wikidata offers two great workarounds. 
+
+### Query shortcut I: Example queries
+First, it offers a [long list of example queries](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples#Most_popular_subjects_of_scientific_articles). All of these queries can be adapted for your own interests, by substituting the item you want for the item the query contains. 
 
 Open the [query service](https://query.wikidata.org/), then click on "Examples," then click on an example.
 
@@ -139,8 +142,7 @@ One more example of adapting an existing query? Load the query "[Popular names p
 
 You could also set the query to a city of interest to you, by changing city the Q-number you found earlier. If you delete that number (but not the `wd:`) and press `control + space` and begin to type the name of the city you choose, the query interface will autofill the Q-number.
 
-
-
+### Query shortcut II: Graphic user interface 
 Second, Wikidata offers a graphic query interface. This can't do all of things that SPARQL can do, but it can set up a basic structure for your queries.
 
 Note: Keyword searching is not Wikidata's strong suit. Users who are  are not as good at finding keywords and strings as other indexes, like internet search engines. Users who are used to this functionality This is not their purpose.
