@@ -124,12 +124,10 @@ There are six colors of text:
 - black for punctuation
 - orange for ???
 - green for variables
-- blue for Wikidata items and properties
+- blue for Wikidata items (Q-numbers) and properties (P-numbers)
 
+When you float your cursor over an item or property, a pop-up will tell you its label and description. The cats example is the simplest query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
 
-
-
-- Cats replace with Presidents of Egypt
 - Find one that can be filtered with date to make it historical.
 
 Second, Wikidata offers a graphic query interface. This can't do all of things that SPARQL can do, but it can set up a basic structure for your queries.
