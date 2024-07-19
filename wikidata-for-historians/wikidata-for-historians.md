@@ -122,13 +122,24 @@ There are six colors of text:
 - grey for comments (which start with hashtags)
 - red for operators
 - black for punctuation
-- orange for ???
-- green for variables
+- orange for variables
+- green for wildcards ?
 - blue for Wikidata items (Q-numbers) and properties (P-numbers)
 
-When you float your cursor over an item or property, a pop-up will tell you its label and description. The cats example is the simplest query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
+When you float your cursor over a blue-text item or property, a pop-up will give you its label and description. The cats example is the simplest query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
 
-- Find one that can be filtered with date to make it historical.
+Let's try adapting another example query. A bit further down the list of examples of simple queries, just below cats, is "Humans who died on a specific date on the English Wikipedia, ordered by label." Click on this one. It's preloaded with August 25, 2001, but you can change the date (in orange) from `"+2001-08-25"` to any other date. Try your birthdate. In the results, the `?sl` column on the right counts the pages that Wikipedia and its sister projects hold on the individual.
+
+One more example of adapting an existing query? Load the query "[Popular names per birthplace](https://query.wikidata.org/#%23Popular%20names%20per%20birthplace%0A%23defaultView%3ABubbleChart%0ASELECT%20%3Fcid%20%3Ffirstname%20%28COUNT%28%2a%29%20AS%20%3Fcount%29%0AWHERE%0A%7B%0A%20%20%3Fpid%20wdt%3AP19%20wd%3AQ64.%0A%20%20%3Fpid%20wdt%3AP735%20%3Fcid.%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fcid%20rdfs%3Alabel%20%3Ffirstname%0A%20%20%20%20FILTER%28%28LANG%28%3Ffirstname%29%29%20%3D%20%22en%22%29%0A%20%20%7D%0A%7D%0AGROUP%20BY%20%3Fcid%20%3Ffirstname%0AORDER%20BY%20DESC%28%3Fcount%29%20%3Ffirstname%0ALIMIT%2050)." It's set for a certain city--see if you can figure out which one (hint: float your cursor over the various Q-numbers). As historians, we may be interested in popular names of the past. Adding a couple of lines to the query will filter this name list by date. On line 12, before the curly bracket, add these two lines:
+
+```
+  ?pid wdt:P569 ?dob.
+  FILTER("1800-01-01"^^xsd:dateTime <= ?dob && ?dob < "1900-01-01"^^xsd:dateTime)
+```
+
+You could also set the query to a city of interest to you, by changing city the Q-number you found earlier. If you delete that number (but not the `wd:`) and press `control + space` and begin to type the name of the city you choose, the query interface will autofill the Q-number.
+
+
 
 Second, Wikidata offers a graphic query interface. This can't do all of things that SPARQL can do, but it can set up a basic structure for your queries.
 
