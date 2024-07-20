@@ -15,11 +15,12 @@ In this lesson you will learn:
 - how to explore that data in order to contextualize questions in your historical research, and
 - how to edit and add data in Wikidata to store your own data and share it with others.
 
-While this stand-alone lesson focuses on Wikidata, it can also serve to extend your understanding of Linked Open Data. Wikidata is the most user-friendly implementation of this data structure, and it's under constant development. It's a great place to learn about key graph data features, such as schemas and the SPARQL query language, which can be applied in other contexts. After–or before–completing this lesson, users might wish to read Jonathan Blaney's [Introduction to the Principles of Linked Open Data](https://programminghistorian.org/en/lessons/intro-to-linked-data), which covers some of the same ground.
+While this stand-alone lesson focuses on Wikidata, it can also serve to extend your understanding of Linked Open Data. Wikidata is the most user-friendly implementation of this data structure, and it's under constant development. It's a great place to learn about key graph data features, such as schemas and the SPARQL query language, which can be applied in other contexts. After completing this lesson, users might wish to read Jonathan Blaney's [Introduction to the Principles of Linked Open Data](https://programminghistorian.org/en/lessons/intro-to-linked-data), which covers some of the same ground in more abstract and general terms. (When Blaney wrote his lesson, Wikidata did not yet exist.) 
 
 There are no prerequisites for this lesson, but users with a Wikipedia login might wish to log in to Wikidata using the same credential.
 
 # What is Wikidata?
+The cluster of technologies called semantic web/graph data/linked open data/resource description framework have objects of fascination for years, due to their potential to solve certain problems. But that potential had not been realized (outside of some specialist cases) until recently, with the advent and popularization of Wikidata. Now, for the first time, historians interested in these technologies have a substantial, well-supported foundation for their work.[^2] 
 
 Wikidata is the world's largest open data set. Like any database, it operates according to rigid rules about how information must be structured. Unlike most databases, Wikidata's structure prioritizes open contribution and collaboration protocols, interoperability, and linking between data sets. For historians, this data structure offers something especially attractive: in cases of uncertainty, it can accommodate more than one answer.
 
@@ -33,7 +34,7 @@ At the top of the page, you will see many variant versions and spellings of his 
 
 A bit further down, a section of **Statements** begins. Some of these statements are the sort of transparent information you'd see on a passport: "sex or gender" is "male", "date of birth." Others (such as "instance of" "human") may be a bit less obvious–we'll say more about those later.
 
-Even further down, you'll find another section with the heading **Identifiers**. Here you'll find the unique identifier that dozens of other databases–from the Library of Congress to the Internet Movie Database–use for Abdel Nasser in their systems. This avalanche of identifiers is characteristic of the linked data universe. And at the very bottom, you will see a list of all of the Wikipedia pages about him. 
+Even further down, you'll find another section with the heading **Identifiers**. Here you'll find the unique identifier that dozens of other databases–from the Library of Congress to the Internet Movie Database–use for Abdel Nasser in their systems. This avalanche of identifiers is characteristic of the linked data universe. (For further background on this point, read the [section on linked data authorities](https://programminghistorian.org/en/lessons/intro-to-linked-data#linked-open-data-what-is-it) in Blaney's lesson.) And at the very bottom, you will see a list of all of the Wikipedia pages about him. 
 
 Unique identifiers are one key to understanding Wikidata. Wikidata's own identifiers can be found in the URL of Abdel Nasser's page, which is `https://www.wikidata.org/wiki/Q39524.` Abdel Nasser and all of the other objects that Wikidata describes are called "items". The Q-number `Q39524`, which is the unique identifier that you find at the end of the URL and at the top of Abdel Nasser's page, is the essence of the item. Everything else is you see on the page is semantics: optional labels and signfiers and statements about this identifier.
 
@@ -93,29 +94,45 @@ It takes a while to get the hang of the [Wikidata query service](https://query.w
 ### Query shortcut I: Wikidata Query Builder 
 Second, Wikidata offers a [graphic query builder interface](https://query.wikidata.org/querybuilder/). This can't do all of things that SPARQL can do, but it can set up a basic structure for your queries. 
 
-Let's try a variant of the US governor college query we tried earlier. 
+Let's try it out, using a variant of the US governor college query we tried earlier. (Don't forget that you can switch the interface to your prefered language, using the language selector button at the top right.)
+
+The Query Builder form presents you with two blank fields. It requires you to enter one property and one value in order to perform a query. At this point, you are probably not yet clear on what "property" and "value" mean in the context of Wikidata. This is a good chance to learn more through practice.
+
+The people we're trying to find are US governors. How should we describe them here? Put your cursor in the "property" field, and try typing some terms. "Governor" doesn't work, and "United States" gives some odd stuff.
+
+What's going on? What is a property? The definition in the infobox is (to my mind) not much help:
+
+	The *property* field in a condition, is the category or descriptor for the *value*. For example, "color" would be a *property* you'd likely use for the *value* "blue".
+
+Maybe this makes sense to you. To me, what makes sense is to think of the property as the verb that connects subject to object in a three-part subject-verb-object statement. In this case, the statement is "Some person (subject) holds the position of (verb) US governor (object)." Type "position held" into the property box, and "governor" in the value box. You'll see that there are different kinds of governors--see if you can find the one that applies to the US. Click "Run Query," and you should see a list of US governors.
+
+But we are trying to find out something else: what colleges these people attended. So, let's click the "Add Condition" button on the query form. This opens another pair of property/value fields. What property to use? "Educated at" seems about right. What value to use? This step is confusing, because we are trying to find out *where* these governors were educated. We could enter a particular school, which would return a list of all governors educated there. But there is no way, using this form, to produce a list of the schools themselves, or a count of schools of the sort that we saw above. 
+
+If Wikidata had a property named something like "gave an education to," which took people as its object, we could use this form to find an answer to our question. (We would put "governor" in the value field.) There is no such property in Wikidata however--or it is not widely used. As a consequence, the query builder will not work for us in this case.
+
+***Insight***: Wikidata is a relatively flexible database, but its rules and vocabulary are rigid. In order to use it effectively, you cannot go rogue--you have to rely on the properties and values that previous users have used when building out the data. Sometimes the existing vocabulary will be well-tailored to your purposes. More frequently, you will have to find a workaround. Fortunately, SPARQL is flexible enough to pose almost any question you can imagine. Unfortunately, figuring out how to use SPARQL is a fair bit more involved than the simple Query Builder form.
 
 ### Query shortcut II: Example SPARQL queries
-Wikidata offers a [long list of example queries](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples#Most_popular_subjects_of_scientific_articles). All of these queries can be adapted for your own interests, by substituting the item you want for the item the query contains. 
+Fortunatley, Wikidata offers a [long list of example queries](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples#Most_popular_subjects_of_scientific_articles) that can serve as a guide to SPARQL. All of these queries can be adapted for your own interests, by substituting the item you want for the item the query contains. 
 
-Open the [query service](https://query.wikidata.org/), then click on "Examples," then load an example.
+Let's give this a try. Open the [query service](https://query.wikidata.org/), then click on "Examples," then load an example.
 
 ![Figure 4: Cats example query](cats-query-example.png)
 
 #### Example A: Cats
-Let's start with the first example query listed: Cats. 
+Let's start with the first example query listed: Cats. When you click on the example, the query form loads with the necessary text.
 
 ![Figure 5: Cats query](cats-substitute.png)
 
-There are six colors of text:
-- grey for comments (which start with hashtags)
-- red for operators
-- black for punctuation
-- orange for variables
-- green for wildcards ?
-- blue for Wikidata items (Q-numbers) and properties (P-numbers)
+Six colors of text indicate the syntax of the query:
+- **blue** for Wikidata items (Q-numbers) and properties (P-numbers)
+- **green** for the items that you seek (all of which are arbitrary-defined words starting with a ?)
+- **grey** for comments (which start with hashtags)
+- **red** for operators
+- **black** for punctuation
+- **orange** for variables
 
-When you float your cursor over a blue-text item or property, a pop-up will give you its label and description. The cats example is the simplest query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
+When you float your cursor over a blue-text item or property, a pop-up will give you its label and description. The cats example is the simplest form of SPARQL query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
 
 ***Insight***: the "instance of" property ([P31](https://www.wikidata.org/wiki/Property:P31)) does a huge amount of work in Wikidata and similar data structures. In simple English, line 5 of the query (`?item wdt:P31 wd:Q146`) could be read as "This item is a cat." You will see P31 everywhere in Wikidata. Just as often, you will see [P279](https://www.wikidata.org/wiki/Property:P279), the "subclass of" property. Try changing line 5 to `?item wdt:P279 wd:Q146`, which could be read as "This item is a *kind of* cat." The query yields different results. What's the takeaway? These two properties are the most common properties in Wikidata and they matter a great deal, but their function won't be immediately apparent.
 
@@ -146,10 +163,17 @@ P-number is property
 
 
 # Contributing to Wikidata
+If you've made it this far, you are probably convinced that Wikidata can give some worthwhile answers to some worthwhile questions. You are probably also convinced that it could do a better job of both if it contained more data relevant to your research interests.
 
-Socially constructed semantics. You need to find out what properties and items people are already using to describe what you wish to search. This might not be the "right" concepts, according to your view, but you need to be practical.
+The whole idea behind Linked Open Data in general and Wikidata in particular is that we should overcome data silos. Wikidata invites your contributions--and depends on them. And as the historical professions redefines its understanding of scholarly contributions and productivity, sharing data may well become a more significant part of our work. At the present moment, Wikidata is the best platform for such work. It is the most widely used site, the best supported, and it does a good job of attributing work to those who offer it.
 
-Like good historians, we will want to look at any object of knowledge from a few different angles. Wikidata items are no exception. We can look at its history: who has edited this page, when, and why? We can look at its use in wikidata: in the left hand menu, there's a "what links here" field. If you click on it, you will see a list of the hundreds of items in Wikidata that use "head of state" in some way or another. This particular list is pretty bewildering, but looking at "what links here" for more obscure items can be quite instructive. For example, [Abdel Nasser's birthplace]
+In practical terms, then, how to contribute? In this introductory less, the most important thing to say is ***START SMALL***! Unless you are an expert in information management (in which case you are unlikely to be reading this sentence), you have a steep learning curve ahead. Wikidata is the product of socially constructed semantic structures, taxonomies, schemas, and ontologies. As new users, we must imitate its traditions. We need to find out what properties and items people are already using to describe what we want to talk about. These might not be the "right" concepts, according to our view as historians, but we need to be good citizens by suspending our own expertise in this environment.
+
+We have the skills to do this. As historians, we know how to consider objects of knowledge from different angles. Wikidata items, properties, and classes are objects of knowledge. We can look at their history: who has edited this page, when, and why? Just as in Wikipedia, every Wikidata page has a history tab showing every change made to the page. Wikidata pages also have discussion tabs, which are a great place to ask questions before making any dramatic changes. [**link to instructions**]
+
+The most important step is to understand how Wikidata already models the domain in which you wish to work. One of the best ways to do this is to navigate to an item that you know a lot about as a historian. In the left hand menu, you will find a "what links here" field. Clicking on this link yields a list of the ways that Wikidata currently uses this item in some way or another. 
+
+What links to "head of state"? Hundreds of items. This particular list is pretty bewildering, but looking at "what links here" for more obscure items can be quite instructive. For example, [Abdel Nasser's birthplace]
 
 
 Every Wikipedia page links to a wikidata item
@@ -168,3 +192,4 @@ Batch editing: subject of another lesson.
 
 ## Endnotes
 [^1]: Rosenzweig, Roy. “Can History Be Open Source? Wikipedia and the Future of the Past.” *Journal of American History* 93, no. 1 (June 1, 2006): 117–46. https://doi.org/10.2307/4486062.
+[^2]: Take, for example, this line from Blaney's 2017 lesson: "Unfortunately I can’t find anything that describes the relationship between a teacher and a pupil in the Music Ontology. But the ontology is published openly, so I can use it to describe other features of music and then create my own extension." With Wikidata, it is no longer necessary to create such most such extension--they already exit. In this case, [***fill in the relevant wikidata property***].
