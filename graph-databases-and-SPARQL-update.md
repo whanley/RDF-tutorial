@@ -30,7 +30,8 @@ doi: 10.46430/phen0047
 # Notes:
 - can cultural focus be retained? requires finding a good endpoint
 - visualization tools line 104 needs update. use PH lessons.
-- perform straight swap between dbpedia and wikidata urls
+- perform straight swap between dbpedia and wikidata urls? some of this I've done already
+- sub in nomisma.org and linked places for cultural examples? Let Wikidata replace british museum? VIAF, Geonames. VAIF could work for history books list, for example. Lincs: https://lincsproject.ca/
 
 
 Lesson Goals
@@ -171,10 +172,10 @@ In order to get the human-readable version of the information represented by eac
 
 <http://purl.org/dc/terms/creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#label> "was created by" .
 
-<http://dbpedia.org/resource/Rembrandt> <http://xmlns.com/foaf/0.1/name> "Rembrandt van Rijn" .
+<https://www.wikidata.org/wiki/Q5598> <http://xmlns.com/foaf/0.1/name> "Rembrandt van Rijn" .
 ```
 
-You will notice that, unlike the URIs in the query that are surrounded by `<>`, the _objects_ of these statements are just strings of text within quotation marks, known as _literals_. Literals are unlike URIs in that they represent values, rather than references. For example, `<http://dbpedia.org/resource/Rembrandt>` represents an entity that may reference (and be referenced by) any number of other statements (say, birth dates, students, or family members), while the text string `"Rembrandt van Rijn"` stands only for itself. Literals do not point to other nodes in the graph, and they can only ever be objects in an RDF statement. Other literal values in RDF include dates and numbers.
+You will notice that, unlike the URIs in the query that are surrounded by `<>`, the _objects_ of these statements are just strings of text within quotation marks, known as _literals_. Literals are unlike URIs in that they represent values, rather than references. For example, `<https://www.wikidata.org/wiki/Q5598>` represents an entity that may reference (and be referenced by) any number of other statements (say, birth dates, students, or family members), while the text string `"Rembrandt van Rijn"` stands only for itself. Literals do not point to other nodes in the graph, and they can only ever be objects in an RDF statement. Other literal values in RDF include dates and numbers.
 
 See the _predicates_ in these statements, with domain names like `purl.org`, `w3.org`, and `xmlns.com`? These are some of the many providers of ontologies that help standardize the way we describe relationships between bits of information like "title", "label", "creator", or "name". The more RDF/LOD that you work with, the more of these providers you'll find.
 
@@ -352,7 +353,7 @@ ORDER BY DESC(?n)
 
 Up until now, we have constructed queries that look for patterns in one dataset alone. In the ideal world envisioned by Linked Open Data advocates, multiple databases can be interlinked to allow very complex queries dependent on knowledge present in different locations. However, this is easier said than done, and many endpoints (the BM's included) do not yet reference outside authorities.
 
-One endpoint that does, however, is [Europeana's][eursparql]. They have created links between the objects in their database and records about individuals in [DBPedia](http://wiki.dbpedia.org/) and [VIAF](https://viaf.org/), places in [GeoNames](http://sws.geonames.org/), and concepts in the Getty Art & Architecture thesaurus. SPARQL allows you to insert `SERVICE` statements that instruct the database to "phone a friend" and run a portion of the query on an outside dataset, using the results to complete the query on the local dataset. While this lesson will go into the data models in Europeana and DBpedia in depth, the following query illustrates how a `SELECT` statement works. You may run it yourself by copying and pasting the query text into the [Europeana endpoint][eursparql].
+One endpoint that does, however, is [Europeana's][eursparql]. They have created links between the objects in their database and records about individuals in [Wikidata](https://www.wikidata.org/) and [VIAF](https://viaf.org/), places in [GeoNames](http://sws.geonames.org/), and concepts in the Getty Art & Architecture thesaurus. SPARQL allows you to insert `SERVICE` statements that instruct the database to "phone a friend" and run a portion of the query on an outside dataset, using the results to complete the query on the local dataset. While this lesson will go into the data models in Europeana and DBpedia in depth, the following query illustrates how a `SELECT` statement works. You may run it yourself by copying and pasting the query text into the [Europeana endpoint][eursparql].
 
 [eursparql]: http://sparql.europeana.eu/
 
