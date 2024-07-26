@@ -102,7 +102,7 @@ The people we're trying to find are US governors. How should we describe them he
 
 What's going on? What is a property? The definition in the infobox is (to my mind) not much help:
 
-	The *property* field in a condition, is the category or descriptor for the *value*. For example, "color" would be a *property* you'd likely use for the *value* "blue".
+> The *property* field in a condition, is the category or descriptor for the *value*. For example, "color" would be a *property* you'd likely use for the *value* "blue".
 
 Maybe this makes sense to you. To me, what makes sense is to think of the property as the verb that connects subject to object in a three-part subject-verb-object statement. In this case, the statement is "Some person (subject) holds the position of (verb) US governor (object)." Type "position held" into the property box, and "governor" in the value box. You'll see that there are different kinds of governors--see if you can find the one that applies to the US. Click "Run Query," and you should see a list of US governors.
 
