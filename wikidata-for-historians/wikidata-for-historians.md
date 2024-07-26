@@ -154,13 +154,9 @@ You could also set the query to a city of interest to you, by changing city the 
 ***Insight***: We modified this query by adding a statement using the "date of birth" property ([P569](https://www.wikidata.org/wiki/Property:P569)), then filtering the results by date. Adding lines to a SPARQL query is quite a bit more complicated than swapping one Q-number or P-number for another, however. For the time being, browsing the examples for a query that is already structured correctly and substituting numbers. 
 
 ## other
-
-
 Most historians have some background in postcolonial theory, and can readily identify the value in distinguishing between the signifier and the signified. In the wikidata knowledge base, the signfied are only ever numbers; everything else is a signifier.
 
 P-number is property
-
-
 
 # Contributing to Wikidata
 If you've made it this far, you are probably convinced that Wikidata can give some worthwhile answers to some worthwhile questions. You are probably also convinced that it could do a better job of both if it contained more data relevant to your research interests.
@@ -177,23 +173,23 @@ What links to "head of state"? [Hundreds of items](https://www.wikidata.org/w/in
 
 To begin enriching an item that you know, log in to Wikidata--this will ensure that you are able to see what changes you have made, and follow future changes to items you've improved. Logging in also makes your language settings persistent, which can be helpful if you work in multiple languages.
 
-### a) add a statement
+## a) add a statement
 If you navigate to the Wikidata item of an individual whose history you know, you will likely identify some lacking statement. Could you add a birthplace? A link to a family member? At the end of the "Statements" section, click "add statement." You will be prompted to supply a property and an object. The property box autocompletes, and it does a fairly good job of predicting the most common applicable properties. Remember, though, you can take your time. Before using a statement in a property, check a similar page to make sure that others are using the property in the way you wish to use it. The same goes for objects. Be especially careful with ambiguous person or place names. As we've already seen, there are several "governor" items--and this is true of many other terms. One of the great strengths of wikidata's unique IDs is that they allow you to avoid ambiguity--but we've got to pick the right item!
 
-### b) add a reference
+## b) add a reference
 Referencing is probably the least developed aspect of Wikidata. For one thing, users have not yet adopted the habit of consistently providing sources for statements--and the sources provided are often transitory (such as Wikipedia pages). Historians may find the sourcing system to be cumbersome, because it requires that the reference source (which for us often means books and articles) be itself an item in Wikidata. At present (in 2024), this applies to less than 100,000 books, though there are 40,000,000 articles in Wikidata.[^3] Where the item already exists, referencing is easy enough, but it can be cumbersome to create an reference item by hand.
 
 Referencing is a great way to learn how to use the "qualifier" function in Wikidata, however. Statements (such as "born in" "Cairo") can be qualifed with a further statement, giving a reference. On an item page, there is an "add reference" button. Published works are referenced using the property "stated in" ([P248](https://www.wikidata.org/wiki/Property:P248)). The [help guide for sourcing](https://www.wikidata.org/wiki/Help:Sources) offers instructions for citing different types of published works. The Wikidata user community is (at the time of writing, in 2024) debating the status of published works in Wikidata, and it seems likely some new consensus will emerge.
 
 In the meantime, the path of least resistance may be to cite any and all references using URLs. To do so, use the property "reference URL" ([P854](https://www.wikidata.org/wiki/Property:P854)). This property takes URLs as an object. If you use the doi for an article or the OCLC reference number for a book, you do not have to ensure that the source exists as an item. This provisional solution seems practical until a new use consensus emerges, at which point an automated process (a "bot") can do the work of reconciling the URL to whatever format is then prefered.
 
-### c) add a label or alias
+## c) add a label or alias
+The label and alias box at the head of each item page could perhaps use your attention. We've already seen that Wikidata is not built around searching for text strings. However, a complete set of labels and aliases can make items discoverable--add any terms that anyone uses to refer to the item, in any language. And good descriptions make it easier to find the right item using autofill suggestions.
 
-
-### d) add an item
+## d) add an item
 Once you've added a statement and a reference, you may be ready to add an item. As always, search carefully to ensure that it's not already in Wikidata. If not, you can go ahead, using the "Create a new Item" link in the left hand menu. You will be prompted to supply labels, aliases and descriptions in whatever languages you can manage. It is crucial from the start to add an "instance of" ([P31](https://www.wikidata.org/wiki/Property:P31)) statement to your new item. A person, for example, is an "instance of" "human" ([Q5](https://www.wikidata.org/wiki/Q5)). To make sure you get this right, imitate another item of the same type. You can proceed to add more statements--Wikidata should give you some useful prompts--as well as references and identifiers.
 
-### e) add a payload of data
+# Conclusion
 Batch editing works well on Wikidata, and it's a real timesaver, but it requires special caution. This will be the subject of another lesson.
 
 ## Endnotes
