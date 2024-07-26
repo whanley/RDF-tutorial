@@ -171,25 +171,32 @@ In practical terms, then, how to contribute? In this introductory less, the most
 
 We have the skills to do this. As historians, we know how to consider objects of knowledge from different angles. Wikidata items, properties, and classes are objects of knowledge. We can look at their history: who has edited this page, when, and why? Just as in Wikipedia, every Wikidata page has a history tab showing every change made to the page. Wikidata pages also have discussion tabs, which are a great place to ask questions before making any dramatic changes. [**link to instructions**]
 
-The most important step is to understand how Wikidata already models the domain in which you wish to work. One of the best ways to do this is to navigate to an item that you know a lot about as a historian. In the left hand menu, you will find a "what links here" field. Clicking on this link yields a list of the ways that Wikidata currently uses this item in some way or another. 
+The most important step is to understand how Wikidata already models the domain in which you wish to work. One of the best ways to do this is to navigate to an item that you know well as a historian. In the left hand menu, you will find a "what links here" field. Clicking on this link yields a list of the ways that Wikidata currently uses this item in some way or another. 
 
-What links to "head of state"? Hundreds of items. This particular list is pretty bewildering, but looking at "what links here" for more obscure items can be quite instructive. For example, [Abdel Nasser's birthplace]
+What links to "head of state"? [Hundreds of items](https://www.wikidata.org/w/index.php?title=Special:WhatLinksHere/Q48352&limit=1000). This particular list is pretty bewildering, but looking at "what links here" for more obscure items can be quite instructive. For example, Abdel Nasser's page states that he has is associated with a "movement"([P135](https://www.wikidata.org/wiki/Property:P135)) called "Nasserism"([Q1813600](https://www.wikidata.org/wiki/Q1813600)). The "Nasserism" item [is linked to](https://www.wikidata.org/wiki/Special:WhatLinksHere/Q1813600) by a couple of dozen items describing individuals, political parties, and ideologies. What we see here is the footprint of this concept in Wikidata--in this case, the footprint is rather shallow and undefined, and could be enriched by a historian with knowledge of the specialist literature.
+
+To begin enriching an item that you know, log in to Wikidata--this will ensure that you are able to see what changes you have made, and follow future changes to items you've improved. Logging in also makes your language settings persistent, which can be helpful if you work in multiple languages.
+
+### a) add a statement
+If you navigate to the Wikidata item of an individual whose history you know, you will likely identify some lacking statement. Could you add a birthplace? A link to a family member? At the end of the "Statements" section, click "add statement." You will be prompted to supply a property and an object. The property box autocompletes, and it does a fairly good job of predicting the most common applicable properties. Remember, though, you can take your time. Before using a statement in a property, check a similar page to make sure that others are using the property in the way you wish to use it. The same goes for objects. Be especially careful with ambiguous person or place names. As we've already seen, there are several "governor" items--and this is true of many other terms. One of the great strengths of wikidata's unique IDs is that they allow you to avoid ambiguity--but we've got to pick the right item!
+
+### b) add a reference
+Referencing is probably the least developed aspect of Wikidata. For one thing, users have not yet adopted the habit of consistently providing sources for statements--and the sources provided are often transitory (such as Wikipedia pages). Historians may find the sourcing system to be cumbersome, because it requires that the reference source (which for us often means books and articles) be itself an item in Wikidata. At present (in 2024), this applies to less than 100,000 books, though there are 40,000,000 articles in Wikidata.[^3] Where the item already exists, referencing is easy enough, but it can be cumbersome to create an reference item by hand.
+
+Referencing is a great way to learn how to use the "qualifier" function in Wikidata, however. Statements (such as "born in" "Cairo") can be qualifed with a further statement, giving a reference. On an item page, there is an "add reference" button. Published works are referenced using the property "stated in" ([P248](https://www.wikidata.org/wiki/Property:P248)). The [help guide for sourcing](https://www.wikidata.org/wiki/Help:Sources) offers instructions for citing different types of published works. The Wikidata user community is (at the time of writing, in 2024) debating the status of published works in Wikidata, and it seems likely some new consensus will emerge.
+
+In the meantime, the path of least resistance may be to cite any and all references using URLs. To do so, use the property "reference URL" ([P854](https://www.wikidata.org/wiki/Property:P854)). This property takes URLs as an object. If you use the doi for an article or the OCLC reference number for a book, you do not have to ensure that the source exists as an item. This provisional solution seems practical until a new use consensus emerges, at which point an automated process (a "bot") can do the work of reconciling the URL to whatever format is then prefered.
+
+### c) add a label or alias
 
 
-Every Wikipedia page links to a wikidata item
+### d) add an item
+Once you've added a statement and a reference, you may be ready to add an item. As always, search carefully to ensure that it's not already in Wikidata. If not, you can go ahead, using the "Create a new Item" link in the left hand menu. You will be prompted to supply labels, aliases and descriptions in whatever languages you can manage. It is crucial from the start to add an "instance of" ([P31](https://www.wikidata.org/wiki/Property:P31)) statement to your new item. A person, for example, is an "instance of" "human" ([Q5](https://www.wikidata.org/wiki/Q5)). To make sure you get this right, imitate another item of the same type. You can proceed to add more statements--Wikidata should give you some useful prompts--as well as references and identifiers.
 
-Login
-
-See other languages
-
-Add reference
-
-Add item: must have instance of. Imitate another of its type.
-
-Add birthplace?
-
-Batch editing: subject of another lesson.
+### e) add a payload of data
+Batch editing works well on Wikidata, and it's a real timesaver, but it requires special caution. This will be the subject of another lesson.
 
 ## Endnotes
 [^1]: Rosenzweig, Roy. “Can History Be Open Source? Wikipedia and the Future of the Past.” *Journal of American History* 93, no. 1 (June 1, 2006): 117–46. https://doi.org/10.2307/4486062.
 [^2]: Take, for example, this line from Blaney's 2017 lesson: "Unfortunately I can’t find anything that describes the relationship between a teacher and a pupil in the Music Ontology. But the ontology is published openly, so I can use it to describe other features of music and then create my own extension." With Wikidata, it is no longer necessary to create such most such extension--they already exit. In this case, [***fill in the relevant wikidata property***].
+[^3]: These numbers come from a [fascinating statistical summary of Wikidata's share of "all human knowledge."](https://www.wikidata.org/wiki/User:Emijrp/All_Human_Knowledge#Books) Borges fans will enjoy it!
