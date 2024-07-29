@@ -13,14 +13,14 @@ authors:
 In this lesson you will learn:
 - what kinds of information Wikidata contains, 
 - how to explore that data in order to contextualize questions in your historical research, and
-- how to edit and add data in Wikidata to store your own data and share it with others.
+- how to edit and add data in Wikidata.
 
 While this stand-alone lesson focuses on Wikidata, it can also serve to extend your understanding of Linked Open Data. Wikidata is the most user-friendly implementation of this data structure, and it's under constant development. It's a great place to learn about key graph data features, such as schemas and the SPARQL query language, which can be applied in other contexts. After completing this lesson, users might wish to read Jonathan Blaney's [Introduction to the Principles of Linked Open Data](https://programminghistorian.org/en/lessons/intro-to-linked-data), which covers some of the same ground in more abstract and general terms. (When Blaney wrote his lesson, Wikidata did not yet exist.) 
 
-There are no prerequisites for this lesson, but users with a Wikipedia login might wish to log in to Wikidata using the same credential.
+There are no prerequisites for this lesson, but most users will want to log in to Wikidata in order to personalize language settings. A Wikipedia user id also works in Wikidata.
 
 # What is Wikidata?
-The cluster of technologies called semantic web/graph data/linked open data/resource description framework have objects of fascination for years, due to their potential to solve certain problems. But that potential had not been realized (outside of some specialist cases) until recently, with the advent and popularization of Wikidata. Now, for the first time, historians interested in these technologies have a substantial, well-supported foundation for their work.[^2] 
+The cluster of technologies called [semantic web](https://en.wikipedia.org/wiki/Semantic_Web)/[graph data](https://en.wikipedia.org/wiki/Graph_database)/[linked data](https://en.wikipedia.org/wiki/Linked_data#Linked_open_data)/[resource description framework](https://en.wikipedia.org/wiki/Resource_Description_Framework) has been an object of fascination for years, due to its potential to solve the problem of aggregating extemely diverse data sets. Outside of some specialist cases, that potential had not been realized until the late 2010s, with the advent and popularization of Wikidata. Now, for the first time, historians interested in these technologies have a substantial, well-supported foundation for their work.[^2] 
 
 Wikidata is the world's largest open data set. Like any database, it operates according to rigid rules about how information must be structured. Unlike most databases, Wikidata's structure prioritizes open contribution and collaboration protocols, interoperability, and linking between data sets. For historians, this data structure offers something especially attractive: in cases of uncertainty, it can accommodate more than one answer.
 
@@ -190,7 +190,7 @@ The label and alias box at the head of each item page could perhaps use your att
 Once you've added a statement and a reference, you may be ready to add an item. As always, search carefully to ensure that it's not already in Wikidata. If not, you can go ahead, using the "Create a new Item" link in the left hand menu. You will be prompted to supply labels, aliases and descriptions in whatever languages you can manage. It is crucial from the start to add an "instance of" ([P31](https://www.wikidata.org/wiki/Property:P31)) statement to your new item. A person, for example, is an "instance of" "human" ([Q5](https://www.wikidata.org/wiki/Q5)). To make sure you get this right, imitate another item of the same type. You can proceed to add more statements--Wikidata should give you some useful prompts--as well as references and identifiers.
 
 # Conclusion
-Batch editing works well on Wikidata, and it's a real timesaver, but it requires special caution. This will be the subject of another lesson.
+Batch editing works well on Wikidata, and it's a real timesaver, but it requires special caution. This will be the subject of another lesson, focusing on how to store your own data and share it with others
 
 ## Endnotes
 [^1]: Rosenzweig, Roy. “Can History Be Open Source? Wikipedia and the Future of the Past.” *Journal of American History* 93, no. 1 (June 1, 2006): 117–46. https://doi.org/10.2307/4486062.
