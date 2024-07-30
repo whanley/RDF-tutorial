@@ -65,17 +65,17 @@ Wikidata supports data-informed contextualization of this kind. It's easy, with 
 
 All such results can be downloaded in the usual data formats and as code snippets in various programming languages. Wikidata even includes a rudimentary visualization package with its query service, which can help in quick data exploration. Here's a [map of the birthplace of everyone with the first name "Gamal."](https://query.wikidata.org/#%23Birthplaces%20of%20people%20with%20given%20name%20Jamal%0A%23defaultView%3AMap%0ASELECT%20%3Fjamal%20%3FjamalLabel%20%3FbirthplaceLabel%20%3Fcoords%20%0AWHERE%0A%7B%0A%20%20%3Fjamal%20wdt%3AP735%20wd%3AQ1261968.%20%0A%20%20%3Fjamal%20wdt%3AP19%20%3Fbirthplace.%0A%20%20%3Fbirthplace%20wdt%3AP625%20%3Fcoords.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%7D)
 
-It is essential, however, to recognize what Wikidata does not do–and should not be expected to do. The knowledge base is vast, but it will always be incomplete. While many or even most of the data in this list of results are more or less correct, we find some individual answers that don't make sense, and others that are missing.
+Obviously, this is only a tiny fraction of the world's Jamals. It is essential to recognize what Wikidata does not do–and should not be expected to do. The knowledge base is vast, but it will always be incomplete. While many or even most of the data in these lists of results are more or less correct, we find some individual answers that don't make sense, and others that are missing.
 
-This incompleteness is a function of two features of the knowledge base. First, there is no guarantee that the data it contains are accurate. At the time of writing, there were eight references attested for Abdel Nasser's date of birth:
+This incompleteness is a function of two features of the knowledge base. First, there is no guarantee that the data it contains are accurate, and no rigid requirement that it be source referenced. At the time of writing, eight references attested Abdel Nasser's date of birth:
 
 ![Figure 3: Nasser birthdate references](nasser-birth-references.png)
 
-However, we only have one reference for the date when he assumed the Prime Minister's office. That reference is to the [list of Egyptian Prime Ministers in English Wikipedia](https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Egypt)–which might itself be scrutinized. Generally speaking, at this point in its development, Wikidata's references are relatively poor in quality and quantity. However, in many cases, we can reasonably take it on trust that factual information in Wikidata will typically be accurate. Our historian's judgment will serve us well when we look at the evidence.
+However, we only have one reference for the date when he assumed the Prime Minister's office. That reference is to the [list of Egyptian Prime Ministers in English Wikipedia](https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Egypt)–which could itself be scrutinized for accuracy and conpleteness. Generally speaking, at this point in its development, Wikidata's references are relatively poor in quality and quantity. However, in many cases, we can reasonably assume that factual information in Wikidata will typically be accurate for purposes of data exploration and hypothesis testing. Our historian's judgment will serve us well when we look at the evidence more closely.
 
 A second (and more interesting) reason for incomplete query results concerns the structure of knowledge that Wikidata produces, and this issue warrants a section of its own. 
 
-## Vocabulary:
+## Key vocabulary:
 - item
 - property
 - label
@@ -86,9 +86,9 @@ A second (and more interesting) reason for incomplete query results concerns the
 # Wikidata's taxonomies
 Categories and semantics are a juicy problem for any historian. This is true in analog scholarly debate, and it is also true when we consider Wikidata and other semantic data structures.
 
-While there is (probably) general consensus on the meaning of "date of birth," the meaning of "head of state" is not so clear. The age query above used the Wikidata item "head of state"([Q48352](https://www.wikidata.org/wiki/Q48352)) to identify Abdel Nasser and his counterparts in other countries. But Wikidata also contains an item labeled "head of government"([Q2285706](https://www.wikidata.org/wiki/Q2285706)). Let's take a closer look at the "head of state" and "head of government" items.
+While there is (probably) general consensus on the meaning of "date of birth," most concepts are not so clear cut. Take, for example, "head of state"([Q48352](https://www.wikidata.org/wiki/Q48352)), used in the age query above to identify Abdel Nasser and his counterparts in other countries. But perhaps we should have used the Wikidata item labeled "head of government"([Q2285706](https://www.wikidata.org/wiki/Q2285706)) instead? Let's take a closer look at "head of state" and "head of government."
 
-It is the time to introduce a concept that may be new to most historians: class. Not the class of "class struggle," silly! In database ontology, class is a kind of logic for organizing concepts in a data structure. Looking again at the item page, we see that "head of state" is an "instance of" (or kind or example of) "public office," but a "subclass of" "statesperson" and "leader." This latter statement means that all heads of state are statespersons and leaders, but not all statesperson and leaders are heads of state. 
+It is the time to introduce a concept that may be new to most historians: **class**. Not the class of "class struggle," silly! In database ontology, [class](https://en.wikipedia.org/wiki/Class_(knowledge_representation)) is a logical term organizing concepts in a data structure. Looking again at the item page, we see that "head of state"([Q48352](https://www.wikidata.org/wiki/Q48352)) is an "instance of"([P31](https://www.wikidata.org/wiki/Property:P31)) (or kind or example of) "public office"([Q294414](https://www.wikidata.org/wiki/Q294414)), but a "subclass of"([P279](https://www.wikidata.org/wiki/Property:P279)) "statesperson"([Q372436](https://www.wikidata.org/wiki/Q372436)) and "leader"([Q1251441](https://www.wikidata.org/wiki/Q1251441)), This latter statement means that all heads of state are statespersons and leaders, but not all statesperson and leaders are heads of state.
 
 Keen-eyed observers will already detect the presence of a formal taxonomy here. Sure enough, we can look down a step to see all of the public offices that are subclasses of "head of state." Here's a [query that lists them](https://query.wikidata.org/#%23Subclass%20of%20head%20of%20state%0ASELECT%20%3FheadOfStateSubclass%20%3FheadOfStateSubclassLabel%20%28COUNT%28%3Fitem%29%20as%20%3Fcount%29%0AWHERE%0A%7B%0A%20%20%3FheadOfStateSubclass%20wdt%3AP279%2a%20wd%3AQ48352.%0A%20%20%3Fitem%20wdt%3AP31%7Cwdt%3AP39%7Cwdt%3AP106%20%3FheadOfStateSubclass.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%20%0A%7D%0AGROUP%20BY%20%3FheadOfStateSubclass%20%3FheadOfStateSubclassLabel%20%0AORDER%20BY%20DESC%28%3Fcount%29) (ordered by number of instances). You will notice that "head of state" gives us a lot of monarchs and US state governors, among thousands of other positions. 
 
@@ -101,6 +101,10 @@ Let's run the age of first taking office query we used above, [but use "head of 
 Historians tend to be sceptical of taxonomic schemes, with good reason. But explicit taxonomies can do great work for us as a means to discover and explore information. No doubt you will find (what you consider to be) errors in this taxonomy. You can certainly "correct" those errors–Wikidata is open–but don't be too hasty. The taxonomies already existing in Wikidata are organic and collectively produced, and they are not exclusive. There are ways to work around the parts you don't agree with–don't change the knowledge base itself until you have learned how to do this.
 
 A big part of our expertise as historians is contextualizing details. For many of us, that's the fun and fascinating work. And that skill is precisely what a researcher needs to interact with the galaxy of isolated factoids in Wikidata. The rest of this lesson shows a few of the main ways to do that.
+
+## Vocabulary
+- class
+- subclass
 
 # Querying Wikidata
 
