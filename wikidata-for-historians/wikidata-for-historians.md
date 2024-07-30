@@ -40,15 +40,17 @@ A bit further down, a section of **Statements** begins. Some of these statements
 Even further down, you'll find another section with the heading **Identifiers**. Here you'll find unique identifiers from dozens of other databases–from the Library of Congress to the Internet Movie Database–that identify Abdel Nasser in their systems. This avalanche of identifiers is characteristic of the linked data universe. (For further background on this point, read the [section on linked data authorities](https://programminghistorian.org/en/lessons/intro-to-linked-data#linked-open-data-what-is-it) in Blaney's lesson.) And at the very bottom, you will see a list of all of the Wikipedia pages about him. 
 
 ## Explaining the page
-**Unique identifiers** are one key to understanding Wikidata. Wikidata's own identifier for Abdel Nasser can be found in the URL of his page, which is `https://www.wikidata.org/wiki/Q39524.` Abdel Nasser and all of the other objects that Wikidata describes are called "items". The Q-number, which is the unique identifier that you find at the end of the URL at the top of every item's page (`Q39524` for Abdel Nasser), is the essence of any item. Everything else you see on the page is semantics: optional labels and signfiers and statements about this identifier.
+**Unique identifiers** are one key to understanding Wikidata. Wikidata's own identifier for Abdel Nasser can be found in the URL of his page, which is `https://www.wikidata.org/wiki/Q39524.` Abdel Nasser and all of the other objects that Wikidata describes are called **items**. The Q-number, which is the unique identifier that you find at the end of the URL at the top of every item's page (`Q39524` for Abdel Nasser), is the essence of any item. Everything else you see on the page is semantics: optional labels and signfiers and statements about this identifier.
 
 Most historians--particularly those with some background in postcolonial theory--might readily identify the value in distinguishing between the signifier and the signified. In the Wikidata knowledge base, the signfied are only ever numbers; everything else is a signifier. This distinction means that the relationships between items do not depend on arbitrary human semantic choices. Wikidata can use multiple terms for the same idea, and those terms can change, without breaking the database.
 
 Wikidata also uses P-numbers, which refer to **properties**. In the "Statements" section, you will note two columns. The first column (with a grey field) contains properties. The second column (with a white field) contains items or values that answer these properties (sometimes these are called "objects" of properties). This lesson is not the place to get bogged down in the complexities of data structures. Instead, employ a common sense reading of those properties that make sense to you.
 
+![Figure 3: Properties and objects in statements](statement-properties.png)
+
 You can click on any item or property to go to its own page, which will give you a description, aliases, statements, and identifers related to that idea. And it is useful to know that every Wikipedia page has a counterpart item in Wikidata, accessible via a link the left hand tools menu:
 
-![Figure 1: Wikidata item on Wikipedia](wikidata-item-on-wikipedia.png)
+![Figure 3: Wikidata item on Wikipedia](wikidata-item-on-wikipedia.png)
 
 Take a look at the Wikidata item associated with Wikipedia page on a subject of interest to you. Click on links on that page–some will make sense, probably; others will not. Focus on those that are most transparent to, and orient yourself a bit in the web of data that makes up Wikidata.
 
@@ -69,7 +71,7 @@ This incompleteness is a function of two features of the knowledge base. First, 
 
 ![Figure 3: Nasser birthdate references](nasser-birth-references.png)
 
-However, we only have one reference for the date when he assumed the Prime Minister's office. That reference is to the [list of Egyptian Prime Ministers in English Wikipedia](https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Egypt)–which might itself be scrutinized. Generally speaking, at this point in its development, Wikidata's references are poor in quality and quantity. However, in many cases, we can reasonably take it on trust that information of this sort in Wikidata will mostly be right. Our historian's judgment will serve us well when we look at the evidence.
+However, we only have one reference for the date when he assumed the Prime Minister's office. That reference is to the [list of Egyptian Prime Ministers in English Wikipedia](https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Egypt)–which might itself be scrutinized. Generally speaking, at this point in its development, Wikidata's references are relatively poor in quality and quantity. However, in many cases, we can reasonably take it on trust that factual information in Wikidata will typically be accurate. Our historian's judgment will serve us well when we look at the evidence.
 
 A second (and more interesting) reason for incomplete query results concerns the structure of knowledge that Wikidata produces, and this issue warrants a section of its own. 
 
