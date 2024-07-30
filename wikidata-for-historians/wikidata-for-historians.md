@@ -46,7 +46,7 @@ Most historians--particularly those with some background in postcolonial theory-
 
 Wikidata also uses P-numbers, which refer to **properties**. In the "Statements" section, you will note two columns. The first column (with a grey field) contains properties. The second column (with a white field) contains items or values that answer these properties (sometimes these are called "objects" of properties). This lesson is not the place to get bogged down in the complexities of data structures. Instead, employ a common sense reading of those properties that make sense to you.
 
-![Figure 3: Properties and objects in statements](statement-properties.png)
+![Figure 3: Properties and objects in statements](statements-properties.png)
 
 You can click on any item or property to go to its own page, which will give you a description, aliases, statements, and identifers related to that idea. And it is useful to know that every Wikipedia page has a counterpart item in Wikidata, accessible via a link the left hand tools menu:
 
