@@ -96,9 +96,16 @@ Keen-eyed observers will already detect the presence of a formal taxonomy here. 
 
 | Head of state subclass | count | Head of government subclass | count |
 | --------- | --------- | --------- | --------- |
-| Row 1, column 1 | Row 1, column 2 | Row 1, column 3| |
-| Row 2, column 1 | Row 2, column 2 | Row 2, column 3| |
-| Row 3, column 1 | Row 3, column 2 | Row 3, column 3| |
+|president ([Q30461](https://www.wikidata.org/wiki/Q30461))|6314|mayor ([Q30185](https://www.wikidata.org/wiki/Q30185))|21578|
+|regent ([Q477406](https://www.wikidata.org/wiki/Q477406))|911|mayor of a place in the Netherlands ([Q13423499](https://www.wikidata.org/wiki/Q13423499))|3750|
+|Captain Regent of San Marino ([Q258045](https://www.wikidata.org/wiki/Q258045))|893|mayor of a place in France ([Q382617](https://www.wikidata.org/wiki/Q382617))|1794|
+|pope ([Q19546](https://www.wikidata.org/wiki/Q19546))|267|Captain Regent of San Marino ([Q258045](https://www.wikidata.org/wiki/Q258045))|893|
+|Doge of Genoa ([Q3712541](https://www.wikidata.org/wiki/Q3712541))|172|mayor of a place in the Czech Republic ([Q99356295](https://www.wikidata.org/wiki/Q99356295))|892|
+|Ban of Croatia ([Q253779](https://www.wikidata.org/wiki/Q253779))|141|mayor ([Q2922332](https://www.wikidata.org/wiki/Q2922332))|768|
+|President of the Generalitat of Catalonia ([Q16933549](https://www.wikidata.org/wiki/Q16933549))|133|mayor ([Q670106](https://www.wikidata.org/wiki/Q670106))|657|
+|Doge of Venice ([Q858316](https://www.wikidata.org/wiki/Q858316))|126|mayor in Luxembourg ([Q29639349](https://www.wikidata.org/wiki/Q29639349))|446|
+|Emperor of Japan ([Q208233](https://www.wikidata.org/wiki/Q208233))|124|lord mayor ([Q109862464](https://www.wikidata.org/wiki/Q109862464))|446|
+|Hetman of Zaporizhian Host ([Q16157109](https://www.wikidata.org/wiki/Q16157109))|110|Lord Mayor of London ([Q73341](https://www.wikidata.org/wiki/Q73341))|439|
 </div>
 Table 1: Top 10 subclasses of two similar classes (summer 2024)
 
