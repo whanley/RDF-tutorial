@@ -167,14 +167,14 @@ Let's start with the first example query listed: Cats. When you click on the exa
 ![Figure 5: Cats query](cats-substitute.png)
 
 Six colors of text indicate the syntax of the query:
-- **blue** for Wikidata items (Q-numbers) and properties (P-numbers)
+- **blue** for Wikidata items (Q-numbers) and properties (P-numbers). When you float your cursor over a blue-text item or property, a pop-up gives you its label and description. The prefixes (`wdt:`, `wd:` and so on) are significant but beyond the scope of this lesson.
 - **green** for the items that you seek (all of which are arbitrary-defined words starting with a ?)
 - **grey** for comments (which start with hashtags)
-- **red** for operators
+- **red** for functions
 - **black** for punctuation
 - **orange** for variables
 
-When you float your cursor over a blue-text item or property, a pop-up will give you its label and description. The cats example is the simplest form of SPARQL query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
+ The cats example is the simplest form of SPARQL query: it returns every `?item` that is an "instance of" (`wdt:P31`) a "cat" (`wd:Q146`). By changing the last Q-number, we can search for all instances of something else. For example, try changing `Q146` to `Q3024240`. Float your cursor over this new item to see what it is, then execute the query and skim the results.
 
 ***Insight***: the "instance of" property ([P31](https://www.wikidata.org/wiki/Property:P31)) does a huge amount of work in Wikidata and similar data structures. In simple English, line 5 of the query (`?item wdt:P31 wd:Q146`) could be read as "This item is a cat." You will see P31 everywhere in Wikidata. Just as often, you will see [P279](https://www.wikidata.org/wiki/Property:P279), the "subclass of" property. Try changing line 5 to `?item wdt:P279 wd:Q146`, which could be read as "This item is a *kind of* cat." The query yields different results. What's the takeaway? These two properties are the most common properties in Wikidata and they matter a great deal, but their function won't be immediately apparent.
 
