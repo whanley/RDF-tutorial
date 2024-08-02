@@ -206,7 +206,7 @@ The whole idea behind Linked Open Data is that we should overcome data silos. Wi
 
 In practical terms, then, how to contribute? 
 
-<div class="alert alert-warning">In this introductory lesson, the most important thing to say is _***START SMALL***_! </div>
+<div class="alert alert-warning">In this introductory lesson, the most important thing to say is ***START SMALL***! </div>
 
 Unless you are an expert in information management (in which case you are unlikely to be reading this sentence), you have a steep learning curve ahead. Wikidata is the product of socially constructed semantic structures, taxonomies, schemas, and ontologies. As new users, we must imitate its traditions. We need to find out what properties and items people are already using to describe what we want to talk about. These might not be the "right" concepts, according to our view as historians, but we need to be good citizens by suspending our own expertise in this environment.
 
