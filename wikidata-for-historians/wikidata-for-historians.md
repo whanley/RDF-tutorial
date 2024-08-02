@@ -227,7 +227,11 @@ Be especially careful with ambiguous person or place names. As we've already see
 ## b) add a reference
 Referencing is perhaps the least developed aspect of Wikidata. Users have not yet adopted the habit of consistently providing sources for statements--and the sources provided are often transitory, tertiary sources (such as Wikipedia pages) rather than the secondary sources we might prefer. 
 
-Referencing is a great way to learn how to use the "qualifier" function in Wikidata, however. Statements (such as "born in" "Cairo") can be qualifed with a further statement, giving a reference. On an item page, there is an "add reference" button. Published works are referenced using the property "stated in" ([P248](https://www.wikidata.org/wiki/Property:P248)). The [help guide for sourcing](https://www.wikidata.org/wiki/Help:Sources) offers instructions for citing different types of published works. 
+Referencing is a great way to learn how to use the "qualifier" function in Wikidata, however. Statements (such as "place of death" "Cairo") can be qualifed with a further statement, giving a reference. 
+
+![Figure: references to Abdel Nasser's place of death](place-of-death.png)
+
+At the end of every statement, there is an "add reference" button. Published works are referenced using the property "stated in" ([P248](https://www.wikidata.org/wiki/Property:P248)). The [help guide for sourcing](https://www.wikidata.org/wiki/Help:Sources) offers instructions for citing different types of published works. 
 
 Historians may find Wikidata's reference system to be cumbersome. It requires that the reference source (which for us often means books and articles) be itself an item in Wikidata. At present (in 2024), this applies to less than 100,000 books, though there are 40,000,000 articles in Wikidata.[^4] Where the item already exists, referencing is easy enough, but it can be cumbersome to create a reference item by hand. The Wikidata user community is (at the time of writing, in 2024) debating the status of published works in Wikidata, and it seems likely some new consensus will emerge.
 
