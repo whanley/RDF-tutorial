@@ -33,7 +33,6 @@ doi: 10.46430/phen0047
 - perform straight swap between dbpedia and wikidata urls? some of this I've done already
 - sub in nomisma.org and linked places for cultural examples? Let Wikidata replace british museum? VIAF, Geonames. VAIF could work for history books list, for example. Lincs: https://lincsproject.ca/
 
-Smithsonian endpoint: https://triplydb.com/smithsonian/american-art-museum/sparql
 
 
 
@@ -50,13 +49,18 @@ This lesson introduces the SPARQL query language, showing how to access federate
 
 # Graph Databases, RDF, and Linked Open Data
 
-RDF databases are well-suited to expressing complex relationships between many entities, like people, places, events, concepts, and individual objects. These databases are often referred to as "graph" databases because they structure information as a graph or network, where a set of resources, or nodes, are connected together by edges that describe the relationships between each resource.
+RDF databases are well-suited to expressing complex relationships between many entities, like people, places, events, concepts, and individual objects. These databases are often referred to as "graph" databases because they structure information as a graph or network, where a set of resources, or nodes, are connected together by edges that describe the relationships between each resource. 
 
-Because RDF databases support the use of URLs (weblinks), they can be made available online and linked to other databases, hence the term "Linked Open Data". For a time, certain major art collections maintained their own independent LOD publicationsof their collections data.[^1] Starting in 2014, the [Getty Vocabulary Program](http://vocab.getty.edu) also released their series of authoritative databases on geographic place names, terms for describing art and architecture, and variant spellings of artist names, as LOD.
+Because RDF databases support the use of URLs (weblinks), they can be made available online and linked to other databases, hence the term "Linked Open Data". For a time, certain libraries and major art collections maintained their own independent LOD publications of their collections data.[^1] Standards for LOD publication begant to emerge in various scholarly communities. 
+- the [Getty Vocabulary Program](http://vocab.getty.edu) also released its series of authoritative databases on geographic place names, terms for describing art and architecture, and variant spellings of artist names, as LOD.
+- geonames
+- linked places
+- nomisma
+- VIAF
 
-Around 2020, the [Wikidata](https://wikidata.org) knowledge graph began to assume the predominant role in the LOD universe, and many institutions closed their independent services while making their data available via Wikidata.[^2]
+Around 2020, the [Wikidata](https://wikidata.org) knowledge graph began to assume the predominant role in the LOD universe, and many institutions closed their independent services while making their data available via Wikidata.[^2] Wikidata links its items to those in other databases using "Identifiers" native to those databases. This functionality makes it possible to navigate between and among these various datasets.
 
-SPARQL is the language used to query these databases. This language is particularly powerful because it does not presuppose the perspectives that users will bring to the data. A query about objects and a query about donors is basically equivalent to such a database. Unfortunately, many tutorials on SPARQL use extremely simplified data models that don't resemble the more complex datasets released by cultural heritage institutions. This tutorial gives a crash course on SPARQL using a dataset that a humanist might actually find in the wilds of the Internet. In this tutorial, we will learn how to query the British Museum Linked Open Data collection.
+SPARQL is the language used to query these databases. This language is particularly powerful because it does not presuppose the perspectives that users will bring to the data. A query about objects and a query about donors is basically equivalent to such a database. Unfortunately, many tutorials on SPARQL use extremely simplified data models that don't resemble the more complex datasets released by cultural heritage institutions. This tutorial gives a crash course on SPARQL using a dataset that a humanist might actually find in the wilds of the Internet. In this tutorial, we will learn how to query the Wikidata knowledge graph and its links to cultural institution collections.
 
 ## RDF in brief
 
@@ -150,15 +154,13 @@ So far, we have been looking at a toy representation of RDF that uses easy-to-re
 would more likely look something like this:
 
 ```
-<http://data.rijksmuseum.nl/item/8909812347> <http://purl.org/dc/terms/creator>  <https://www.wikidata.org/wiki/Q5598>.
+<https://www.rijksmuseum.nl/nl/collectie/SK-C-5> <http://purl.org/dc/terms/creator>  <https://www.wikidata.org/wiki/Q5598>.
 ```
-
-_N.B. the Rijksmuseum has not (yet) built their own Linked Data site, so the URI in this query is just for demo purposes._
 
 In order to get the human-readable version of the information represented by each of these URIs, what we're really doing is just retrieving more RDF statements. Even the predicate in that statement has its own literal label:
 
 ```
-<http://data.rijksmuseum.nl/item/8909812347> <http://purl.org/dc/terms/title> "The Nightwatch" .
+<https://www.rijksmuseum.nl/nl/collectie/SK-C-5> <http://purl.org/dc/terms/title> "The Nightwatch" .
 
 <http://purl.org/dc/terms/creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#label> "was created by" .
 
@@ -171,7 +173,7 @@ See the _predicates_ in these statements, with domain names like `purl.org`, `w3
 
 URIs can become unwieldy when composing SPARQL queries, which is why we'll use _prefixes_. These are shortcuts that allow us to skip typing out entire long URIs. For example, remember that predicate for retrieving the title of the *Nightwatch*, `<http://purl.org/dc/terms/title>`? With these prefixes, we just need to type `dct:title` whenever we need to use a `purl.org` predicate. `dct:` stands in for `http://purl.org/dc/terms/`, and `title` just gets pasted onto the end of this link.
 
-For example, with the prefix `PREFIX rkm: <http://data.rijksmuseum.nl/>`, appended to the start of our SPARQL query, `<http://data.rijksmuseum.nl/item/8909812347>` becomes `rkm:item/8909812347` instead.
+For example, with the prefix `PREFIX wd: <https://www.wikidata.org/wiki/>`, appended to the start of our SPARQL query, `<https://www.wikidata.org/wiki/Q5598>` becomes `wd:Q5598` instead.
 
 Be aware that, prefixes can be arbitrarily assigned with whatever abbreviations you like, different endpoints may use slightly different prefixes for the same namespace (e.g. `dct` vs. `dcterms` for `<http://purl.org/dc/terms/>`).
 
@@ -427,5 +429,5 @@ Both the Europeana and Getty Vocabularies LOD sites also offer extensive, and qu
 - [Getty Vocabularies Example Queries](http://vocab.getty.edu/queries)
 
 # Notes
-[^1]: In the 2010s, many cultural institutions began to offer access to their collections information through [web Application Programming Interfaces](/lessons/intro-to-the-zotero-api.html). While these APIs were a powerful way to access individual records in a machine-readable manner, they are not ideal for cultural heritage data because they are structured to work for a predetermined set of queries. For example, a museum may have information on donors, artists, artworks, exhibitions, and provenance, but its web API may offer only object-wise retrieval, making it difficult or impossible to search for associated data about donors, artists, provenance, etc. This structure is great if you come looking for information about particular objects. However, it makes it difficult to aggregate information about every artist or donor that happens to be described in the dataset as well. These included defunct services from the [British Museum](http://collection.britishmuseum.org), [Europeana](http://labs.europeana.eu/api/linked-open-data-introduction), the [Smithsonian American Art Museum](http://americanart.si.edu), and the [Yale Center for British Art](http://britishart.yale.edu/collections/using-collections/technology/linked-open-data).
-[^2]: See, for example, the explanation by the National Gallery of Art for its 2018 [decision to move its data collections to Wikidata](https://www.nga.gov/open-access-images/wikimedia-commons-wikidata.html).
+[^1]: In the 2010s, many cultural institutions began to offer access to their collections information through [web Application Programming Interfaces](/lessons/intro-to-the-zotero-api.html). While these APIs were a powerful way to access individual records in a machine-readable manner, they are not ideal for cultural heritage data because they are structured to work for a predetermined set of queries. For example, a museum may have information on donors, artists, artworks, exhibitions, and provenance, but its web API may offer only object-wise retrieval, making it difficult or impossible to search for associated data about donors, artists, provenance, etc. This structure is great if you come looking for information about particular objects. However, it makes it difficult to aggregate information about every artist or donor that happens to be described in the dataset as well. These included defunct services from the [British Museum](http://collection.britishmuseum.org), [Europeana](http://labs.europeana.eu/api/linked-open-data-introduction), and the [Yale Center for British Art](http://britishart.yale.edu/collections/using-collections/technology/linked-open-data). The [Smithsonian American Art Museum](https://triplydb.com/smithsonian/american-art-museum/sparql) maintains its SPARQL endpoint. 
+[^2]: Wikidata superceded the pioneering graph database [DBpedia](https://www.dbpedia.org/), which is still active. See the explanation by the National Gallery of Art for its 2018 [decision to move its data collections to Wikidata](https://www.nga.gov/open-access-images/wikimedia-commons-wikidata.html).
