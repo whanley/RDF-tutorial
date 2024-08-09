@@ -97,7 +97,7 @@ A traditional relational database might split attributes about artworks and attr
 
 ## Searching RDF with SPARQL
 
-SPARQL lets us translate heavily interlinked, graph data into normalized, tabular data with rows and columns you can open in programs like Excel, or import into a visualization suite such as [plot.ly](http://plot.ly) or [Palladio].
+SPARQL lets us translate heavily interlinked, graph data into normalized, tabular data with rows and columns you can open in programs like Excel, or import into a visualization suite such as [plot.ly](http://plot.ly) or [Palladio](http://palladio.designhumanities.org/).
 
 It is useful to think of a SPARQL query as a [Mad Lib](https://en.wikipedia.org/wiki/Mad_Libs) - a set of sentences with blanks in them. The database will take this query and find every set of matching statements that correctly fill in those blanks, returning the matching values to us as a table. Take this SPARQL query:
 
@@ -191,9 +191,7 @@ Be aware that, prefixes can be arbitrarily assigned with whatever abbreviations 
 
 ## All the statements for one object
 
-Let's start our first query using the [British Museum SPARQL endpoint][bms]. A SPARQL endpoint is a web address that accepts SPARQL queries and returns results. The BM endpoint is like many others: if you navigate to it in a web browser, it presents you with a text box for composing queries.
-
-[bms]: http://collection.britishmuseum.org/sparql
+Let's start our first query using the [Wikidata SPARQL endpoint](https://query.wikidata.org/). A SPARQL endpoint is a web address that accepts SPARQL queries and returns results. The Wikidata endpoint is like many others: if you navigate to it in a web browser, it presents you with a text box for composing queries.
 
 {% include figure.html filename="sparql03.png" caption="The BM SPARQL endpoint webpage. For all the queries in this tutorial, make sure that you have left the 'Include inferred' and 'Expand results over equivalent URIs' boxes unchecked." %}
 
@@ -402,9 +400,7 @@ jq -r '.head.vars as $fields | ($fields | @csv), (.results.bindings[] | [.[$fiel
 
 ## Export results to Palladio
 
-The popular data exploration platform [Palladio] can directly load data from a SPARQL endpoint. On the "Create a new project" screen, a link at the bottom to "Load data from a SPARQL endpoint (beta)" will provide you a field to enter the endpoint address, and a box for the query itself. Depending on the endpoint, you may need to specify the file output type in the endpoint address; for example, to load data from the BM endpoint you must use the address `http://collection.britishmuseum.org/sparql.json`. Try pasting in the aggregation query we used above to count artworks by type and clicking on "Run query". Palladio should display a preview table.
-
-[Palladio]: http://palladio.designhumanities.org/
+The popular data exploration platform [Palladio](http://palladio.designhumanities.org/) can directly load data from a SPARQL endpoint. On the "Create a new project" screen, a link at the bottom to "Load data from a SPARQL endpoint (beta)" will provide you a field to enter the endpoint address, and a box for the query itself. Depending on the endpoint, you may need to specify the file output type in the endpoint address; for example, to load data from the BM endpoint you must use the address `http://collection.britishmuseum.org/sparql.json`. Try pasting in the aggregation query we used above to count artworks by type and clicking on "Run query". Palladio should display a preview table.
 
 {% include figure.html filename="sparql10.png" caption="Palladio's SPARQL query interface." %}
 
