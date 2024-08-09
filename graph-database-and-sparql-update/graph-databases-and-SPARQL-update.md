@@ -92,6 +92,7 @@ A pseudo-RDF database might contain interrelated statements like these:
 If we were to visualize these statements as nodes and edges within network graph, it would appear like so:
 
 ![A network visualization of the pseudo-RDF shown above. Arrows indicate the 'direction' of the predicate. For example, that 'Woman with a Balance was created by Vermeer', and not the other way around.](sparql01.svg)
+
 {% include figure.html filename="sparql01.svg" caption="A network visualization of the pseudo-RDF shown above. Arrows indicate the 'direction' of the predicate. For example, that 'Woman with a Balance was created by Vermeer', and not the other way around." %}
 
 A traditional relational database might split attributes about artworks and attributes about artists into separate tables. In an RDF/graph database, all these data points belong to the same interconnected graph, which allows users maximum flexibility in deciding how they wish to query it.
@@ -110,6 +111,8 @@ WHERE {
 ```
 
 `?painting` in this query stands in for the node (or nodes) that the database will return. On receiving this query, the database will search for all values of `?painting` that properly complete the RDF statement `<has medium> <oil on canvas> .`:
+
+![A visualization of what our query is looking for](sparql01-1.svg)
 
 {% include figure.html filename="sparql01-1.svg" caption="A visualization of what our query is looking for." %}
 
@@ -136,6 +139,7 @@ WHERE {
 
 Here we've introduced a second variable, `?artist`. The RDF database will return all matching combinations of `?artist` and `?painting` that fulfill both of these statements.
 
+![A visualization of the SPARQL query, with mentioned elements in orange, and selected elements (those that will be returned in the results) in red.](sparql02-1.svg)
 {% include figure.html filename="sparql02-1.svg" caption="A visualization of the SPARQL query, with mentioned elements in orange, and selected elements (those that will be returned in the results) in red." %}
 
 
@@ -194,7 +198,8 @@ Be aware that, prefixes can be arbitrarily assigned with whatever abbreviations 
 
 Let's start our first query using the [Wikidata SPARQL endpoint](https://query.wikidata.org/). A SPARQL endpoint is a web address that accepts SPARQL queries and returns results. The Wikidata endpoint is like many others: if you navigate to it in a web browser, it presents you with a text box for composing queries.
 
-{% include figure.html filename="sparql03.png" caption="The BM SPARQL endpoint webpage. For all the queries in this tutorial, make sure that you have left the 'Include inferred' and 'Expand results over equivalent URIs' boxes unchecked." %}
+![The Wikidata SPARQL endpoint webpage. For all the queries in this tutorial, make sure that you have left the 'Include inferred' and 'Expand results over equivalent URIs' boxes unchecked](sparql03.png)
+{% include figure.html filename="sparql03.png" caption="The Wikidata SPARQL endpoint webpage. For all the queries in this tutorial, make sure that you have left the 'Include inferred' and 'Expand results over equivalent URIs' boxes unchecked." %}
 
 When starting to explore a new RDF database, it helps to look at the relationships that stem from a single [example object](http://collection.britishmuseum.org/id/object/PPA82633).
 
