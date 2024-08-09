@@ -10,7 +10,7 @@ authors:
 
 # Summary
 
- 
+Programming Historian contains an introductory [tutorial on OpenRefine](/cleaning-data-with-openrefine). If you are not already using OpenRefine, complete that lesson before begining this lesson. A second Programming Historian lesson, on [Fetching and Parsing Data from the Web with OpenRefine](/fetch-and-parse-data-with-openrefine), covers some similar ground to this lesson and is a good way to generalize the approach covered here, which is restricted to WikiData, to cover other data sources. However 
 
 
 ### Links

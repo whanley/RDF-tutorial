@@ -33,11 +33,14 @@ doi: 10.46430/phen0047
 - perform straight swap between dbpedia and wikidata urls? some of this I've done already
 - sub in nomisma.org and linked places for cultural examples? Let Wikidata replace british museum? VIAF, Geonames. VAIF could work for history books list, for example. Lincs: https://lincsproject.ca/
 
+Smithsonian endpoint: https://triplydb.com/smithsonian/american-art-museum/sparql
+
+
 
 Lesson Goals
 ------------
 
-This lesson explains why many cultural institutions are adopting graph databases, and how researchers can access these data though the query language called SPARQL.
+This lesson introduces the SPARQL query language, showing how to access federated data from cultural institutions and other sources via Wikidata and other SPARQL endpoints.
 
 {% include toc.html %}
 
@@ -47,14 +50,13 @@ This lesson explains why many cultural institutions are adopting graph databases
 
 # Graph Databases, RDF, and Linked Open Data
 
-Many cultural institutions now offer access to their collections information through [web Application Programming Interfaces][api]. While these APIs are a powerful way to access individual records in a machine-readable manner, they are not ideal for cultural heritage data because they are structured to work for a predetermined set of queries. For example, a museum may have information on donors, artists, artworks, exhibitions, and provenance, but its web API may offer only object-wise retrieval, making it difficult or impossible to search for associated data about donors, artists, provenance, etc. This structure is great if you come looking for information about particular objects. However, it makes it difficult to aggregate information about every artist or donor that happens to be described in the dataset as well.
+In the 2010s, many cultural institutions began to offer access to their collections information through [web Application Programming Interfaces][api]. While these APIs were a powerful way to access individual records in a machine-readable manner, they are not ideal for cultural heritage data because they are structured to work for a predetermined set of queries. For example, a museum may have information on donors, artists, artworks, exhibitions, and provenance, but its web API may offer only object-wise retrieval, making it difficult or impossible to search for associated data about donors, artists, provenance, etc. This structure is great if you come looking for information about particular objects. However, it makes it difficult to aggregate information about every artist or donor that happens to be described in the dataset as well.
 
 [api]: /lessons/intro-to-the-zotero-api.html
 
-RDF databases are well-suited to expressing complex relationships between many entities, like people, places, events, and concepts tied to individual objects. These databases are often referred to as "graph" databases because they structure information as a graph or network, where a set of resources, or nodes,
-are connected together by edges that describe the relationships between each resource.
+RDF databases are well-suited to expressing complex relationships between many entities, like people, places, events, and concepts tied to individual objects. These databases are often referred to as "graph" databases because they structure information as a graph or network, where a set of resources, or nodes, are connected together by edges that describe the relationships between each resource.
 
-Because RDF databases support the use of URLs (weblinks), they can be made available online and linked to other databases, hence the term "Linked Open Data". Major art collections including the [British Museum][bm], [Europeana], the [Smithsonian American Art Museum][saam], and the [Yale Center for British Art][yale] have published their collections data as LOD. The [Getty Vocabulary Program][getty], has also released their series of authoritative databases on geographic place names, terms for describing art and architecture, and variant spellings of artist names, as LOD.
+Because RDF databases support the use of URLs (weblinks), they can be made available online and linked to other databases, hence the term "Linked Open Data". For a time, certain major art collections, including the [British Museum][bm], [Europeana], the [Smithsonian American Art Museum][saam], and the [Yale Center for British Art][yale], maintained their own independent LOD publicationsof their collections data. Starting in 2014, the [Getty Vocabulary Program][getty] also released their series of authoritative databases on geographic place names, terms for describing art and architecture, and variant spellings of artist names, as LOD.
 
 [getty]: http://vocab.getty.edu
 
@@ -65,6 +67,10 @@ Because RDF databases support the use of URLs (weblinks), they can be made avail
 [saam]: http://americanart.si.edu
 
 [yale]: http://britishart.yale.edu/collections/using-collections/technology/linked-open-data
+
+Around 2020, the [Wikidata][wd] knowledge graph began to assume the predominant role in the LOD universe, and many institutions closed their independent services while making their data available via Wikidata.[^1]
+
+[wd]: https://wikidata.org
 
 SPARQL is the language used to query these databases. This language is particularly powerful because it does not presuppose the perspectives that users will bring to the data. A query about objects and a query about donors is basically equivalent to such a database. Unfortunately, many tutorials on SPARQL use extremely simplified data models that don't resemble the more complex datasets released by cultural heritage institutions. This tutorial gives a crash course on SPARQL using a dataset that a humanist might actually find in the wilds of the Internet. In this tutorial, we will learn how to query the British Museum Linked Open Data collection.
 
@@ -435,3 +441,6 @@ Both the Europeana and Getty Vocabularies LOD sites also offer extensive, and qu
 
 - [Europeana SPARQL how-to](http://labs.europeana.eu/api/linked-open-data-SPARQL-endpoint)
 - [Getty Vocabularies Example Queries](http://vocab.getty.edu/queries)
+
+# Notes
+[^1]: See, for example, the explanation by the National Gallery of Art for its 2018 [decision to move its data collections to Wikidata](https://www.nga.gov/open-access-images/wikimedia-commons-wikidata.html).
